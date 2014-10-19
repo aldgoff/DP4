@@ -2,7 +2,7 @@
 // Name        : DP4.cpp
 // Author      : Allan Goff
 // Version     :
-// Copyright   : Your copyright notice
+// Copyright   : Novatia Labs 2014
 // Description : Hello World in C++, Ansi-style
 //============================================================================
 
