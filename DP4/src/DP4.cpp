@@ -19,6 +19,8 @@ bridge
 #include <vector>
 using namespace std;
 
+#include "meta.h"
+
 #include "facade.h"
 #include "adapter.h"
 
@@ -63,12 +65,16 @@ int main(int argc, char* args[]) {
 	if(argc == 1)
 		cout << "  No args.\n" << endl;
 
+	meta();
+
 	for(int i=0; i<argc; i++) {
 		if(!strcmp(args[i], "facade"))		runFacade();
 		if(!strcmp(args[i], "adapter"))		runAdapter();
 		if(!strcmp(args[i], "strategy"))	runStrategy();
 		if(!strcmp(args[i], "bridge"))		runBridge();
 	}
+
+	meta();
 
 	cout << "Aloha DP4.\n";
 	return 0;
