@@ -16,7 +16,7 @@ using namespace std;
 #include "adapter.h"
 #include "strategy.h"
 #include "bridge.h"
-// Seam point avoided by auto generation.
+// Seam point half avoided by auto generation.
 
 #include "meta.h"
 

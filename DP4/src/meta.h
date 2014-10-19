@@ -182,6 +182,7 @@ void meta(const string& arg) {
 		if(arg == desPats[i]->name) {
 			desPats[i]->run(i);
 			cout << "\n";
+			break;
 		}
 	}
 }
