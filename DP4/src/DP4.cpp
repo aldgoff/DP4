@@ -17,6 +17,7 @@ int main(int argc, char* args[]) {
 
 	for(int i=0; i<argc; i++) {
 	}
+	cout << endl;
 
 	cout << "Aloha DP4.\n";
 	return 0;
