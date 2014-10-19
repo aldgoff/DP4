@@ -6,26 +6,19 @@
 // Description : Examples for a Design Patterns class.
 //============================================================================
 
-#ifdef runConfigs
-facade
-adapter
-strategy
-bridge
-#endif
-
 #include <cstdio>
 #include <cstring>
 #include <iostream>
 #include <vector>
 using namespace std;
 
-#include "meta.h"
-
 #include "facade.h"
 #include "adapter.h"
-
 #include "strategy.h"
 #include "bridge.h"
+// Seam point avoided by auto generation.
+
+#include "meta.h"
 
 /*====================================================================================================================*/
 
@@ -57,24 +50,31 @@ void runBridge() {
 	bridge::demo();
 }
 
+// Seam point; can be eliminated by use of design patterns.
+
 /*====================================================================================================================*/
 
 int main(int argc, char* args[]) {
 	cout << "Hello DP4.\n" << endl;
 
-	if(argc == 1)
+	if(argc == 1) {
 		cout << "  No args.\n" << endl;
+		meta("");
+	}
 
-	meta();
+	for(int i=1; i<argc; i++)
+		meta(string(args[i]));
 
 	for(int i=0; i<argc; i++) {
 		if(!strcmp(args[i], "facade"))		runFacade();
 		if(!strcmp(args[i], "adapter"))		runAdapter();
 		if(!strcmp(args[i], "strategy"))	runStrategy();
 		if(!strcmp(args[i], "bridge"))		runBridge();
+		// Seam point; can be eliminated by use of design patterns.
 	}
 
-	meta();
+	for(int i=1; i<argc; i++)
+		meta(string(args[i]));
 
 	cout << "Aloha DP4.\n";
 	return 0;
