@@ -3,7 +3,7 @@
 // Author      : Allan Goff
 // Version     :
 // Copyright   : Novatia Labs 2014
-// Description : Hello World in C++, Ansi-style
+// Description : Examples for a Design Patterns class.
 //============================================================================
 
 #ifdef runConfigs
