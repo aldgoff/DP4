@@ -139,10 +139,12 @@ public:
 };
 // Seam point.
 /*
+ *
 midterm
 varies
 solti
 sideBySide
+
  */
 void meta(const string& arg) {
 	// Array and loop is O(n), inefficient if desPats is large.
@@ -186,6 +188,5 @@ void meta(const string& arg) {
 		}
 	}
 }
-
 
 #endif /* META_H_ */

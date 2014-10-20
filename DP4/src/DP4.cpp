@@ -70,6 +70,7 @@ int main(int argc, char* args[]) {
 		if(!strcmp(args[i], "adapter"))		runAdapter();
 		if(!strcmp(args[i], "strategy"))	runStrategy();
 		if(!strcmp(args[i], "bridge"))		runBridge();
+
 		// Seam point; can be eliminated by use of design patterns.
 	}
 
