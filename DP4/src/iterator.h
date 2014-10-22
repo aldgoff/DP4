@@ -120,7 +120,7 @@ class StackIter : public Iterator {};
 
 class Container {};
 class Array : public Container {
-	int	array[10];
+//	int	array[10];
 public:
 	ArrayIter begin() {
 		return ArrayIter(this);
@@ -139,8 +139,8 @@ void demo() {
 	cout << "<< Iterator Solution >>\n";
 
 	Array arrayObj;
-	Array* arrayPtr = new Array;
-	Container* arrayPoly = new Array;
+//	Array* arrayPtr = new Array;
+//	Container* arrayPoly = new Array;
 
 	vector<int> v;
 	v.push_back(1);

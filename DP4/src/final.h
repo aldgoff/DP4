@@ -308,11 +308,11 @@ struct Order {
 };
 
 void readOrders(vector<Order>& orders) {
-	int i = 0;
+//	int i = 0;
 	Order order[] = { // First spec must be num, end of specs indicated by two blank strings {"",""}, or {"end",""}.
-		{++i, {{"num",""}, {"size", "50"}, {"",""} }},
-		{++i, {{"num",""}, {"size","100"}, {"plastic","ABS"}, {"",""} }},
-		{++i, {{"num",""}, {"size","500"}, {"end",""} }},
+		{0, {{"num",""}, {"size", "50"}, {"",""} }},
+		{0, {{"num",""}, {"size","100"}, {"plastic","ABS"}, {"",""} }},
+		{0, {{"num",""}, {"size","500"}, {"end",""} }},
 	};
 
 	const char* key = 0;
@@ -326,7 +326,7 @@ void readOrders(vector<Order>& orders) {
 			if(j > 0)
 				val = order[i].spec[j].val;
 			else {													// Treat 1st spec (must be order number) specially.
-				sprintf(value, "%03d", i+1);
+				sprintf(value, "%03ld", i+1);
 				val = value;
 			}
 			order[i].specs[key] = val;								// Store specs in map.

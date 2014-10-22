@@ -146,7 +146,7 @@ void section3() {
 	cout << "<< Problem Set 3 - Principles: " << section << " >>\n\n";
 	for(size_t i=0; i<sizeof(principles)/sizeof(Principles); i++) {
 		s = (((((((((s*s)%13)*s)%13)*s)%13)*s)%13) + 3)%13;	// Single pure attractor.
-		sprintf(line, " %2d) %2ld) _________  %s\n", i+1, s+1,
+		sprintf(line, " %2ld) %2ld) _________  %s\n", i+1, s+1,
 				principles[s].concept.c_str()
 		);
 		cout << line << endl;
@@ -156,7 +156,7 @@ void section3() {
 	for(size_t i=0; i<sizeof(principles)/sizeof(Principles); i++) {
 		s = (((((((((s*s)%13)*s)%13)*s)%13)*s)%13) + 3)%13;	// Single pure attractor.
 		sprintf(answer, "__%s%s", principles[s].answer.c_str(), "_________");
-		sprintf(line, " %2d) %2ld) %-9.9s  %s\n", i+1, s+1,
+		sprintf(line, " %2ld) %2ld) %-9.9s  %s\n", i+1, s+1,
 				answer,
 				principles[s].concept.c_str()
 		);
@@ -580,7 +580,10 @@ private:
 	ColorPallet	cp;
 	Shine		shine;
 public:
-	Facade(ColorPallet cp=pastel, Shine shine=winter) : cp(cp), shine(shine) {}
+	Facade(ColorPallet cpArg=pastel, Shine shineArg=winter) : cp(cpArg), shine(shineArg) {
+		cp = cpArg;			// Just because gcc thinks ctor arg
+		shine = shineArg;	// list doesn't qualify as "use" ?!?
+	}
 public:
 	void paintHouse(ColorPallet cp=pastel) { cout << "House:" << endl; };
 	void stainDeck(Shine shine=summer) { cout << "Deck:" << endl; };
@@ -593,8 +596,8 @@ public:
 };
 
 void clientCode(int type) {
-	Facade::ColorPallet pallet;
-	Facade::Shine		shine;
+	Facade::ColorPallet pallet = Facade::pastel;	// Defaults.
+	Facade::Shine		shine  = Facade::summer;
 
 	switch (type) {
 	case 1:

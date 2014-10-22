@@ -57,7 +57,9 @@ class Gen10 : public Generation {};
 class Hardware {
 	Generation*	gen;
 public:
-	Hardware(Generation* gen=new Gen7) : gen(gen) {}
+	Hardware(Generation* genArg=new Gen7) : gen(genArg) {
+		gen = genArg;
+	}
 public:
 	virtual ~Hardware() {};
 public:
