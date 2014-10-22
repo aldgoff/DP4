@@ -25,6 +25,8 @@ using namespace std;
 
 #define COUNT(x) (sizeof(x)/sizeof(*x))
 
+#ifdef obsolete
+
 class LegacyClass1 {};
 class LegacyClass2 {};
 class LegacyClass3 {};
@@ -454,6 +456,8 @@ namespace solution {
 		cout << endl;
 	}
 }
+
+#endif
 
 #ifdef obsolete
 
