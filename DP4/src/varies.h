@@ -4,17 +4,31 @@
  *  Created on: Sep 5, 2014
  *      Author: aldgoff
  *
- * Summary:
- *   If the algorithms are varying, use the Strategy pattern.
- *   If the interfaces are varying, use the Adapter pattern.
- *   If the API's are varying, use the Facade pattern.
- *   If the steps are varying, use the Template Method pattern.
- *   If the classes are varying, use the Factory Method pattern.
- *   If the options are varying, use the Decorator pattern.
- *   If the notifiees are varying, use the Observer pattern.
- *   If the requests are varying, use the Command pattern.
+ * Summary DP1 (Intro):
+ * Single inheritance trees:
+ *   1) If the algorithms are varying, use the Strategy pattern.
+ *   2) If the interfaces are varying, use the Adapter pattern.
+ *   3) If the API's are varying, use the Facade pattern.
+ *   4) If the steps are varying, use the Template Method pattern.
+ *   5) If the classes are varying, use the Factory Method pattern.
+ *   6) If the options are varying, use the Decorator pattern.
+ *   7) If the listeners are varying, use the Observer pattern.
+ *   8) If the yyy are varying, use the ddd pattern.
+ * Multiple inheritance trees:
+ *   9) If the requests and receivers are varying, use the Command pattern.
+ *   A) If the uuu and vvv are varying, use the ddd pattern.
+ *
+ * Summary DP2 (Advanced):
+ * Single inheritance trees:
+ *   x) If the yyy are varying, use the ddd pattern.
+ * Multiple inheritance trees:
+ *   x) If the uuu and vvv are varying, use the ddd pattern.
+ *
+ * Unknown:
  *   If the nodes are varying, use the Composite pattern.
- *   If the xxx are varying, use the yyy pattern.
+ * Idioms:
+ *   x) If the yyy are varying, use the ddd pattern.
+ *   x) If the uuu and vvv are varying, use the ddd pattern.
  */
 
 #ifndef VARIES_H_
