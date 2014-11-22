@@ -128,11 +128,20 @@
  * Chain of Responsibility
  * <Abstract Factory>
  * Observer
+<<<<<<< HEAD
+=======
+ */
+/* Implementation:
+ * To keep things simple for a classroom setting, imagine that the larger system
+ * prepares the order file (input) with both the customers' orders and persistent data
+ * from the injection molding shop such as mold location, run count, etc.
+>>>>>>> refs/heads/final
  */
 
 #include "map"
 #include "vector"
 #include "string"
+#include "cassert"
 using namespace std;
 
 namespace final {
@@ -466,6 +475,61 @@ public:
 namespace facade { // Milling machine control, very complicated, only need two methods say.
 }
 
+namespace chain_of_responsibility {
+
+class GetMold {
+protected:
+	GetMold* successor;
+public:
+	GetMold(GetMold* successor=0) : successor(successor) {};
+	virtual ~GetMold() {}
+public:
+	virtual void from(const string& place) {
+		cout << "  Can't find place " << place << " to get mold from.\n";
+	}
+};
+class Inventory : public GetMold {
+public:
+	Inventory(GetMold* successor=0) : GetMold(successor) {};
+public:
+	void from(const string& place) {
+		if(place == "inventory")
+			cout << "  Pull mold from inventory.\n";
+		else if(successor != 0)
+			successor->from(place);
+		else
+			GetMold::from(place);	// Oops.
+	}
+};
+class Mill : public GetMold {
+public:
+	Mill(GetMold* successor=0) : GetMold(successor) {};
+public:
+	void from(const string& place) {
+		if(place == "mill")
+			cout << "  Create mold from mill.\n";
+		else if(successor != 0)
+			successor->from(place);
+		else
+			GetMold::from(place);	// Oops.
+	}
+};
+class Purchase : public GetMold {
+public:
+	Purchase(GetMold* successor=0) : GetMold(successor) {};
+public:
+	void from(const string& place) {
+		if(place == "purchase")
+			cout << "  Acquire mold via purchase.\n";
+		else if(successor != 0)
+			successor->from(place);
+		else
+			GetMold::from(place);	// Oops.
+	}
+};
+
+}
+
 namespace template_method { // Order processing.
 
 class PartBin {
@@ -506,7 +570,17 @@ public:
 	}
 	void installMold() {
 		cout << "installMold\n";
+		cout << "  CofR to fetch from inventory, mill, or purchase.\n";
 		cout << "  hookupConnections\n";
+
+		chain_of_responsibility::GetMold* getMold =
+			new chain_of_responsibility::Inventory(
+			new chain_of_responsibility::Mill(
+			new chain_of_responsibility::Purchase(
+			new chain_of_responsibility::GetMold(
+		))));
+		getMold->from("inventory");	// Replace with source from order.
+
 		//	addTaggingDecorators();
 	}
 	void machineSetup() {	// Setup the Stock bins.
@@ -663,19 +737,22 @@ struct Order {
 void readOrders(vector<Order>& orders) {
 	int i = 0;
 	Order order[] = { // First spec must be num, end of specs indicated by two blank strings {"",""}, or {"end",""}.
-		{++i, {{"num",""},
+		{++i, {{"orderNum",""},
 				{"mold", "duck"},
+				{"moldLoc", "inventory"},
 				{"metal", "steel"},
 				{"size", "50"},
 				{"",""} }},
-		{++i, {{"num",""},
+		{++i, {{"orderNum",""},
 				{"mold", "car"},
+				{"moldLoc", "mill"},
 				{"metal", "steel"},
 				{"size","100"},
 				{"plastic","ABS"},
 				{"",""} }},
-		{++i, {{"num",""},
+		{++i, {{"orderNum",""},
 				{"mold", "hero"},
+				{"moldLoc", "purchase"},
 				{"metal", "steel"},
 				{"size","500"},
 				{"end",""} }},
@@ -701,6 +778,14 @@ void readOrders(vector<Order>& orders) {
 	}
 }
 
+void printOrderElement(vector<Order>::iterator it, const char* str) {
+	char padding[80+1];
+	int size = 10 - strlen(str);
+	sprintf(padding, "%*c", size, ' ');
+	cout << "   " << str << padding << " = " << it->specs[str] << "\n";
+	//   mold       = hero
+}
+
 void demo() {
 	cout << "<< final solution >>\n";
 
@@ -711,12 +796,14 @@ void demo() {
 	const char* indent = "   ";
 	for(; it!=orders.end(); it++) {
 		cout << it->orderNumber << ":\n";
-		cout << indent << "orderNum = " << it->specs["num"] 	<< "\n";
-		cout << indent << "mold     = " << it->specs["mold"]    << "\n";
-		cout << indent << "metal    = " << it->specs["metal"]    << "\n";
-		cout << indent << "size     = " << it->specs["size"]    << "\n";
-		cout << indent << "plastic  = " << it->specs["plastic"] << "\n";
-		cout << indent << "seam     = " << it->specs["seam"]    << "\n";
+		printOrderElement(it, "orderNum");
+		printOrderElement(it, "mold");
+		printOrderElement(it, "moldLoc");
+		printOrderElement(it, "metal");
+		printOrderElement(it, "size");
+		printOrderElement(it, "plastic");
+		printOrderElement(it, "seam");
+
 		cout << indent << "----------\n";
 		string plastic = it->specs["plastic"].size() ? it->specs["plastic"] : "poly";
 		cout << indent << "plastic  = " << plastic << "\n";
