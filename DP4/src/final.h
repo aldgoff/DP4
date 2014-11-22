@@ -129,6 +129,14 @@
  * <Abstract Factory>
  * Observer
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+ */
+/* Implementation:
+ * To keep things simple for a classroom setting, imagine that the larger system
+ * prepares the order file (input) with both the customers' orders and persistent data
+ * from the injection molding shop such as mold location, run count, etc.
+>>>>>>> refs/heads/final
 =======
  */
 /* Implementation:
