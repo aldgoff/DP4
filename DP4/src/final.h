@@ -70,8 +70,8 @@
  * 	  2.1) Get mold
  * 	  	   1) Select metal
  * 	  	   	  a) Steel
- * 	  	   	  b) Aluminum
- * 	  	   2) Fetch or make
+ * 	  	   	  b) (Aluminum)
+ * 	  	   2) Fetch or mill (or purchase)
  * 	  	   	  1) Make: if not in inventory or near end of life
  * 	  	   	  2) Fetch: otherwise
  * 	  2.2) Install mold
@@ -128,31 +128,189 @@
  * Chain of Responsibility
  * <Abstract Factory>
  * Observer
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
  */
 /* Implementation:
  * To keep things simple for a classroom setting, imagine that the larger system
  * prepares the order file (input) with both the customers' orders and persistent data
  * from the injection molding shop such as mold location, run count, etc.
->>>>>>> refs/heads/final
-=======
- */
-/* Implementation:
- * To keep things simple for a classroom setting, imagine that the larger system
- * prepares the order file (input) with both the customers' orders and persistent data
- * from the injection molding shop such as mold location, run count, etc.
->>>>>>> refs/heads/final
  */
 
-#include "map"
-#include "vector"
-#include "string"
-#include "cassert"
+#include "varies.h"
+#include <map>
+#include <vector>
+#include <string>
+#include <cassert>
 using namespace std;
 
-namespace final {
+namespace spec {	// The possible specs for each order.
+const char* list[] = {
+	"orderNum",		// "orderNum" must be first spec.
+	"mold",
+	"moldLoc",
+	"metal",
+	"size",
+	"plastic",
+};
+}
+
+// Specs are encoded as key/value pairs to allow additions that won't break developing code.
+struct Specs {
+	const char*	key;
+	const char*	val;
+};
+class Order {
+public:
+	uint					 orderNumber;
+	map<const char*, string> specs;
+public:
+	/* 1:
+	 *    orderNum   = 001
+	 *    mold       = car
+	 *    moldLoc    = mill
+	 *    metal      = steel
+	 *    size       = 100
+	 *    plastic    = ABS
+	 *    ...
+	 */
+	void printParameters() {
+		cout << orderNumber << ":\n";
+		char padding[80+1];
+		for(size_t i=0; i<COUNT(spec::list); i++) {
+			const char* str = spec::list[i];
+			int size = 10 - strlen(str);
+			sprintf(padding, "%*c", size, ' ');
+			cout << "   " << str << padding << " = " << specs[str] << "\n";
+		}
+	}
+};
+
+// Strategy pattern; get orders from internal list for dev purposes, replace with external file for students.
+class GetOrders {
+public:
+	virtual ~GetOrders() {}
+public:
+	virtual vector<Order>	orders() {
+		vector<Order>	orders;
+		return orders;
+	}
+};
+class FromList : public GetOrders {
+	struct List {
+		uint	orderNumber;
+		Specs	spec[COUNT(spec::list)+1];	// To allow initialization by struct rather than ctor.
+	};
+public:
+	vector<Order>	orders() {
+		cout << "Get orders from internal list.\n";
+		vector<Order>	orders;
+
+		int i = 0;
+		List list[] = { // First spec must be num, end of specs indicated by two blank strings {"",""}, or {"end",""}.
+			{++i, {{"orderNum",""},
+					{"mold", "duck"},
+					{"moldLoc", "inventory"},
+					{"metal", "steel"},
+					{"size", "50"},
+					{"",""} }},
+			{++i, {{"orderNum",""},
+					{"mold", "car"},
+					{"moldLoc", "mill"},
+					{"metal", "steel"},
+					{"size","100"},
+					{"plastic","ABS"},
+					{"",""} }},
+			{++i, {{"orderNum",""},
+					{"mold", "hero"},
+					{"moldLoc", "purchase"},
+					{"metal", "steel"},
+					{"size","500"},
+					{"end",""} }},
+		};
+
+		const char* key = 0;
+		const char* val = 0;
+		char		value[10+1] = "";
+		Order		order;
+		for(size_t i=0; i<COUNT(list); i++) {	// For every order...
+			for(size_t j=0; j<COUNT(spec::list); j++) {					// Retrieve every spec...
+				key = list[i].spec[j].key;
+				if(strlen(key) == 0 || !strcmp(key, "end"))				// No more specs.
+					break;
+				if(j > 0)
+					val = list[i].spec[j].val;
+				else {													// Treat 1st spec (must be order number) specially.
+					order.orderNumber = i+1;							// Save order number.
+					sprintf(value, "%03d", order.orderNumber);			// Format it.
+					val = value;
+				}
+				order.specs[key] = val;									// Store specs in map.
+			}
+			orders.push_back(order);								// Accumulate orders.
+		}
+
+		return orders;
+	}
+};
+class FromFile : public GetOrders {
+public:
+	vector<Order>	orders() {
+		cout << "Get orders from external file.\n";
+		vector<Order>	orders;
+
+		// Postponed, let's get the design pattern elements correct first.
+
+		return orders;
+	}
+};
+
+
+namespace final_problem {
+
+void getMold(string loc) {	// Uses if/else to get mold.
+	if(loc == "inventory")
+		cout << "  Pull mold from inventory.\n";
+	else if(loc == "mill")
+		cout << "  Create mold from mill.\n";
+	else {
+		cout << "  Can't find place " << loc << " to get mold from.\n";
+	}
+}
+
+void process(Order& order) {
+	cout << "Setup\n";
+
+	cout << "Install mold\n";
+	string str = order.specs["moldLoc"];
+	getMold(str);
+	cout << "  addTaggingElements\n";
+	cout << "  hookupConnections\n";
+
+	cout << "Cycle IJM\n";
+
+	cout << "Cleanup\n" << endl;
+
+}
+
+void demo() {
+	cout << "<< final problem >>\n";
+	assert(string("orderNum") == spec::list[0]);	// "orderNum" must be first spec.
+
+	GetOrders* get = new FromList();	// FromFile();
+	vector<Order>	orders = get->orders();
+
+	vector<Order>::iterator it = orders.begin();
+	for(; it!=orders.end(); it++) {
+		Order& order = *it;
+		order.printParameters();
+		process(order);
+	}
+
+	cout << endl;
+}
+
+}
+
+namespace final_solution {
 
 namespace order { // The fundamental entity is the Order.
 
@@ -560,12 +718,12 @@ class Color : public Stock {};
 // Spec add.
 class UVInhibitor : public Stock {};
 
-class Order {
+class Order {	// Deprecated.
 protected:
 	adapter::Mold*			mold;
 	strategy::FlowStrategy*	flow;
-	vector<Stock>	stockBin;
-	PartBin			partBin;
+	vector<Stock>			stockBin;
+	PartBin					partBin;
 public:
 	Order(
 		adapter::Mold*			mold,
@@ -587,7 +745,7 @@ public:
 			new chain_of_responsibility::Purchase(
 			new chain_of_responsibility::GetMold(
 		))));
-		getMold->from("inventory");	// Replace with source from order.
+		getMold->from("sam");	// Replace with source from order.
 
 		//	addTaggingDecorators();
 	}
@@ -626,7 +784,7 @@ public:
 public:
 	void injectionRun() {
 		cout << "injectionRun\n";
-		for(int i=1; i<32; i*=2) {
+		for(int i=1; i<16; i*=2) {
 			flow->run();
 			if(partBin.full()) {
 				partBin.advanceBin();
@@ -654,6 +812,50 @@ public:
 	}
 };
 
+class ProcessOrder {
+public:
+	virtual ~ProcessOrder() {}
+protected:
+	void setup() {
+		cout << "Setup\n";
+	}
+	void installMold(string loc) {
+		cout << "Install Mold\n";
+
+		chain_of_responsibility::GetMold* getMold =
+			new chain_of_responsibility::Inventory(
+			new chain_of_responsibility::Mill(
+			new chain_of_responsibility::Purchase(
+			new chain_of_responsibility::GetMold(
+		))));
+		getMold->from(loc);
+
+		cout << "  addTaggingDecorators\n";
+		cout << "  hookupConnections\n";
+	}
+	virtual void injectionRun() {
+		cout << "Cycle IJM - template method pattern.\n";
+	}
+	void removeMold() {
+		cout << "removeMold\n";
+	}
+	void cleanMold_Adapter() {
+		cout << "cleanMold_Adapter\n";
+	}
+	void returnMoldToInventory() {
+		cout << "returnMoldToInventory\n";
+	}
+public:
+	void run(map<const char*, string> specs) {
+		setup();
+		installMold(specs["moldLoc"]);
+		injectionRun();
+		removeMold();
+		cleanMold_Adapter();
+		returnMoldToInventory();
+	}
+};
+class ABS : public ProcessOrder {};
 }
 
 namespace factory_method { // Creating or fetching the mold.
@@ -729,98 +931,29 @@ class YSplitBelt : public Conveyer {};
 
 }
 
-// Specs are encoded as key/value pairs to allow additions that won't break developing code.
-struct Specs {
-	const char*	key;
-	const char*	val;
-};
 
-struct Order {
-	enum { MaxSpecs = 10 };
-	uint	orderNumber;
-	Specs	spec[MaxSpecs];	// To allow initialization by struct rather than ctor.
-	map<const char*, string> specs;
-};
-
-void readOrders(vector<Order>& orders) {
-	int i = 0;
-	Order order[] = { // First spec must be num, end of specs indicated by two blank strings {"",""}, or {"end",""}.
-		{++i, {{"orderNum",""},
-				{"mold", "duck"},
-				{"moldLoc", "inventory"},
-				{"metal", "steel"},
-				{"size", "50"},
-				{"",""} }},
-		{++i, {{"orderNum",""},
-				{"mold", "car"},
-				{"moldLoc", "mill"},
-				{"metal", "steel"},
-				{"size","100"},
-				{"plastic","ABS"},
-				{"",""} }},
-		{++i, {{"orderNum",""},
-				{"mold", "hero"},
-				{"moldLoc", "purchase"},
-				{"metal", "steel"},
-				{"size","500"},
-				{"end",""} }},
-	};
-
-	const char* key = 0;
-	const char* val = 0;
-	char		value[10+1] = "";
-	for(size_t i=0; i<sizeof(order)/sizeof(Order); i++) {	// For every order...
-		for(int j=0; j<Order::MaxSpecs; j++) {					// Retrieve every spec...
-			key = order[i].spec[j].key;
-			if(strlen(key) == 0 || !strcmp(key, "end"))				// No more specs.
-				break;
-			if(j > 0)
-				val = order[i].spec[j].val;
-			else {													// Treat 1st spec (must be order number) specially.
-				sprintf(value, "%03d", i+1);
-				val = value;
-			}
-			order[i].specs[key] = val;								// Store specs in map.
-		}
-		orders.push_back(order[i]);								// Accumulate orders.
-	}
-}
-
-void printOrderElement(vector<Order>::iterator it, const char* str) {
-	char padding[80+1];
-	int size = 10 - strlen(str);
-	sprintf(padding, "%*c", size, ' ');
-	cout << "   " << str << padding << " = " << it->specs[str] << "\n";
-	//   mold       = hero
+void process(Order& order) {
+	template_method::ProcessOrder* process = new template_method::ABS();
+	process->run(order.specs);
 }
 
 void demo() {
 	cout << "<< final solution >>\n";
+	assert(string("orderNum") == spec::list[0]);	// "orderNum" must be first spec.
 
-	vector<Order> orders;
-	readOrders(orders);
+	GetOrders* get = new FromList();	// FromFile();
+	vector<Order> orders = get->orders();
 
 	vector<Order>::iterator it = orders.begin();
-	const char* indent = "   ";
 	for(; it!=orders.end(); it++) {
-		cout << it->orderNumber << ":\n";
-		printOrderElement(it, "orderNum");
-		printOrderElement(it, "mold");
-		printOrderElement(it, "moldLoc");
-		printOrderElement(it, "metal");
-		printOrderElement(it, "size");
-		printOrderElement(it, "plastic");
-		printOrderElement(it, "seam");
-
-		cout << indent << "----------\n";
-		string plastic = it->specs["plastic"].size() ? it->specs["plastic"] : "poly";
-		cout << indent << "plastic  = " << plastic << "\n";
-		cout << endl;
+		Order& order = *it;
+		order.printParameters();
+		process(order);
 	}
 
-	template_method::Order* order = new template_method::SingleColor(new strategy::ABS);
-	order->run();
-
+//	template_method::Order* order = new template_method::SingleColor(new strategy::ABS);
+//	order->run();
+//
 }
 
 }

@@ -163,7 +163,8 @@ void runCommand() {
 // Seam point; can be eliminated by use of design patterns.
 
 void runFinal() {
-	final::demo();
+	final_problem::demo();
+	final_solution::demo();
 }
 
 void runPrinciples() {
