@@ -199,7 +199,7 @@ void runSideBySide() {
 int main(int argc, char* args[]) {
 	cout << "Hello DP4.\n" << endl;
 
-	if(argc == 1) {
+	if(argc == 1) {	// Give user better feedback.
 		cout << "  No args.\n" << endl;
 		meta("");
 	}
