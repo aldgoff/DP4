@@ -200,7 +200,7 @@ int main(int argc, char* args[]) {
 	cout << "Hello DP4.\n" << endl;
 
 	if(argc == 1) {
-		cout << "  No args.\n" << endl;
+		cout << "  No args - use these (one per line).\n" << endl;
 		meta("");
 	}
 
