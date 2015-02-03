@@ -45,6 +45,8 @@ using namespace std;
 
 #include "SideBySide/sideBySide.h"
 
+#include "skeletons.h"
+
 #include "meta.h"
 
 /*====================================================================================================================*/
@@ -194,6 +196,19 @@ void runSideBySide() {
 	side_by_side::clientCommand();
 }
 
+void runSkeletons() {
+	skeleton::clientStrategy();
+	skeleton::clientAdapter();
+	skeleton::clientFacade();
+	skeleton::clientTemplateMethod();
+	skeleton::clientFactoryMethod();
+	skeleton::clientDecorator();
+	skeleton::clientObserver();
+	skeleton::clientChainOfResponsibility();
+	skeleton::clientBridge();
+	skeleton::clientAbstractFactory();
+}
+
 /*====================================================================================================================*/
 
 int main(int argc, char* args[]) {
@@ -240,6 +255,8 @@ int main(int argc, char* args[]) {
 		if(!strcmp(args[i], "solti"))			runSolti();
 
 		if(!strcmp(args[i], "sideBySide"))		runSideBySide();
+
+		if(!strcmp(args[i], "skeletons"))		runSkeletons();
 
 		// Seam point; can be eliminated by use of design patterns.
 	}

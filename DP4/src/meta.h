@@ -173,6 +173,8 @@ void meta(const string& arg) {
 		for(size_t i=0; i<COUNT(desPats); i++) {	// List for Run Configurations...
 			cout << desPats[i]->name << endl;
 		}
+		cout << "skeletons\n";
+
 		cout << endl;
 		for(size_t i=0; i<COUNT(desPats); i++) {	// Include list (#include "desPat.h").
 			cout << "#include \"" << desPats[i]->name << ".h\"\n";

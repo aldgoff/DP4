@@ -68,7 +68,6 @@ void clientBridge() {
 		}
 		cout << endl;
 	}
-	cout << endl;
 }
 
 }
