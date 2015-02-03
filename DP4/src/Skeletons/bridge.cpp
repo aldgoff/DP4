@@ -60,6 +60,7 @@ public:
 };
 
 void clientBridge() {
+	cout << "Bridge\n";
 	BridgeImplementation* imps[] = { new Implementation1, new Implementation2, new Implementation3 };
 	for(size_t i=0; i<COUNT(imps); i++) {
 		BridgeAbstraction* abs[] = { new Abstraction1(imps[i]), new Abstraction2(imps[i]), new Abstraction3(imps[i]) };

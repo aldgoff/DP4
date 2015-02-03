@@ -56,6 +56,7 @@ public:
 };
 
 void clientChainOfResponsibility() {
+	cout << "Chain of Responsibility\n";
 	ChainOfResp*	first  = new Handler1;
 	ChainOfResp*	second = new Handler2;
 	ChainOfResp*	third  = new Handler3;

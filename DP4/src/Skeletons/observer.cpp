@@ -51,6 +51,7 @@ public:
 };
 
 void clientObserver() {
+	cout << "Observer\n";
 	Subject* subject = new Subject;
 	Observer* dp[] = { new Observer1, new Observer2, new Observer3};
 	for(size_t i=0; i<COUNT(dp); i++) {

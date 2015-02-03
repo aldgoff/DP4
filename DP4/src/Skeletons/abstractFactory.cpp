@@ -99,6 +99,7 @@ public:
 };
 
 void clientAbstractFactory() {
+	cout << "Abstract Factory\n";
 	AbstractFactory* afs[] = { new Factory_Able, new Factory_Bill, new Factory_Cain};
 	for(size_t i=0; i<COUNT(afs); i++) {
 		AbstractFactory* af = afs[i];

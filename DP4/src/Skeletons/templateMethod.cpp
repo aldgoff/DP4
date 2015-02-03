@@ -50,6 +50,7 @@ public:
 };
 
 void clientTemplateMethod() {
+	cout << "Template Method\n";
 	TemplateMethod* steps[] = { new Step3_thisWay, new Step3_thatWay, new Step3_yourWay };
 	for(size_t i=0; i<COUNT(steps); i++) {
 		steps[i]->run();
