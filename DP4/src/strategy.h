@@ -8,7 +8,10 @@
  *  Created on: Mar 29, 2014
  *      Author: aldgoff
  *
- *  URL: http://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns#Strategy
+ *  URLs:
+ *  	http://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns#Strategy
+ *  	http://www.dofactory.com/net/strategy-design-pattern
+ *  	http://www.netobjectives.com/resources/books/design-patterns-explained/review-questions#Chapter9
  */
 
 #ifndef STRATEGY_H_
