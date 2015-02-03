@@ -164,7 +164,7 @@ void draw_an_arc(double x1, double y1, double x2, double y2) {
 
 namespace bridge {
 
-class CoordSystem {
+class CoordSystem {	// Implementation dimension 2.
 public:
 	virtual ~CoordSystem() {}
 	virtual double x()=0;
@@ -188,7 +188,7 @@ public:
 };
 // Seam point, add another coordinate system.
 
-class Platform {
+class Platform {	// Implementation dimension 1.
 public:
 	virtual ~Platform() {}
 	virtual void line(double x1, double y1, double x2, double y2)=0;
@@ -223,7 +223,7 @@ public:
 };
 // Seam point, add another platform.
 
-class Shape {
+class Shape {		// Abstraction.
 protected:
 	CoordSystem* loc;
 	Platform*	 platform;
