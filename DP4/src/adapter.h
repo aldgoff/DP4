@@ -64,10 +64,27 @@ public:
 
 }
 
+namespace adapter_legacy {
+
+void demo() {
+	vector<ShapeInterfaceDraw*> shapes;
+	shapes.push_back(new Point);
+	shapes.push_back(new Line);
+	shapes.push_back(new Rect);
+
+	for(size_t i=0; i<shapes.size(); i++) {	// Polymorphic user code.
+		shapes[i]->draw();
+	}
+
+	cout << endl;
+}
+
+}
+
 namespace adapter_problem {
 
 void demo() {
-	cout << "<< Adapter problem >>\n";
+//	cout << "<< Adapter problem >>\n";
 
 	vector<ShapeInterfaceDraw*> shapes;
 	shapes.push_back(new Point);
@@ -111,7 +128,7 @@ public:
 };
 
 void demo() {
-	cout << "<< Adapter solution >>\n";
+//	cout << "<< Adapter solution >>\n";
 
 	vector<ShapeInterfaceDraw*> shapes;
 	shapes.push_back(new Point);
