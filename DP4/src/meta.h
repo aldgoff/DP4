@@ -24,9 +24,12 @@ public:
 	}
 	virtual ~DesignPattern() {}
 public:
-	void run(int i) {	// Example of the Template Method design pattern.
+	virtual void run(int i) {	// Example of the Template Method design pattern.
 		cout << i+1 << ") ";	problem();
 		cout << i+1 << ") ";	solution();
+	}
+	virtual void legacy() {
+		cout << "<< " << name << " legacy >>\n";
 	}
 	virtual void problem() {
 		cout << "<< " << name << " problem >>\n";
@@ -52,14 +55,23 @@ class Adapter : public DesignPattern {
 public:
 	Adapter() : DesignPattern("Adapter") {}
 public:
+	void run(int i) {	// Example of the Template Method design pattern.
+		cout << i+1 << ") ";	legacy();
+		cout << i+1 << ") ";	problem();
+		cout << i+1 << ") ";	solution();
+	}
+	void legacy() {
+		DesignPattern::legacy();
+		adapter_legacy::demo();
+	}
 	void problem() {
 		DesignPattern::problem();
-		cout << "    details...\n";
+//		cout << "    details...\n";
 		adapter_problem::demo();
 	}
 	void solution() {
 		DesignPattern::solution();
-		cout << "    details...\n";
+//		cout << "    details...\n";
 		adapter_solution::demo();
 	}
 };
@@ -185,7 +197,7 @@ void meta(const string& arg) {
 	for(size_t i=0; i<COUNT(desPats); i++) {
 		if(arg == desPats[i]->name) {
 			desPats[i]->run(i);
-			cout << "\n";
+//			cout << "\n";
 			break;
 		}
 	}
