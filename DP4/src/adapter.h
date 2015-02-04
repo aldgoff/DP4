@@ -6,7 +6,11 @@
  *  Created on: Mar 8, 2014
  *      Author: aldgoff
  *
- *  URL: http://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns#Adapter
+ *  URLs:
+ *  	http://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns#Adapter
+ *  	http://www.dofactory.com/net/adapter-design-pattern
+ *  	http://www.netobjectives.com/resources/books/design-patterns-explained/review-questions#Chapter7
+ *  	http://sourcemaking.com/design_patterns/adapter
  */
 
 #ifndef ADAPTER_H_
@@ -17,9 +21,12 @@
  * class hierarchy containing more complex shapes.
  * The problem is that the two class hierarchies use different API's.
  * The original one uses the function "draw()" the other the function "display()".
- * This breaks the polymorphism that kept the user code simple.
- * User code will become more complicated, likely will become littered with
- * if statements of the sort "what type are you?".
+ * This breaks the polymorphism that kept the client code simple.
+ * This cause 4 maintenance headaches:
+ *   1) Client code will become more complicated.
+ *   2) Changes will be required in existing client code.
+ *   3) Likely become littered with if statements of the sort "what type are you"?
+ *   4) Need for error detection.
  * Solve this problem by writing new classes that 'adapt' the new interface
  * to the old.
  */
@@ -42,7 +49,7 @@ public:
 	void draw() { cout << "Draw rectangle.\n"; }
 };
 
-namespace convoluted {
+namespace commercial {
 
 class ShapeInterfaceDisplay {				// Another interface class (commercial?).
 public:
@@ -72,7 +79,7 @@ void demo() {
 	shapes.push_back(new Line);
 	shapes.push_back(new Rect);
 
-	for(size_t i=0; i<shapes.size(); i++) {	// Polymorphic user code.
+	for(size_t i=0; i<shapes.size(); i++) {	// Polymorphic client code.
 		shapes[i]->draw();
 	}
 
@@ -83,25 +90,32 @@ void demo() {
 
 namespace adapter_problem {
 
+struct Shapes {
+	ShapeInterfaceDraw*	draw;
+	commercial::ShapeInterfaceDisplay*	display;
+	Shapes(
+		ShapeInterfaceDraw* draw=0,
+		commercial::ShapeInterfaceDisplay* display=0)
+		: draw(draw), display(display) {}
+};
+
 void demo() {
-//	cout << "<< Adapter problem >>\n";
+	vector<Shapes*>	shapes;					// Changes to existing code.
+	shapes.push_back(new Shapes(new Point));
+	shapes.push_back(new Shapes(new Line));
+	shapes.push_back(new Shapes(new Rect));
+	shapes.push_back(new Shapes(0, new commercial::Polygon));
+	shapes.push_back(new Shapes(0, new commercial::Torus));
+	shapes.push_back(new Shapes(0, new commercial::Bezel));
 
-	vector<ShapeInterfaceDraw*> shapes;
-	shapes.push_back(new Point);
-	shapes.push_back(new Line);
-	shapes.push_back(new Rect);
-
-	vector<convoluted::ShapeInterfaceDisplay*> shapesC;
-	shapesC.push_back(new convoluted::Polygon);
-	shapesC.push_back(new convoluted::Torus);
-	shapesC.push_back(new convoluted::Bezel);
-
-	for(size_t i=0; i<shapes.size(); i++) {		// User code more complicated because API's differ.
-		shapes[i]->draw();
-	}
-
-	for(size_t i=0; i<shapesC.size(); i++) {	// Likely result is a lot of if statements "what type are you?"
-		shapesC[i]->display();
+	for(size_t i=0; i<shapes.size(); i++) {	// Client code more complicated
+		if(shapes[i]->draw)					// because API's differ
+			shapes[i]->draw->draw();		// requiring if-else statements,
+		else if(shapes[i]->display)			// changes to existing client code,
+			shapes[i]->display->display();
+		else {
+			throw "unknown shape object.";	// and worse; error detection.
+		}
 	}
 
 	cout << endl;
@@ -111,35 +125,33 @@ void demo() {
 
 namespace adapter_solution {
 
-class Polygon : public ShapeInterfaceDraw {
-	convoluted::Polygon poly;
+class Polygon : public ShapeInterfaceDraw {	// New code.
+	commercial::Polygon poly;
 public:
 	void draw() { poly.display(); }
 };
 class Torus : public ShapeInterfaceDraw {
-	convoluted::Torus torus;
+	commercial::Torus torus;
 public:
 	void draw() { torus.display(); }
 };
 class Bezel : public ShapeInterfaceDraw {
-	convoluted::Bezel bezel;
+	commercial::Bezel bezel;
 public:
 	void draw() { bezel.display(); }
 };
 
 void demo() {
-//	cout << "<< Adapter solution >>\n";
-
-	vector<ShapeInterfaceDraw*> shapes;
+	vector<ShapeInterfaceDraw*> shapes;	// Old client code stays the same.
 	shapes.push_back(new Point);
 	shapes.push_back(new Line);
 	shapes.push_back(new Rect);
-	shapes.push_back(new Polygon);
+	shapes.push_back(new Polygon);		// Just add new code.
 	shapes.push_back(new Torus);
 	shapes.push_back(new Bezel);
 
-	for(size_t i=0; i<shapes.size(); i++) {	// User code stays simple because API's have been converged.
-		shapes[i]->draw();
+	for(size_t i=0; i<shapes.size(); i++) {	// Client code stays simple because
+		shapes[i]->draw();					// API's have been converged.
 	}
 
 	cout << endl;

@@ -66,12 +66,10 @@ public:
 	}
 	void problem() {
 		DesignPattern::problem();
-//		cout << "    details...\n";
 		adapter_problem::demo();
 	}
 	void solution() {
 		DesignPattern::solution();
-//		cout << "    details...\n";
 		adapter_solution::demo();
 	}
 };
