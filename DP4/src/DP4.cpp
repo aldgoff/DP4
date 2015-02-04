@@ -45,7 +45,7 @@ using namespace std;
 
 #include "SideBySide/sideBySide.h"
 
-#include "skeletons.h"
+#include "Skeletons/skeletons.h"
 
 #include "meta.h"
 

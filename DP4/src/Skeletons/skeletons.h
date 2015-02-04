@@ -8,7 +8,6 @@
 #ifndef DP4_SRC_SKELETONS_H_
 #define DP4_SRC_SKELETONS_H_
 
-
 namespace skeleton {
 
 void clientStrategy();
