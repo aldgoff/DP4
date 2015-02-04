@@ -224,45 +224,45 @@ int main(int argc, char* args[]) {
 	for(int i=1; i<argc; i++)
 		meta(string(args[i]));
 
-	for(int i=0; i<argc; i++) {
-		if(!strcmp(args[i], "facade"))		runFacade();
-		if(!strcmp(args[i], "adapter"))		runAdapter();
-		if(!strcmp(args[i], "strategy"))	runStrategy();
-		if(!strcmp(args[i], "bridge"))		runBridge();
-
-		if(!strcmp(args[i], "abstractFactory"))	runAbstractFactory();
-		if(!strcmp(args[i], "decorator"))		runDecorator();
-		if(!strcmp(args[i], "observer"))		runObserver();
-		if(!strcmp(args[i], "templateMethod"))	runTemplateMethod();
-
-		if(!strcmp(args[i], "singleton"))		runSingleton();
-		if(!strcmp(args[i], "factoryMethod"))	runFactoryMethod();
-
-		if(!strcmp(args[i], "midterm"))			runMidterm();
-
-		if(!strcmp(args[i], "composite"))				runComposite();
-		if(!strcmp(args[i], "chainOfResponsibility"))	runChainOfResponsibility();
-
-		if(!strcmp(args[i], "iterator"))		runIterator();
-		if(!strcmp(args[i], "visitor"))			runVisitor();
-
-		if(!strcmp(args[i], "command"))			runCommand();
-
-		if(!strcmp(args[i], "final"))			runFinal();
-		if(!strcmp(args[i], "principles"))		principles::demo();
-		if(!strcmp(args[i], "varies"))			runVaries();
-
-		if(!strcmp(args[i], "solti"))			runSolti();
-
-		if(!strcmp(args[i], "sideBySide"))		runSideBySide();
-
-		if(!strcmp(args[i], "skeletons"))		runSkeletons();
-
-		// Seam point; can be eliminated by use of design patterns.
-	}
-
-	for(int i=1; i<argc; i++)
-		meta(string(args[i]));
+//	for(int i=0; i<argc; i++) {
+//		if(!strcmp(args[i], "facade"))		runFacade();
+//		if(!strcmp(args[i], "adapter"))		runAdapter();
+//		if(!strcmp(args[i], "strategy"))	runStrategy();
+//		if(!strcmp(args[i], "bridge"))		runBridge();
+//
+//		if(!strcmp(args[i], "abstractFactory"))	runAbstractFactory();
+//		if(!strcmp(args[i], "decorator"))		runDecorator();
+//		if(!strcmp(args[i], "observer"))		runObserver();
+//		if(!strcmp(args[i], "templateMethod"))	runTemplateMethod();
+//
+//		if(!strcmp(args[i], "singleton"))		runSingleton();
+//		if(!strcmp(args[i], "factoryMethod"))	runFactoryMethod();
+//
+//		if(!strcmp(args[i], "midterm"))			runMidterm();
+//
+//		if(!strcmp(args[i], "composite"))				runComposite();
+//		if(!strcmp(args[i], "chainOfResponsibility"))	runChainOfResponsibility();
+//
+//		if(!strcmp(args[i], "iterator"))		runIterator();
+//		if(!strcmp(args[i], "visitor"))			runVisitor();
+//
+//		if(!strcmp(args[i], "command"))			runCommand();
+//
+//		if(!strcmp(args[i], "final"))			runFinal();
+//		if(!strcmp(args[i], "principles"))		principles::demo();
+//		if(!strcmp(args[i], "varies"))			runVaries();
+//
+//		if(!strcmp(args[i], "solti"))			runSolti();
+//
+//		if(!strcmp(args[i], "sideBySide"))		runSideBySide();
+//
+//		if(!strcmp(args[i], "skeletons"))		runSkeletons();
+//
+//		// Seam point; can be eliminated by use of design patterns.
+//	}
+//
+//	for(int i=1; i<argc; i++)
+//		meta(string(args[i]));
 
 	cout << "Aloha DP4.\n";
 	return 0;
