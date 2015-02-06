@@ -25,6 +25,7 @@ public:
 	virtual ~DesignPattern() {}
 public:
 	virtual void run(int i) {	// Example of the Template Method design pattern.
+		cout << i+1 << ") ";	legacy();
 		cout << i+1 << ") ";	problem();
 		cout << i+1 << ") ";	solution();
 	}
@@ -42,13 +43,17 @@ class Strategy : public DesignPattern {
 public:
 	Strategy() : DesignPattern("Strategy") {}
 public:
+	void legacy() {
+		DesignPattern::legacy();
+		strategy_legacy::demo();
+	}
 	void problem() {
 		DesignPattern::problem();
-		cout << "    details...\n";
+		strategy_problem::demo();
 	}
 	void solution() {
 		DesignPattern::solution();
-		cout << "    details...\n";
+		strategy_solution::demo();
 	}
 };
 class Adapter : public DesignPattern {

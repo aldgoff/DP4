@@ -12,10 +12,381 @@
  *  	http://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns#Strategy
  *  	http://www.dofactory.com/net/strategy-design-pattern
  *  	http://www.netobjectives.com/resources/books/design-patterns-explained/review-questions#Chapter9
+ *  	http://sourcemaking.com/design_patterns/strategy
  */
 
 #ifndef STRATEGY_H_
 #define STRATEGY_H_
+
+/* Consider a sales order processing system.
+ * It must compute tax amounts that depend on country.
+ * The legacy code below is typical of how such a system may initially evolve.
+ * However, it won't scale well.
+ * The multiple switch statements are an Anti-Pattern.
+ * Consider what is required to maintain these switch statements under new specs.
+ * New specs:
+ *   Add new tax rules for Canada
+ *     Different rate for election years 6.9%
+ *   Add new currency symbol for Quebec orders '#'
+ *   Add Germany
+ *     new tax rules 10.5%
+ *     new currency symbol 'e'
+ *   Add date format
+ *     USA & Canada - MMDDYY
+ *     Germany - DDMMCCYY
+ * This is shown in the code section under the strategy_problem namespace.
+ * Refactor the legacy code using the strategy pattern.
+ *   1) Implement the new specs
+ *   2) Avoid code duplication
+ *   3) Avoid need for exceptions
+ *   4) Avoid having to change existing code as much as possible
+ *   	a) New tax specs
+ *   	b) New currency symbol
+ *   	c) New country
+ *   5) Adding the date format spec will require changing existing code even with DP
+ *   6) Make sure you get the same results as from the problem namespace code
+ */
+
+/* PS  I'm not entirely happy with this example,
+ * it is simultaneously too complicated and too simplistic,
+ * but it follows the development of chapter 9 in DPE.
+ * As formulated, the strategy pattern is needed only for the tax calculation.
+ * ... it's an academic exercise... :(
+ */
+
+namespace strategy_legacy {
+
+enum CountryCode {
+	USA,
+	Canada,
+};
+
+const char* CountryName[] = {
+	"USA",
+	"Canada",
+};
+
+// In tax file...
+double taxAmount(int num, double price, CountryCode cc=USA) {
+	double tax = 0;
+
+	switch(cc) {
+	case USA:
+		tax = 0.075*num*price;
+		break;
+	case Canada:
+		tax = 0.065*num*price;
+		break;
+	default:
+	throw "OOPS";
+	break;
+	}
+
+	return tax;
+}
+
+// In currency file...
+char currencySymbol(CountryCode cc=USA) {
+	char symbol = ' ';
+
+	switch(cc) {
+	case USA:
+		symbol = '$';
+		break;
+	case Canada:
+		symbol = '$';
+		break;
+	default:
+	throw "OOPS";
+	break;
+	}
+
+	return symbol;
+}
+
+class SalesOrder {
+public:
+	int	 number;
+	double	price;
+	CountryCode countryCode;
+public:
+	void process() {
+		char str[20];
+		char   sym = currencySymbol(countryCode);
+		double tax = taxAmount(number, price, countryCode);
+		sprintf(str, "%c%.2f for %s order.", sym, tax, CountryName[countryCode]);
+		cout << str << "\n";
+	}
+};
+
+void demo() {
+	SalesOrder orders[] = {
+		{5, 10.00, USA},
+		{1, 20.00, Canada},
+	};
+
+	for(size_t i=0; i<sizeof(orders)/sizeof(SalesOrder); i++) {
+		cout << "  " << i+1 << ") ";
+		orders[i].process();
+	}
+
+	cout << endl;
+}
+
+}
+
+namespace strategy_problem {
+
+enum CountryCode {
+	USA,
+	Canada,
+	Germany,
+	// Country seam point.
+};
+
+const char* CountryName[] = {
+	"USA",
+	"Canada",
+	"Germany",
+	// Country seam point.
+};
+
+// Run time requirements.
+bool electionYear() { return true; }
+bool Quebec() { return true; }
+
+// In tax file...
+double taxAmount(int num, double price, CountryCode cc=USA) {
+	double tax = 0;
+
+	switch(cc) {
+	case USA:
+		tax = 0.075*num*price;
+		break;
+	case Canada:
+		if(electionYear())
+			tax = 0.069*num*price;
+		else
+			tax = 0.065*num*price;
+		break;
+	case Germany:
+		tax = 0.105*num*price;
+		break;
+	// Country seam point.
+	default:
+	throw "OOPS";
+	break;
+	}
+
+	return tax;
+}
+
+// In currency file...
+char currencySymbol(CountryCode cc=USA) {
+	char symbol = ' ';
+
+	switch(cc) {
+	case USA:
+		symbol = '$';
+		break;
+	case Canada:
+		if(Quebec())
+			symbol = '#';
+		else
+			symbol = '$';
+		break;
+	case Germany:
+		symbol = 'e';
+		break;
+	// Country seam point.
+	default:
+	throw "OOPS";
+	break;
+	}
+
+	return symbol;
+}
+
+// In new date format file...
+string dateFormat(CountryCode cc=USA) {
+	string fmt = "";
+
+	switch(cc) {
+	case USA:
+	case Canada:
+		fmt = "MMDDYY";
+		break;
+	case Germany:
+		fmt = "DDMMCCYY";
+		break;
+	// Country seam point (this makes 5).
+	default:
+	throw "OOPS";
+	break;
+	}
+
+	return fmt;
+}
+
+class SalesOrder {
+public:
+	int	 number;
+	double	price;
+	CountryCode countryCode;
+public:
+	void process() {
+		char str[20];
+		char   sym = currencySymbol(countryCode);
+		double tax = taxAmount(number, price, countryCode);
+		string fmt = dateFormat(countryCode);
+		sprintf(str, "%c%.2f for %s order on %s.",
+			sym, tax, CountryName[countryCode], fmt.c_str());
+		cout << str << "\n";
+	}
+};
+
+void demo() {
+	SalesOrder orders[] = {
+		{5, 10.00, USA},
+		{1, 20.00, Canada},
+		{9, 99.99, Germany},
+	};
+
+	for(size_t i=0; i<sizeof(orders)/sizeof(SalesOrder); i++) {
+		cout << "  " << i+1 << ") ";
+		orders[i].process();
+	}
+
+	cout << endl;
+}
+
+}
+
+namespace strategy_solution {
+
+// Run time requirements.
+bool electionYear() { return true; }
+bool Quebec() { return true; }
+
+class Tax {
+protected:
+	double	rate;
+public:
+	Tax(double rate) : rate(rate) {}
+	virtual ~Tax() {}
+public:
+	virtual double amount(int num, double price) {
+		return rate*num*price;
+	}
+};
+class FixedRate : public Tax {
+public:
+	FixedRate(double rate=0.000) : Tax(rate) {}
+};
+class ContingentRate : public Tax {
+public:
+	ContingentRate(double rate=0.000) : Tax(rate) {}
+	double amount(int num, double price) {
+		double cRate = electionYear() ? 0.069 : rate;
+		return cRate*num*price;
+	}
+};
+
+class Currency {
+public: virtual ~Currency() {}
+public:
+	virtual char currencySymbol() { return ' '; }
+};
+class Dollar : public Currency {
+public:
+	char currencySymbol() { return '$'; }
+};
+class Pound : public Currency {
+public:
+	char currencySymbol() { return '#'; }
+};
+class Euro : public Currency {
+public:
+	char currencySymbol() { return 'e'; }
+};
+
+class DateFormat {
+public: virtual ~DateFormat() {}
+public:
+	virtual string str() { return ""; }
+};
+class MMDDYY : public DateFormat {
+public:
+	string str() { return "MMDDYY"; }
+};
+class DDMMCCYY : public DateFormat {
+public:
+	string str() { return "DDMMCCYY"; }
+};
+
+class Country {
+public:
+	string		name;
+	Tax*		tax;		// Realistically requires the strategy pattern.
+	Currency*	currency;	// Probably can make do with a built in type.
+	DateFormat*	fmt;		// Ditto, but implemented as strategy as academic exercise.
+public:
+	Country(string name, Tax* tax=new Tax(0.00),
+			Currency* currency=new Currency, DateFormat* fmt=new DateFormat)
+	: name(name), tax(tax), currency(currency), fmt(fmt) {}
+};
+class USA : public Country {
+public:
+	USA() : Country("USA", new FixedRate(0.075), new Dollar, new MMDDYY) {}
+};
+class Canada : public Country {
+public:
+	Canada() : Country("Canada", new ContingentRate, new Pound, new MMDDYY) {}
+};
+class Germany : public Country {
+public:
+	Germany() : Country("Germany", new FixedRate(0.105), new Euro, new DDMMCCYY) {}
+};
+// Country seam point (only 1).
+
+class SalesOrder {
+public:
+	Country*	country;
+	int	 number;
+	double	price;
+public:
+	SalesOrder(int number, double price, Country* country)
+	: country(country), number(number), price(price) {}
+public:
+	void process() {
+		char str[20];
+		char   sym = country->currency->currencySymbol();
+		double tax = country->tax->amount(number, price);
+		string name = country->name;
+		string fmt = country->fmt->str();
+		sprintf(str, "%c%.2f for %s order on %s.",
+			sym, tax, name.c_str(), fmt.c_str());
+		cout << str << "\n";
+	}
+};
+
+void demo() {
+	SalesOrder* orders[] = {
+		new SalesOrder(5, 10.00, new USA),
+		new SalesOrder(1, 20.00, new Canada),
+		new SalesOrder(9, 99.99, new Germany),
+	};
+
+	for(size_t i=0; i<sizeof(orders)/sizeof(SalesOrder*); i++) {
+		cout << "  " << i+1 << ") ";
+		orders[i]->process();
+	}
+
+	cout << endl;
+}
+
+}
+
 
 namespace wikibooks_cpp_pcdp {
 
