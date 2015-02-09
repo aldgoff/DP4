@@ -12,21 +12,21 @@ using namespace std;
 
 namespace skeleton {
 
-class LegacyClass1 {
+class LegacyClassA {
 public:
 	void func1(...) { cout << "Func 1.\n"; }
 	void func2(...) { cout << "Func 2.\n"; }
 	// ...
 	void funcX(...) { cout << "Func X.\n"; }
 };
-class LegacyClass2 {
+class LegacyClassB {
 public:
 	void routine1(...) { cout << "Routine 1.\n"; }
 	void routine2(...) { cout << "Routine 2.\n"; }
 	// ...
 	void routineY(...) { cout << "Routine Y.\n"; }
 };
-class LegacyClass3 {
+class LegacyClassC {
 public:
 	void sub1(...) { cout << "Sub 1.\n"; }
 	void sub2(...) { cout << "Sub 2.\n"; }
@@ -44,28 +44,28 @@ public:
 };
 
 class Interface1 : public Adapter {
-	LegacyClass1	legacyClass1;
+	LegacyClassA	legacyClassA;
 public:
-	void method1() { cout << "  Interface1::method1() - "; legacyClass1.func1(); }
-	void method2() { cout << "  Interface1::method2() - "; legacyClass1.func2(); }
+	void method1() { cout << "  Interface1::method1() - "; legacyClassA.func1(); }
+	void method2() { cout << "  Interface1::method2() - "; legacyClassA.func2(); }
 	// ...
-	void methodN() { cout << "  Interface1::methodN() - "; legacyClass1.funcX(); }
+	void methodN() { cout << "  Interface1::methodN() - "; legacyClassA.funcX(); }
 };
 class Interface2 : public Adapter {
-	LegacyClass2	legacyClass2;
+	LegacyClassB	legacyClassB;
 public:
-	void method1() { cout << "  Interface2::method1() - "; legacyClass2.routine1(); }
-	void method2() { cout << "  Interface2::method2() - "; legacyClass2.routine2(); }
+	void method1() { cout << "  Interface2::method1() - "; legacyClassB.routine1(); }
+	void method2() { cout << "  Interface2::method2() - "; legacyClassB.routine2(); }
 	// ...
-	void methodN() { cout << "  Interface2::methodN() - "; legacyClass2.routineY(); }
+	void methodN() { cout << "  Interface2::methodN() - "; legacyClassB.routineY(); }
 };
 class Interface3 : public Adapter {
-	LegacyClass3	legacyClass3;
+	LegacyClassC	legacyClassC;
 public:
-	void method1() { cout << "  Interface3::method1() - "; legacyClass3.sub1(); }
-	void method2() { cout << "  Interface3::method2() - "; legacyClass3.sub2(); }
+	void method1() { cout << "  Interface3::method1() - "; legacyClassC.sub1(); }
+	void method2() { cout << "  Interface3::method2() - "; legacyClassC.sub2(); }
 	// ...
-	void methodN() { cout << "  Interface3::methodN() - "; legacyClass3.subZ(); }
+	void methodN() { cout << "  Interface3::methodN() - "; legacyClassC.subZ(); }
 };
 
 void clientAdapter() {

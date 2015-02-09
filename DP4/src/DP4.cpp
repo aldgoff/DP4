@@ -48,6 +48,7 @@ using namespace std;
 #include "Skeletons/skeletons.h"
 
 #include "meta.h"
+#include "whatVaries.h"
 
 /*====================================================================================================================*/
 
@@ -209,6 +210,24 @@ void runSkeletons() {
 	skeleton::clientAbstractFactory();
 }
 
+void runWhatVaries() {
+//	abstractByComposition::demo();
+	antiPattern_ifelse::demo();
+	abstract_over_doubles::demo();
+	vary_tax_rate_by_state::demo();
+	cout << endl;
+
+	antiPattern_switch::demo();
+	abstract_over_TaxStrategy::demo();
+	vary_tax_strategy_by_country::demo();
+}
+
+void runVirtualDtorBug() {
+//	virtual_dtor_bug::demo();
+//	const_ref_ptr_bug::demo();
+//	ref_study::demo();
+}
+
 /*====================================================================================================================*/
 
 int main(int argc, char* args[]) {
@@ -224,7 +243,7 @@ int main(int argc, char* args[]) {
 	for(int i=1; i<argc; i++)
 		meta(string(args[i]));
 
-//	for(int i=0; i<argc; i++) {
+	for(int i=0; i<argc; i++) {
 //		if(!strcmp(args[i], "facade"))		runFacade();
 //		if(!strcmp(args[i], "adapter"))		runAdapter();
 //		if(!strcmp(args[i], "strategy"))	runStrategy();
@@ -256,10 +275,12 @@ int main(int argc, char* args[]) {
 //
 //		if(!strcmp(args[i], "sideBySide"))		runSideBySide();
 //
-//		if(!strcmp(args[i], "skeletons"))		runSkeletons();
+		if(!strcmp(args[i], "skeletons"))		runSkeletons();
+		if(!strcmp(args[i], "whatVaries"))		runWhatVaries();
+		if(!strcmp(args[i], "virtualDtorBug"))	runVirtualDtorBug();
 //
 //		// Seam point; can be eliminated by use of design patterns.
-//	}
+	}
 //
 //	for(int i=1; i<argc; i++)
 //		meta(string(args[i]));
