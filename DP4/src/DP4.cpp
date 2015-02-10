@@ -212,6 +212,9 @@ void runSkeletons() {
 
 void runWhatVaries() {
 //	abstractByComposition::demo();
+	{
+	using namespace strategy;
+
 	antiPattern_ifelse::demo();
 	abstract_over_doubles::demo();
 	vary_tax_rate_by_state::demo();
@@ -220,6 +223,7 @@ void runWhatVaries() {
 	antiPattern_switch::demo();
 	abstract_over_TaxStrategy::demo();
 	vary_tax_strategy_by_country::demo();
+	}
 }
 
 void runVirtualDtorBug() {

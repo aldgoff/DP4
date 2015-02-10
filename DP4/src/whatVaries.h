@@ -47,7 +47,58 @@ void demo() {
 
 }
 
-namespace antiPattern_ifelse {	// If the tax rates are varying, model as doubles.
+namespace grid {
+
+/*  0
+ *  1
+ *  2
+ *  3
+ *  4
+ *  5
+ *  6
+ *  7
+ *  8
+ *  9
+ * 10
+ * 11
+ * 12
+ * 13
+ * 14
+ * 15
+ * 16
+ * 17
+ * 18
+ * 19
+ * 20
+ * 21
+ * 22
+ * 23
+ * 24
+ * 25
+ * 26
+ * 27
+ * 28
+ * 29
+ * 30
+ * 31
+ * 32
+ * 33
+ * 34
+ * 35
+ * 36
+ * 37
+ * 38
+ * 39
+ * 40
+ * 41
+ * 42
+ * 43
+ */
+}
+
+namespace strategy {
+
+namespace antiPattern_ifelse {	// If tax rates are varying, model as doubles.
 
 struct Data {
 	double		amount;
@@ -60,8 +111,8 @@ Data data[] = {
 	{ 40.00, "HI" },
 };
 
-double tax(double amount, const char* state) {	// Maintenance headache.
-	double rate = 0.00;							// Client code not closed to modification.
+double tax(double amount, const char* state) {	// Maintenance headache. Client
+	double rate = 0.00;						// code not closed to modification.
 
 	if(		!strcmp(state, "WA"))
 		rate = 0.066;
@@ -71,7 +122,7 @@ double tax(double amount, const char* state) {	// Maintenance headache.
 		rate = 0.088;
 	else if(!strcmp(state, "HI"))
 		rate = 0.099;
-	// Seam point - insert another state and rate, (violates open/closed principle).
+	// Seam point: insert another state & rate (violates open/closed principle).
 	else {
 		throw "OOPS";	// Exception handling, complicates logic of client code.
 	}
@@ -81,7 +132,7 @@ double tax(double amount, const char* state) {	// Maintenance headache.
 
 void demo() {
 	cout << "antiPattern_ifelse::demo().\n";
-	for(size_t i=0; i<COUNT(data); i++) {
+	for(size_t i=0; i<sizeof(data)/sizeof(Data); i++) {
 		sprintf(str, "$%.2f", tax(data[i].amount, data[i].state));
 		cout << "  " << i+1 << ") tax = " << str << ".\n";
 	}
@@ -90,7 +141,22 @@ void demo() {
 
 }
 
-namespace abstract_over_doubles {	// Variables - allow variation over a built-in type.
+namespace abstract_over_doubles {	// Variables: variation over built-in type.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 struct Data {
 	double amount;
@@ -103,13 +169,13 @@ Data data[] = {		// But how to get correct tax rate into the data?
 	{ 40.00, 0.099 },
 };
 
-double tax(double amount, double rate) {	// Client code closed to modification.
+double tax(double amount, double rate) {  // Client code closed to modification.
 	return rate*amount;
 }
 
 void demo() {
 	cout << "abstract_over_doubles::demo().\n";
-	for(size_t i=0; i<COUNT(data); i++) {
+	for(size_t i=0; i<sizeof(data)/sizeof(Data); i++) {
 		sprintf(str, "$%.2f", tax(data[i].amount, data[i].rate));
 		cout << "  " << i+1 << ") tax = " << str << ".\n";
 	}
@@ -118,7 +184,7 @@ void demo() {
 
 }
 
-namespace vary_tax_rate_by_state {	// Map domain (state) to range (tax rate).
+namespace vary_tax_rate_by_state {	// Map state to tax rate.
 
 enum State {
 	WA,
@@ -146,13 +212,13 @@ Data data[] = {		// Map states to tax rates with enums and arrays.
 	{ 40.00, HI },
 };
 
-double tax(double amount, double rate) {	// Client code closed to modification.
+double tax(double amount, double rate) {  // Client code closed to modification.
 	return rate*amount;
 }
 
 void demo() {
 	cout << "vary_tax_rate_by_state::demo().\n";
-	for(size_t i=0; i<COUNT(data); i++) {
+	for(size_t i=0; i<sizeof(data)/sizeof(Data); i++) {
 		sprintf(str, "$%.2f", tax(data[i].amount, rates[data[i].state]));
 		cout << "  " << i+1 << ") tax = " << str << ".\n";
 	}
@@ -176,7 +242,7 @@ double teired(double amount) {
 
 }
 
-namespace antiPattern_switch {	// If the tax algorithms are varying, model as TaxStrategy.
+namespace antiPattern_switch {	// If tax algorithms vary, model as TaxStrategy.
 
 using namespace contingency_forces;
 
@@ -186,7 +252,6 @@ enum CountryCode {
 	Germany,
 	Russia,
 };
-
 struct Data {
 	double	 	amount;
 	CountryCode country;
@@ -198,49 +263,34 @@ Data data[] = {
 	{ 40.00, Russia },
 };
 
-double tax(double amount, CountryCode country) { // Maintenance headache.
-	double rate = 0.00;							 // Client code not closed to modification.
-
-	switch(country) {
-	case USA:
-		rate = byState()*amount;
-		break;
+double tax(double amount, CountryCode country) { // Maintenance headache. Client
+	switch(country) {						 // code not closed to modification.
+	case USA:					return byState()*amount;		break;
 	case Canada:
-		if(electionYear())
-			rate = 0.075*amount;
-		else
-			rate = 0.065*amount;
-		break;
+		if(electionYear())		return 0.075*amount;
+		else					return 0.065*amount;			break;
 	case Germany:
-		if(luxurious(amount))
-			rate = 0.088*amount;
-		else
-			rate = 0.077*amount;
-		break;
-	case Russia:
-		rate = teired(amount)*amount;
-		break;
-	// Seam point - insert another country, (violates open/closed principle).
+		if(luxurious(amount))	return 0.088*amount;
+		else					return 0.077*amount;			break;
+	case Russia:				return teired(amount)*amount;	break;
+	// Seam point: insert another country (violates open/closed principle).
 	default:
 	throw "OOPS";	// Exception handling, complicates logic of client code.
 	break;
 	}
-
-	return rate;
 }
 
 void demo() {
 	cout << "antiPattern_algorithms::demo().\n";
-	for(size_t i=0; i<COUNT(data); i++) {
+	for(size_t i=0; i<sizeof(data)/sizeof(Data); i++) {
 		sprintf(str, "$%.2f", tax(data[i].amount, data[i].country));
 		cout << "  " << i+1 << ") tax = " << str << ".\n";
 	}
 	cout << endl;
 }
-
 }
 
-namespace abstract_over_TaxStrategy {	// Polymorphism - allow variation over a class.
+namespace abstract_over_TaxStrategy {	// Polymorphism: variation over a class.
 
 using namespace contingency_forces;
 
@@ -281,19 +331,26 @@ public:
 };
 // Seam point - add a tax strategy (follows open/closed principle).
 
+
+
+
+
+
+
+
 struct Data {
 	double	 	 amount;
 	TaxStrategy* taxStrategy;
 };
-Data data[] = {					// But how to get correct tax strategy into the data?
+Data data[] = {			   // But how to get correct tax strategy into the data?
 	{ 10.00, new ByState },
 	{ 20.00, new ByElectionYear },
 	{ 30.00, new ByLuxuriousness },
 	{ 40.00, new ByTier },
 };
 
-double tax(double amount, const TaxStrategy* tax) {	// Client code closed to modification.
-	return tax->rate()*amount;
+double tax(double amount, const TaxStrategy* tax) {	// Client code closed
+	return tax->rate()*amount;						// to modifications.
 }
 
 void demo() {
@@ -307,7 +364,7 @@ void demo() {
 
 }
 
-namespace vary_tax_strategy_by_country {	// Map domain (country) to range (tax strategy).
+namespace vary_tax_strategy_by_country {	// Map country to tax strategy.
 
 using namespace contingency_forces;
 
@@ -346,7 +403,7 @@ public:
 		return teired(amount);
 	}
 };
-// Seam point - add a tax strategy (follows open/closed principle).
+// Seam point: add a tax strategy (follows open/closed principle).
 
 class Country {
 public:
@@ -383,8 +440,8 @@ Data data[] = {	// Map countries to tax strategies by composition.
 	{ 40.00, new Russia(new ByTier) },
 };
 
-double tax(double amount, const TaxStrategy* tax) {	// Client code closed to modifications.
-	return tax->rate()*amount;
+double tax(double amount, const TaxStrategy* tax) {	// Client code closed
+	return tax->rate()*amount;						// to modifications.
 }
 
 void demo() {
@@ -398,6 +455,19 @@ void demo() {
 
 }
 
+}
+
+namespace adapter {
+
+namespace antiPattern_ {}
+namespace abstract_ {}
+namespace vary_ {}
+
+}
+
+
+#ifdef experimental
+// Probably need to add... using namespace strategy;
 
 namespace experiment_polymorphic_refs_dtor {
 
@@ -936,5 +1006,7 @@ void demo() {
 }
 
 }
+
+#endif
 
 #endif /* DP4_SRC_WHATVARIES_H_ */
