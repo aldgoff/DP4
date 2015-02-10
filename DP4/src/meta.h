@@ -82,13 +82,17 @@ class Facade : public DesignPattern {
 public:
 	Facade() : DesignPattern("Facade") {}
 public:
+	void legacy() {
+		DesignPattern::legacy();
+		facade_legacy::demo();
+	}
 	void problem() {
 		DesignPattern::problem();
-		cout << "    details...\n";
+		facade_problem::demo();
 	}
 	void solution() {
 		DesignPattern::solution();
-		cout << "    details...\n";
+		facade_solution::demo();
 	}
 };
 class Bridge : public DesignPattern {

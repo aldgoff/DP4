@@ -14,6 +14,117 @@
 #ifndef FACADE_H_
 #define FACADE_H_
 
+namespace facade_legacy {
+
+class Large {
+public:
+	const char* ego() { return " I'm"; }
+	const char* size() { return " lots"; }
+};
+class Complicated {
+public:
+	const char* town() { return " Fairbanks"; }
+	const char* moola() { return " money"; }
+	const char* iq() { return " smarter"; }
+	const char* count() { return " thousand"; }
+	const char* manufactor() { return " Made"; }
+};
+class Obtuse {
+public:
+	const char* item() { return " ice machines"; }
+	const char* chiefNerd() { return " Sheldon"; }
+};
+
+void demo() {
+	cout << "  Large, complicated and obtuse enterprise MIS.\n";
+	cout << "  How do I use this monstrosity?\n";
+
+	cout << endl;
+}
+
+}
+
+namespace facade_problem {
+
+using namespace facade_legacy;
+
+Complicated comp;	// Unused static variable.
+
+void demo() {
+	Obtuse		obtuse;	// Unused local variable.
+	Large		large;
+	Complicated	complicated;
+
+	Obtuse* ptr = new Obtuse();
+	cout << " " << large.ego();
+	cout << large.size();
+	cout << complicated.iq() << " than";
+	cout << " another";
+	if(true) {
+		Complicated* comp = new Complicated;
+		cout << comp->count();
+	}
+	cout << Complicated().moola() << ".\n";	// Inconsistent use.
+	cout << " " << complicated.manufactor();
+	cout << ptr->chiefNerd();	// Unnecessary indirection.
+	cout << complicated.town();
+	cout << Obtuse().item();
+	cout << ".\n";
+
+	cout << endl;
+}
+
+}
+
+namespace facade_solution {
+
+using namespace facade_legacy;
+
+class FacadeSales {
+	Complicated complicated;
+	Obtuse		obtuse;
+public:
+	void close() {
+		cout << "  Sales: Another";
+		cout << complicated.count() << obtuse.item();
+		cout << " for" << complicated.town() << ".\n";
+	}
+};
+
+class FacadeRnD {
+	Large		large;
+	Complicated complicated;
+	Obtuse		obtuse;
+public:
+	void patents() {
+		cout << "  R&D:  " << large.ego() << complicated.iq();
+		cout << " than" << obtuse.chiefNerd() << ".\n";
+	}
+};
+
+class FacadeCorp {
+	Large		large;
+	Complicated complicated;
+public:
+	void bottomLine() {
+		cout << "  Corp: " << complicated.manufactor() << large.size();
+		cout << " of" << complicated.moola() << ".\n";
+	}
+};
+
+void demo() {
+	FacadeSales	sales;
+	FacadeRnD	rnd;
+	FacadeCorp	pres;
+	sales.close();
+	rnd.patents();
+	pres.bottomLine();
+
+	cout << endl;
+}
+
+}
+
 namespace legacy {	// Smart house with large, complicated interface.
 
 class Alarm {
