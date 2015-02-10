@@ -20,16 +20,18 @@
  * for simple shapes needs to be extended by incorporating a commercial
  * class hierarchy containing more complex shapes.
  * The problem is that the two class hierarchies use different API's.
- * The original one uses the function "draw()" the other the function "display()".
+ * The original uses the function "draw()" the other the function "display()".
  * This breaks the polymorphism that kept the client code simple.
- * This cause 4 maintenance headaches:
+ * This causes 4 maintenance headaches:
  *   1) Client code will become more complicated.
  *   2) Changes will be required in existing client code.
- *   3) Likely become littered with if statements of the sort "what type are you"?
+ *   3) Likely become littered w/ if statements of the sort "what type are you"?
  *   4) Need for error detection.
  * Solve this problem by writing new classes that 'adapt' the new interface
  * to the old.
  */
+
+namespace home_grown {
 
 class ShapeInterfaceDraw {					// Interface class (home grown?).
 public:
@@ -49,9 +51,11 @@ public:
 	void draw() { cout << "Draw rectangle.\n"; }
 };
 
+}
+
 namespace commercial {
 
-class ShapeInterfaceDisplay {				// Another interface class (commercial?).
+class ShapeInterfaceDisplay {		   // Another interface class (commercial?).
 public:
 	virtual void display()=0;
 	virtual ~ShapeInterfaceDisplay() {}
@@ -73,6 +77,8 @@ public:
 
 namespace adapter_legacy {
 
+using namespace home_grown;
+
 void demo() {
 	vector<ShapeInterfaceDraw*> shapes;
 	shapes.push_back(new Point);
@@ -90,12 +96,15 @@ void demo() {
 
 namespace adapter_problem {
 
+using namespace home_grown;
+using namespace commercial;
+
 struct Shapes {
-	ShapeInterfaceDraw*	draw;
-	commercial::ShapeInterfaceDisplay*	display;
+	ShapeInterfaceDraw*		draw;
+	ShapeInterfaceDisplay*	display;
 	Shapes(
-		ShapeInterfaceDraw* draw=0,
-		commercial::ShapeInterfaceDisplay* display=0)
+		ShapeInterfaceDraw*		draw=0,
+		ShapeInterfaceDisplay*	display=0)
 		: draw(draw), display(display) {}
 };
 
@@ -104,9 +113,9 @@ void demo() {
 	shapes.push_back(new Shapes(new Point));
 	shapes.push_back(new Shapes(new Line));
 	shapes.push_back(new Shapes(new Rect));
-	shapes.push_back(new Shapes(0, new commercial::Polygon));
-	shapes.push_back(new Shapes(0, new commercial::Torus));
-	shapes.push_back(new Shapes(0, new commercial::Bezel));
+	shapes.push_back(new Shapes(0, new Polygon));
+	shapes.push_back(new Shapes(0, new Torus));
+	shapes.push_back(new Shapes(0, new Bezel));
 
 	for(size_t i=0; i<shapes.size(); i++) {	// Client code more complicated
 		if(shapes[i]->draw)					// because API's differ
@@ -124,6 +133,8 @@ void demo() {
 }
 
 namespace adapter_solution {
+
+using namespace home_grown;
 
 class Polygon : public ShapeInterfaceDraw {	// New code.
 	commercial::Polygon poly;
