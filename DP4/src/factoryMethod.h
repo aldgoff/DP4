@@ -12,9 +12,11 @@
  *  Created on: July 30, 2014
  *      Author: aldgoff
  *
- * URL: http://www.dofactory.com/Patterns/PatternFactory.aspx#_self1
- * URL: http://sourcemaking.com/design_patterns/factory_method/cpp/1
- * URL: http://sourcemaking.com/
+ *  URLs:
+ *  	http://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns#Factory_Method
+ *  	http://www.dofactory.com/net/factory-method-design-pattern
+ *  	http://www.netobjectives.com/resources/books/design-patterns-explained/review-questions#Chapter23
+ *  	http://sourcemaking.com/design_patterns/factory_method
  */
 
 #ifndef FACTORYMETHOD_H_
@@ -22,6 +24,31 @@
 
 #include <vector>
 using namespace std;
+
+namespace factory_method_legacy {
+
+void demo() {
+	cout << "factory_method_legacy::demo().\n";
+}
+
+}
+
+namespace factory_method_problem {
+
+void demo() {
+	cout << "factory_method_problem::demo().\n";
+}
+
+}
+
+namespace factory_method_solution {
+
+void demo() {
+	cout << "factory_method_solution::demo().\n";
+}
+
+}
+
 
 /* Consider the problem of sending encrypted video streams to
  * a variety of display types under different crypto protocols
@@ -33,7 +60,7 @@ using namespace std;
  * we want to avoid any combinatorial explosions.
  */
 
-namespace factory_method_problem {
+namespace factory_method_problem2 {
 
 void send_video(int* res, int frameRate, int display, int protocol);
 

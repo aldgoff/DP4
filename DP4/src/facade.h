@@ -8,7 +8,11 @@
  *  Created on: Mar 8, 2014
  *      Author: aldgoff
  *
- *  URL: http://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns#Facade
+ *  URLs:
+ *  	http://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns#Facade
+ *  	http://www.dofactory.com/net/facade-design-pattern
+ *  	http://www.netobjectives.com/resources/books/design-patterns-explained/review-questions#Chapter6
+ *  	http://sourcemaking.com/design_patterns/facade
  */
 
 #ifndef FACADE_H_
@@ -51,7 +55,7 @@ using namespace facade_legacy;
 Complicated comp;	// Unused static variable.
 
 void demo() {
-	Obtuse		obtuse;	// Unused local variable.
+//	Obtuse		obtuse;	// Unused local variable.
 	Large		large;
 	Complicated	complicated;
 

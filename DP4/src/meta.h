@@ -95,6 +95,24 @@ public:
 		facade_solution::demo();
 	}
 };
+class TemplateMethod : public DesignPattern {
+public:
+	TemplateMethod() : DesignPattern("TemplateMethod") {}
+public:
+	void legacy() {
+		DesignPattern::legacy();
+		template_method_legacy::demo();
+	}
+	void problem() {
+		DesignPattern::problem();
+		template_method_problem::demo();
+	}
+	void solution() {
+		DesignPattern::solution();
+		template_method_solution::demo();
+	}
+};
+
 class Bridge : public DesignPattern {
 public:
 	Bridge() : DesignPattern("Bridge") {}
@@ -119,10 +137,6 @@ public:
 class Observer : public DesignPattern {
 public:
 	Observer() : DesignPattern("Observer") {}
-};
-class TemplateMethod : public DesignPattern {
-public:
-	TemplateMethod() : DesignPattern("TemplateMethod") {}
 };
 class Singleton : public DesignPattern {
 public:
@@ -172,11 +186,12 @@ void meta(const string& arg) {
 		new Strategy,
 		new Adapter,
 		new Facade,
+		new TemplateMethod,
+
 		new Bridge,
 		new AbstractFactory,
 		new Decorator,
 		new Observer,
-		new TemplateMethod,
 		new Singleton,
 		new FactoryMethod,
 		new Composite,

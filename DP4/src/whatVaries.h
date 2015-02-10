@@ -21,8 +21,8 @@ using namespace std;
  *   7) If the listeners are varying, use the Observer pattern.
  *   8) If the responders are varying, use the Chain of Responsibility pattern.
  * Multiple inheritance trees:
- *   9) If both the abstractions and implementations are varying, use the bridge pattern.
- *   A) , use the Abstract Factory pattern.
+ *   9) If the abstractions & implementations are varying, use bridge pattern.
+ *   A) If the families are varying, use the Abstract Factory pattern.
 */
 
 char str[20];	// Used to improve formatting of tax amounts.

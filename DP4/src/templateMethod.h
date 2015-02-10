@@ -8,13 +8,158 @@
  *  Created on: May 10, 2014
  *      Author: aldgoff
  *
- * URL: http://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns#Template_Method
+ *  URLs:
+ *  	http://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns#Template_Method
+ *  	http://www.dofactory.com/net/template-method-design-pattern
+ *  	http://www.netobjectives.com/resources/books/design-patterns-explained/review-questions#Chapter19
+ *  	http://sourcemaking.com/design_patterns/template_method
  */
 
 #ifndef TEMPLATEMETHOD_H_
 #define TEMPLATEMETHOD_H_
 
 typedef unsigned int uint;
+
+namespace template_method_common {
+
+enum Alternatives {
+	THIS,
+	THAT,
+	YOUR,
+	// Seam point 1 - insert another alternative.
+};
+
+void sameStep1() { cout << "  Same step 1.\n"; }
+void sameStep2() { cout << "   Same step 2.\n"; }
+void thisStep3() { cout << "    Diff step 3 this way.\n"; }
+void thatStep3() { cout << "    Diff step 3 that way.\n"; }
+void yourStep3() { cout << "    Diff step 3 your way.\n"; }
+// Seam point 2 - add another alternative.
+void sameStep4() { cout << "     Same step 4.\n"; }
+
+}
+
+namespace template_method_legacy {
+
+using namespace template_method_common;
+
+void clientCode(Alternatives alt) {
+	switch(alt) {
+	case 0:
+		sameStep1();	// Lots of duplication, but flow is clear.
+		sameStep2();
+		thisStep3();
+		sameStep4();
+		break;
+	case 1:
+		sameStep1();	// Process specified in multiple places.
+		sameStep2();
+		thatStep3();
+		sameStep4();
+		break;
+	case 2:
+		sameStep1();
+		sameStep2();
+		yourStep3();
+		sameStep4();
+		break;
+						// Seam point 3 - insert another alternative.
+	default:			// Requires error handling.
+	throw "OOPS";
+	break;
+	}
+}
+
+void demo() {
+	Alternatives alt[] = { THIS, THAT, YOUR };
+	for(size_t i=0; i<sizeof(alt)/sizeof(*alt); i++) {
+		clientCode(alt[i]);
+	}
+
+	cout << endl;
+}
+
+}
+
+namespace template_method_problem {
+
+using namespace template_method_common;
+
+void clientCode(Alternatives alt) {
+	sameStep1();
+	sameStep2();
+	switch(alt) {		// Avoids duplication, but flow is obscured.
+	case 0:
+		thisStep3();
+		break;
+	case 1:
+		thatStep3();
+		break;
+	case 2:
+		yourStep3();
+		break;
+						// Seam point 3 - add another alternative.
+	default:			// Still requires error handling.
+	throw "OOPS";
+	break;
+	}
+	sameStep4();
+}
+
+void demo() {
+	Alternatives alt[] = { THIS, THAT, YOUR };
+	for(size_t i=0; i<sizeof(alt)/sizeof(*alt); i++) {
+		clientCode(alt[i]);
+	}
+
+	cout << endl;
+}
+
+}
+
+namespace template_method_solution {
+
+class TemplateMethod {
+public: virtual ~TemplateMethod() {}
+public:
+	void run() {		// Process specified in only one place.
+		sameStep1();
+		sameStep2();
+		diffStep3();
+		sameStep4();
+	}
+protected:
+			void sameStep1() { cout << "  Same step 1.\n"; }
+			void sameStep2() { cout << "   Same step 2.\n"; }
+	virtual void diffStep3() { cout << "    Diff step 3.\n"; }
+			void sameStep4() { cout << "     Same step 4.\n"; }
+};
+class Step3_ThisWay : public TemplateMethod {
+public:
+	void diffStep3() { cout << "    Diff step 3 this way.\n"; }
+};
+class Step3_ThatWay : public TemplateMethod {
+public:
+	void diffStep3() { cout << "    Diff step 3 that way.\n"; }
+};
+class Step3_YourWay : public TemplateMethod {
+public:
+	void diffStep3() { cout << "    Diff step 3 your way.\n"; }
+};
+// Seam point (only 1) - add another alternative.
+
+void demo() {
+	TemplateMethod* steps[] = {
+		new Step3_ThisWay, new Step3_ThatWay, new Step3_YourWay
+	};
+	for(size_t i=0; i<sizeof(steps)/sizeof(*steps); i++) {
+		steps[i]->run();
+	}
+
+	cout << endl;
+}
+
+}
 
 /* Consider a company that has written a number of games, and plans more.
  * All of their games involve players taking turns.
