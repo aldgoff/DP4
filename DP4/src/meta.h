@@ -64,6 +64,12 @@ public:
 		cout << i+1 << ") ";	legacy();
 		cout << i+1 << ") ";	problem();
 		cout << i+1 << ") ";	solution();
+		cout << i+1 << ") ";
+		cout << "<< " << name << " problem production >>\n";
+		adapter_problem_production::demo();
+		cout << i+1 << ") ";
+		cout << "<< " << name << " solution production >>\n";
+		adapter_solution_production::demo();
 	}
 	void legacy() {
 		DesignPattern::legacy();

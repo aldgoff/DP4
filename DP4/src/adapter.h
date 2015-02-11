@@ -36,7 +36,9 @@ namespace home_grown {
 class ShapeInterfaceDraw {					// Interface class (home grown?).
 public:
 	virtual void draw()=0;
-	virtual ~ShapeInterfaceDraw() {}
+	virtual ~ShapeInterfaceDraw() {
+		cout << " home grown dtor\n";
+	}
 };
 class Point : public ShapeInterfaceDraw {
 public:
@@ -58,7 +60,9 @@ namespace commercial {
 class ShapeInterfaceDisplay {		   // Another interface class (commercial?).
 public:
 	virtual void display()=0;
-	virtual ~ShapeInterfaceDisplay() {}
+	virtual ~ShapeInterfaceDisplay() {
+		cout << " commercial dtor\n";
+	}
 };
 class Polygon : public ShapeInterfaceDisplay {
 public:
@@ -163,6 +167,90 @@ void demo() {
 
 	for(size_t i=0; i<shapes.size(); i++) {	// Client code stays simple because
 		shapes[i]->draw();					// API's have been converged.
+	}
+
+	cout << endl;
+}
+
+}
+
+namespace adapter_problem_production {
+
+struct Shapes {
+	ShapeInterfaceDraw*	draw;
+	commercial::ShapeInterfaceDisplay*	display;
+	Shapes(
+		ShapeInterfaceDraw* draw=0,
+		commercial::ShapeInterfaceDisplay* display=0)
+		: draw(draw), display(display) {}
+	virtual ~Shapes() {
+		cout << "  Shapes dtor -";
+		delete draw;
+		delete display;
+	}
+};
+
+void demo() {
+	vector<Shapes*>	shapes;					// Changes to existing code.
+	shapes.push_back(new Shapes(new Point));
+	shapes.push_back(new Shapes(new Line));
+	shapes.push_back(new Shapes(new Rect));
+	shapes.push_back(new Shapes(0, new commercial::Polygon));
+	shapes.push_back(new Shapes(0, new commercial::Torus));
+	shapes.push_back(new Shapes(0, new commercial::Bezel));
+
+	for(size_t i=0; i<shapes.size(); i++) {	// Client code more complicated
+		if(shapes[i]->draw)					// because API's differ
+			shapes[i]->draw->draw();		// requiring if-else statements,
+		else if(shapes[i]->display)			// changes to existing client code,
+			shapes[i]->display->display();
+		else {
+			throw "unknown shape object.";	// and worse; error detection.
+		}
+	}
+
+	for(size_t i=0; i<shapes.size(); i++) {	// Release allocated memory.
+		delete shapes[i];
+	}
+
+	cout << endl;
+}
+
+}
+
+namespace adapter_solution_production {
+
+class Polygon : public ShapeInterfaceDraw {	// New code.
+	commercial::Polygon poly;
+public:
+	void draw() { poly.display(); }
+};
+class Torus : public ShapeInterfaceDraw {
+	commercial::Torus torus;
+public:
+	void draw() { torus.display(); }
+};
+class Bezel : public ShapeInterfaceDraw {
+	commercial::Bezel bezel;
+public:
+	void draw() { bezel.display(); }
+};
+
+void demo() {
+	vector<ShapeInterfaceDraw*> shapes;	// Old client code stays the same.
+	shapes.push_back(new Point);
+	shapes.push_back(new Line);
+	shapes.push_back(new Rect);
+	shapes.push_back(new Polygon);		// Just add new code.
+	shapes.push_back(new Torus);
+	shapes.push_back(new Bezel);
+
+	for(size_t i=0; i<shapes.size(); i++) {	// Client code stays simple because
+		shapes[i]->draw();					// API's have been converged.
+	}
+
+	for(size_t i=0; i<shapes.size(); i++) {	// Release allocated memory.
+		delete shapes[i];
 	}
 
 	cout << endl;
