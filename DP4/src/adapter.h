@@ -176,6 +176,9 @@ void demo() {
 
 namespace adapter_problem_production {
 
+using namespace home_grown;
+using namespace commercial;
+
 struct Shapes {
 	ShapeInterfaceDraw*	draw;
 	commercial::ShapeInterfaceDisplay*	display;
@@ -219,6 +222,8 @@ void demo() {
 }
 
 namespace adapter_solution_production {
+
+using namespace home_grown;
 
 class Polygon : public ShapeInterfaceDraw {	// New code.
 	commercial::Polygon poly;

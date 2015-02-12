@@ -8,11 +8,158 @@
  *  Created on: Apr 26, 2014
  *      Author: aldgoff
  *
- *  URL: http://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns#Decorator
+ *  URLs:
+ *  	http://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns#Decorator
+ *  	http://www.dofactory.com/net/decorator-design-pattern
+ *  	http://www.netobjectives.com/resources/books/design-patterns-explained/review-questions#Chapter17
+ *  	http://sourcemaking.com/design_patterns/decorator
  */
 
 #ifndef DECORATOR_H_
 #define DECORATOR_H_
+
+struct Data {
+	int	optA;
+	int	optB;
+	int optC;
+};
+
+// Still a bit of a mess.
+
+namespace decorator_legacy {
+
+void optionA(int variation) {
+	switch(variation) {
+	case 1:
+		cout << "  option A - variation 1.\n";
+		break;
+	case 2:
+		cout << "  option A - variation 2.\n";
+		break;
+	default:
+	throw "OOPS";
+	}
+}
+
+void optionB(int variation) {
+	switch(variation) {
+	case 1:
+		cout << "  option B - variation 1.\n";
+		break;
+	case 2:
+		cout << "  option B - variation 2.\n";
+		break;
+	case 3:
+		cout << "  option B - variation 3.\n";
+		break;
+	default:
+	throw "OOPS";
+	}
+}
+
+void optionC(int variation) {
+	switch(variation) {
+	case 1:
+		cout << "  option C - variation 1.\n";
+		break;
+	case 2:
+		cout << "  option C - variation 2.\n";
+		break;
+	default:
+	throw "OOPS";
+	}
+}
+
+void clientCode(Data data) {
+	if(data.optA)	optionA(data.optA);
+	if(data.optB)	optionB(data.optB);
+	if(data.optC)	optionC(data.optC);
+}
+
+void demo() {
+	cout << "  decorator_legacy::demo().\n";
+	Data data[] = {
+		{ 0, 1, 0 },
+		{ 1, 2, 1 },
+		{ 2, 3, 2 },
+	};
+	for(size_t i=0; i<sizeof(data)/sizeof(*data); i++) {
+		clientCode(data[i]);
+		cout << endl;
+	}
+}
+
+}
+
+namespace decorator_problem {
+
+void demo() {
+	cout << "  decorator_problem::demo().\n";
+}
+
+}
+
+namespace decorator_solution {
+
+class Decorator {		// If the options are varying...
+public: virtual ~Decorator() {}
+public:
+	virtual void costs() { cout << "  Base decorator cost.\n"; }
+};
+
+class Option1 : public Decorator {
+public:
+	Option1(Decorator* decorator) { cout << "  Option1\n"; }
+public:
+	virtual void costs() { cout << "  Option1 decorator cost.\n"; }
+};
+class Option2 : public Decorator {
+public:
+	Option2(Decorator* decorator) { cout << "  Option2\n"; }
+};
+class Option3 : public Decorator {
+public:
+	Option3(Decorator* decorator) { cout << "  Option3\n"; }
+};
+
+struct Data {
+	vector<Decorator*>	decorators;
+};
+
+void clientCode(Decorator* option) {
+	cout << "Decorator\n";
+	option->costs();
+//	Decorator *decorator = new Decorator;
+//	decorator = new Option1(decorator);
+//	decorator = new Option2(decorator);
+//	decorator = new Option3(decorator);
+//	cout << endl;
+}
+
+void demo() {
+	cout << "  decorator_solution::demo().\n";
+	Decorator* orders[] = {
+		new Option2(new Decorator),
+		new Option1(new Option2(new Option3(new Decorator))),
+		new Option3(new Decorator),
+	};
+	for(size_t i=0; i<sizeof(orders)/sizeof(*orders); i++) {
+		clientCode(orders[i]);
+		cout << endl;
+	}
+
+//	vector<Decorator*>	order1, order2, order3;
+//	order1.push_back(new Decorator);
+//	order2.push_back(new Decorator);	order2.push_back(new Decorator);	order2.push_back(new Decorator);
+//	order3.push_back(new Decorator);
+//	Data data[] = { {order1}, {order2}, {order3} };
+//	clientCodeDecorator();
+
+	cout << endl;
+}
+
+}
+
 
 class Car {
 protected:

@@ -25,26 +25,231 @@
 #include <vector>
 using namespace std;
 
-namespace factory_method_legacy {
+namespace factory_method_common {
 
-void demo() {
-	cout << "factory_method_legacy::demo().\n";
+enum Alternatives {
+	TYPE1,
+	TYPE2,
+	TYPE3,
+	// Seam point 1 - insert another alternative.
+};
+
 }
 
+namespace factory_method_legacy {
+
+using namespace factory_method_common;
+
+class Type1 {
+public:
+	void run() { cout << "  Type1.run()\n"; }
+};
+class Type2 {
+public:
+	void run() { cout << "  Type2.run()\n"; }
+};
+class Type3 {
+public:
+	void run() { cout << "  Type3.run()\n"; }
+};
+// Seam point 2 - add another alternative.
+
+void clientCodeRun(Alternatives alt) {
+	switch(alt) {
+	case TYPE1:
+		Type1 type1;
+		type1.run();
+		break;
+	case TYPE2:
+		Type2 type2;
+		type2.run();
+		break;
+	case TYPE3:
+		Type3 type3;
+		type3.run();
+		break;
+	// Seam point 3 - insert another alternative.
+	default:
+	throw "OOPS";		// Requires error handling.
+	break;
+	}
+}
+
+void demo() {
+	Alternatives alt[] = { TYPE1, TYPE2, TYPE3 };
+	for(size_t i=0; i<sizeof(alt)/sizeof(*alt); i++) {
+		clientCodeRun(alt[i]);
+	}
+
+	cout << endl;
+}
 }
 
 namespace factory_method_problem {
 
+using namespace factory_method_common;
+
+class Type1 {
+public:
+	void run() { cout << "  Type1.run()\n"; }
+	void calc() { cout << "   Type1.calc()\n"; }
+	void compute() { cout << "    Type1.compute()\n"; }
+};
+class Type2 {
+public:
+	void run() { cout << "  Type2.run()\n"; }
+	void calc() { cout << "   Type2.calc()\n"; }
+	void compute() { cout << "    Type2.compute()\n"; }
+};
+class Type3 {
+public:
+	void run() { cout << "  Type3.run()\n"; }
+	void calc() { cout << "   Type3.calc()\n"; }
+	void compute() { cout << "    Type3.compute()\n"; }
+};
+// Seam point 2 - add another alternative.
+
+void clientCodeRun(Alternatives alt) {
+	switch(alt) {
+	case TYPE1:
+		Type1 type1;
+		type1.run();
+		break;
+	case TYPE2:
+		Type2 type2;
+		type2.run();
+		break;
+	case TYPE3:
+		Type3 type3;
+		type3.run();
+		break;
+	// Seam point 3 - insert another alternative.
+	default:
+	throw "OOPS";		// Requires error handling.
+	break;
+	}
+}
+
+void clientCodeCalc(Alternatives alt) {
+	switch(alt) {
+	case TYPE1:
+		Type1 type1;
+		type1.calc();
+		break;
+	case TYPE2:
+		Type2 type2;
+		type2.calc();
+		break;
+	case TYPE3:
+		Type3 type3;
+		type3.calc();
+		break;
+	// Seam point 4 - insert another alternative.
+	default:
+	throw "OOPS";		// Requires error handling.
+	break;
+	}
+}
+
+void clientCodeCompute(Alternatives alt) {
+	switch(alt) {
+	case TYPE1:
+		Type1 type1;
+		type1.compute();
+		break;
+	case TYPE2:
+		Type2 type2;
+		type2.compute();
+		break;
+	case TYPE3:
+		Type3 type3;
+		type3.compute();
+		break;
+	// Seam point 5 - insert another alternative.
+	default:
+	throw "OOPS";		// Requires error handling.
+	break;
+	}
+}
+
 void demo() {
-	cout << "factory_method_problem::demo().\n";
+	Alternatives alt[] = { TYPE1, TYPE2, TYPE3 };
+	for(size_t i=0; i<sizeof(alt)/sizeof(*alt); i++) {
+		clientCodeRun(alt[i]);
+		clientCodeCalc(alt[i]);
+		clientCodeCompute(alt[i]);
+	}
+
+	cout << endl;
 }
 
 }
 
 namespace factory_method_solution {
 
+using namespace factory_method_common;
+
+class FactoryMethod {	// If the classes are varying...
+public:	virtual ~FactoryMethod() {}
+public:
+	virtual void run() {}
+	virtual void calc() {}
+	virtual void compute() {}
+public:
+	static FactoryMethod* makeObject(Alternatives type);
+};
+class Type1 : public FactoryMethod {
+public:
+	void run() { cout << "  Type1.run()\n"; }
+	void calc() { cout << "   Type1.calc()\n"; }
+	void compute() { cout << "    Type1.compute()\n"; }
+};
+class Type2 : public FactoryMethod {
+public:
+	void run() { cout << "  Type2.run()\n"; }
+	void calc() { cout << "   Type2.calc()\n"; }
+	void compute() { cout << "    Type2.compute()\n"; }
+};
+class Type3 : public FactoryMethod {
+public:
+	void run() { cout << "  Type3.run()\n"; }
+	void calc() { cout << "   Type3.calc()\n"; }
+	void compute() { cout << "    Type3.compute()\n"; }
+};
+// Seam point 2 - add another alternative.
+
+FactoryMethod* FactoryMethod::makeObject(Alternatives type) {
+	switch(type) {
+	case TYPE1:	return new Type1;
+	case TYPE2:	return new Type2;
+	case TYPE3:	return new Type3;
+	// Seam point 1 - insert another alternative.
+	default: return new FactoryMethod;
+	}
+}
+
+void clientCodeRun(FactoryMethod* obj) {
+	obj->run();
+}
+void clientCodeCalc(FactoryMethod* obj) {
+	obj->calc();
+}
+void clientCodeCompute(FactoryMethod* obj) {
+	obj->compute();
+}
+
 void demo() {
-	cout << "factory_method_solution::demo().\n";
+	FactoryMethod* classes[] = {
+		FactoryMethod::makeObject(TYPE1),
+		FactoryMethod::makeObject(TYPE2),
+		FactoryMethod::makeObject(TYPE3)};
+	for(size_t i=0; i<sizeof(classes)/sizeof(*classes); i++) {
+		clientCodeRun(classes[i]);
+		clientCodeCalc(classes[i]);
+		clientCodeCompute(classes[i]);
+	}
+
+	cout << endl;
 }
 
 }

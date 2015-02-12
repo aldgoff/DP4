@@ -118,6 +118,74 @@ public:
 		template_method_solution::demo();
 	}
 };
+class FactoryMethod : public DesignPattern {
+public:
+	FactoryMethod() : DesignPattern("FactoryMethod") {}
+public:
+	void legacy() {
+		DesignPattern::legacy();
+		factory_method_legacy::demo();
+	}
+	void problem() {
+		DesignPattern::problem();
+		factory_method_problem::demo();
+	}
+	void solution() {
+		DesignPattern::solution();
+		factory_method_solution::demo();
+	}
+};
+class Decorator : public DesignPattern {
+public:
+	Decorator() : DesignPattern("Decorator") {}
+public:
+	void legacy() {
+		DesignPattern::legacy();
+		decorator_legacy::demo();
+	}
+	void problem() {
+		DesignPattern::problem();
+		decorator_problem::demo();
+	}
+	void solution() {
+		DesignPattern::solution();
+		decorator_solution::demo();
+	}
+};
+class Observer : public DesignPattern {
+public:
+	Observer() : DesignPattern("Observer") {}
+public:
+	void legacy() {
+		DesignPattern::legacy();
+		observer_legacy::demo();
+	}
+	void problem() {
+		DesignPattern::problem();
+		observer_problem::demo();
+	}
+	void solution() {
+		DesignPattern::solution();
+		observer_solution::demo();
+	}
+};
+class ChainOfResponsibility : public DesignPattern {
+public:
+	ChainOfResponsibility() : DesignPattern("ChainOfResponsibility") {}
+public:
+	void legacy() {
+		DesignPattern::legacy();
+		chain_of_resp_legacy::demo();
+	}
+	void problem() {
+		DesignPattern::problem();
+		chain_of_resp_problem::demo();
+	}
+	void solution() {
+		DesignPattern::solution();
+		chain_of_resp_solution::demo();
+	}
+};
 
 class Bridge : public DesignPattern {
 public:
@@ -136,29 +204,13 @@ class AbstractFactory : public DesignPattern {
 public:
 	AbstractFactory() : DesignPattern("AbstractFactory") {}
 };
-class Decorator : public DesignPattern {
-public:
-	Decorator() : DesignPattern("Decorator") {}
-};
-class Observer : public DesignPattern {
-public:
-	Observer() : DesignPattern("Observer") {}
-};
 class Singleton : public DesignPattern {
 public:
 	Singleton() : DesignPattern("Singleton") {}
 };
-class FactoryMethod : public DesignPattern {
-public:
-	FactoryMethod() : DesignPattern("FactoryMethod") {}
-};
 class Composite : public DesignPattern {
 public:
 	Composite() : DesignPattern("Composite") {}
-};
-class ChainOfResponsibility : public DesignPattern {
-public:
-	ChainOfResponsibility() : DesignPattern("ChainOfResponsibility") {}
 };
 class Iterator : public DesignPattern {
 public:
@@ -193,15 +245,15 @@ void meta(const string& arg) {
 		new Adapter,
 		new Facade,
 		new TemplateMethod,
+		new FactoryMethod,
+		new Decorator,
+		new Observer,
+		new ChainOfResponsibility,
 
 		new Bridge,
 		new AbstractFactory,
-		new Decorator,
-		new Observer,
 		new Singleton,
-		new FactoryMethod,
 		new Composite,
-		new ChainOfResponsibility,
 		new Iterator,
 		new Visitor,
 		new Command,

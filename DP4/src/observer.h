@@ -8,11 +8,39 @@
  *  Created on: May 3, 2014
  *      Author: aldgoff
  *
- * URL: http://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns#Observer
+ *  URLs:
+ *  	http://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns#Observer
+ *  	http://www.dofactory.com/net/observer-design-pattern
+ *  	http://www.netobjectives.com/resources/books/design-patterns-explained/review-questions#Chapter18
+ *  	http://sourcemaking.com/design_patterns/observer
  */
 
 #ifndef OBSERVER_H_
 #define OBSERVER_H_
+
+namespace observer_legacy {
+
+void demo() {
+	cout << "  observer_legacy::demo().\n";
+}
+
+}
+
+namespace observer_problem {
+
+void demo() {
+	cout << "  observer_problem::demo().\n";
+}
+
+}
+
+namespace observer_solution {
+
+void demo() {
+	cout << "  observer_solution::demo().\n";
+}
+
+}
 
 void makeMischief() { // Deprecated prototype for notification simulation.
 	cout << "  Thing1 makes mischief.\n";

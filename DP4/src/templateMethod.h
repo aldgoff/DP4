@@ -64,8 +64,8 @@ void clientCode(Alternatives alt) {
 		sameStep4();
 		break;
 						// Seam point 3 - insert another alternative.
-	default:			// Requires error handling.
-	throw "OOPS";
+	default:
+	throw "OOPS";		// Requires error handling.
 	break;
 	}
 }
@@ -99,8 +99,8 @@ void clientCode(Alternatives alt) {
 		yourStep3();
 		break;
 						// Seam point 3 - add another alternative.
-	default:			// Still requires error handling.
-	throw "OOPS";
+	default:
+	throw "OOPS";		// Still requires error handling.
 	break;
 	}
 	sameStep4();

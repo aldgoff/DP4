@@ -8,14 +8,39 @@
  *  Created on: Sep 2, 2014
  *      Author: aldgoff
  *
- * URL: http://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns#Chain_of_Responsibility
- * URL: http://www.dofactory.com/net/chain-of-responsibility-design-pattern
- * URL: http://sourcemaking.com/design_patterns/chain_of_responsibility
- * URL: http://sourcemaking.com/
+ *  URLs:
+ *  	http://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns#Chain_of_Responsibility
+ *  	http://www.dofactory.com/net/chain-of-responsibility-design-pattern
+ *
+ *  	http://sourcemaking.com/design_patterns/chain_of_responsibility
  */
 
 #ifndef CHAINOFRESPONSIBILITY_H_
 #define CHAINOFRESPONSIBILITY_H_
+
+namespace chain_of_resp_legacy {
+
+void demo() {
+	cout << "  chain_of_resp_legacy::demo().\n";
+}
+
+}
+
+namespace chain_of_resp_problem {
+
+void demo() {
+	cout << "  chain_of_resp_problem::demo().\n";
+}
+
+}
+
+namespace chain_of_resp_solution {
+
+void demo() {
+	cout << "  chain_of_resp_solution::demo().\n";
+}
+
+}
 
 /* Consider how to model decision making in a military chain of command.
  * Simple decisions get made by the junior officers, harder ones by the senior officers.
