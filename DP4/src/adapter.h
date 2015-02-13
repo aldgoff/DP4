@@ -98,37 +98,65 @@ void demo() {
 
 }
 
+namespace adapter_problem2 {
+
+using namespace home_grown;
+using namespace commercial;
+
+class Shapes {
+	ShapeInterfaceDraw*		draw;
+	ShapeInterfaceDisplay*	display;
+	// Seam point - insert another private member.
+public:
+	Shapes(
+		ShapeInterfaceDraw*		draw)
+		: draw(draw), display(0) {}
+	Shapes(
+		ShapeInterfaceDisplay*	display)
+		: draw(0), display(display) {}
+	// Seam point - insert another ctor.
+};
+
+}
+
 namespace adapter_problem {
 
 using namespace home_grown;
 using namespace commercial;
 
-struct Shapes {
+class Shapes {
+public:
 	ShapeInterfaceDraw*		draw;
 	ShapeInterfaceDisplay*	display;
+	// Seam point 1 - insert another private member.
+public:
 	Shapes(
-		ShapeInterfaceDraw*		draw=0,
-		ShapeInterfaceDisplay*	display=0)
-		: draw(draw), display(display) {}
+		ShapeInterfaceDraw* draw)
+		: draw(draw), display(0) {}		// Seam point i - insert another init().
+	Shapes(
+		ShapeInterfaceDisplay* display)	// Seam point j - insert another init().
+		: draw(0), display(display) {}
+	// Seam point 2 - insert another ctor.
 };
+
+void clientCode(Shapes* shape) {
+	if(		shape->draw)	shape->draw->draw();
+	else if(shape->display)	shape->display->display();
+	// Seam point 3 - insert another else-if clause.
+	else throw "OOPS";
+}
 
 void demo() {
 	vector<Shapes*>	shapes;					// Changes to existing code.
 	shapes.push_back(new Shapes(new Point));
 	shapes.push_back(new Shapes(new Line));
 	shapes.push_back(new Shapes(new Rect));
-	shapes.push_back(new Shapes(0, new Polygon));
-	shapes.push_back(new Shapes(0, new Torus));
-	shapes.push_back(new Shapes(0, new Bezel));
+	shapes.push_back(new Shapes(new Polygon));
+	shapes.push_back(new Shapes(new Torus));
+	shapes.push_back(new Shapes(new Bezel));
 
 	for(size_t i=0; i<shapes.size(); i++) {	// Client code more complicated
-		if(shapes[i]->draw)					// because API's differ
-			shapes[i]->draw->draw();		// requiring if-else statements,
-		else if(shapes[i]->display)			// changes to existing client code,
-			shapes[i]->display->display();
-		else {
-			throw "unknown shape object.";	// and worse; error detection.
-		}
+		clientCode(shapes[i]);
 	}
 
 	cout << endl;

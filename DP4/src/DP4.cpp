@@ -46,7 +46,7 @@ using namespace std;
 #include "solti.h"
 
 #include "SideBySide/sideBySide.h"
-
+#include "PairWise/pairWise.h"
 #include "Skeletons/skeletons.h"
 
 #include "meta.h"
@@ -187,6 +187,11 @@ void runSolti() {
 	solti_solution::demo();
 }
 
+void runPairWise() {
+	pair_wise::clientStrategy();
+	pair_wise::clientAdapter();
+}
+
 void runSideBySide() {
 	side_by_side::clientDesignPattern();
 	side_by_side::clientStrategy();
@@ -282,6 +287,8 @@ int main(int argc, char* args[]) {
 //		if(!strcmp(args[i], "sideBySide"))		runSideBySide();
 //
 		if(!strcmp(args[i], "skeletons"))		runSkeletons();
+		if(!strcmp(args[i], "sideBySide"))		runSideBySide();
+		if(!strcmp(args[i], "pairWise"))		runPairWise();
 		if(!strcmp(args[i], "whatVaries"))		runWhatVaries();
 		if(!strcmp(args[i], "virtualDtorBug"))	runVirtualDtorBug();
 //

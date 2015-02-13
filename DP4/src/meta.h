@@ -54,19 +54,19 @@ public:
 	}
 	void legacy() {
 		DesignPattern::legacy();
-		skeleton_derived::strategy_legacy::demo();
+		lectures::strategy_legacy::demo();
 	}
 	void skeleton() {
 		DesignPattern::skeleton();
-		skeleton_derived::strategy_skeleton::demo();
+		lectures::strategy_skeleton::demo();
 	}
 	void problem() {
 		DesignPattern::problem();
-		skeleton_derived::strategy_problem::demo();
+		lectures::strategy_problem::demo();
 	}
 	void solution() {
 		DesignPattern::solution();
-		skeleton_derived::strategy_solution::demo();
+		lectures::strategy_solution::demo();
 	}
 };
 class Adapter : public DesignPattern {
