@@ -32,6 +32,9 @@ public:
 	virtual void legacy() {
 		cout << "<< " << name << " legacy >>\n";
 	}
+	virtual void skeleton() {
+		cout << "<< " << name << " skeleton >>\n";
+	}
 	virtual void problem() {
 		cout << "<< " << name << " problem >>\n";
 	}
@@ -43,17 +46,27 @@ class Strategy : public DesignPattern {
 public:
 	Strategy() : DesignPattern("Strategy") {}
 public:
+	void run(int i) {	// Example of the Template Method design pattern.
+		cout << i+1 << ") ";	legacy();
+		cout << i+1 << ") ";	skeleton();
+		cout << i+1 << ") ";	problem();
+		cout << i+1 << ") ";	solution();
+	}
 	void legacy() {
 		DesignPattern::legacy();
-		strategy_legacy::demo();
+		skeleton_derived::strategy_legacy::demo();
+	}
+	void skeleton() {
+		DesignPattern::skeleton();
+		skeleton_derived::strategy_skeleton::demo();
 	}
 	void problem() {
 		DesignPattern::problem();
-		strategy_problem::demo();
+		skeleton_derived::strategy_problem::demo();
 	}
 	void solution() {
 		DesignPattern::solution();
-		strategy_solution::demo();
+		skeleton_derived::strategy_solution::demo();
 	}
 };
 class Adapter : public DesignPattern {
