@@ -12,6 +12,8 @@
 #include <vector>
 using namespace std;
 
+#include "Lectures/lectures.h"
+
 #include "facade.h"
 #include "adapter.h"
 #include "strategy.h"
