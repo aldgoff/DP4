@@ -41,32 +41,61 @@ public:
 	virtual void solution() {
 		cout << "<< " << name << " solution >>\n";
 	}
+	virtual void legacy(int i) {
+		cout << i+1 << ") " << "<< " << name << " legacy >>\n";
+	}
+	virtual void skeleton(int i) {
+		cout << i+1 << ") " << "<< " << name << " skeleton >>\n";
+	}
+	virtual void problem(int i) {
+		cout << i+1 << ") " << "<< " << name << " problem >>\n";
+	}
+	virtual void solution(int i) {
+		cout << i+1 << ") " << "<< " << name << " solution >>\n";
+	}
 };
 class Strategy : public DesignPattern {
+	enum Option {
+		ORIG,
+		LECTURES,
+		HOMEWORK,
+	};
 public:
 	Strategy() : DesignPattern("Strategy") {}
 public:
 	void run(int i) {	// Example of the Template Method design pattern.
-		cout << i+1 << ") ";	legacy();
-		cout << i+1 << ") ";	skeleton();
-		cout << i+1 << ") ";	problem();
-		cout << i+1 << ") ";	solution();
+		Option choice = HOMEWORK;
+		switch(choice) {
+		case ORIG:
+			cout << i+1 << ") ";	legacy();
+			cout << i+1 << ") ";	problem();
+			cout << i+1 << ") ";	solution();
+			break;
+		case LECTURES:
+			DesignPattern::legacy(i);	lectures::strategy_legacy::demo();
+			DesignPattern::skeleton(i);	lectures::strategy_skeleton::demo();
+			DesignPattern::problem(i);	lectures::strategy_problem::demo();
+			DesignPattern::solution(i);	lectures::strategy_solution::demo();
+			break;
+		case HOMEWORK:
+			DesignPattern::legacy(i);	homework::strategy_legacy::demo();
+//			DesignPattern::skeleton(i);	homework::strategy_skeleton::demo();
+			DesignPattern::problem(i);	homework::strategy_problem::demo();
+			DesignPattern::solution(i);	homework::strategy_solution::demo();
+			break;
+		}
 	}
 	void legacy() {
 		DesignPattern::legacy();
-		lectures::strategy_legacy::demo();
-	}
-	void skeleton() {
-		DesignPattern::skeleton();
-		lectures::strategy_skeleton::demo();
+		strategy_legacy::demo();
 	}
 	void problem() {
 		DesignPattern::problem();
-		lectures::strategy_problem::demo();
+		strategy_problem::demo();
 	}
 	void solution() {
 		DesignPattern::solution();
-		lectures::strategy_solution::demo();
+		strategy_solution::demo();
 	}
 };
 class Adapter : public DesignPattern {

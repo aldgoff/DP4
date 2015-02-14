@@ -18,12 +18,234 @@
 #ifndef STRATEGY_H_
 #define STRATEGY_H_
 
+namespace homework {
+
+/* Consider a sales order processing system.
+ * It must compute tax amounts that depend on country.
+ * The legacy code below is typical of how such a system may initially evolve.
+ * However, it won't scale well.
+ * Consider what's required to maintain these switch statements under new specs.
+ * New specs:
+ *   Add new tax rules for Canada
+ *     Different rate for election years 7.5%
+ *   Add Germany
+ *     new tax rules luxury tax
+ * This is shown in the code section under the strategy_problem namespace.
+ * Refactor the legacy code using the strategy pattern.
+ *   1) Implement the new specs
+ *   2) Avoid code duplication
+ *   3) Avoid need for exceptions
+ *   4) Avoid having to change existing code as much as possible
+ *   	a) New tax specs
+ *   	c) New country
+ *   5) Make sure you get the same results as from the problem namespace code
+ */
+
+namespace strategy_common {
+
+enum Alternative {	// Domain (x).
+	USA,
+	CANADA,
+	// Seam point 1 - insert new country code (violates open/closed principle).
+	GERMANY,
+};
+
+const char* CountryName[] = {
+	"USA",
+	"Canada",
+	// Seam point 2 - insert new country name (violates open/closed principle).
+	"Germany",
+};
+
+struct SalesOrder {
+	int			amount;
+	double		price;
+	Alternative	country;
+};
+
+double byState() { return 0.060; }	// Simple model for academic purposes.
+bool electionYear() { return true; }
+bool luxurious(double amount) { return amount > 10000.00; }
+
+}
+
+namespace strategy_legacy {
+
+using namespace strategy_common;
+
+// In tax file...
+double taxAmount(int amount, double price, Alternative alt=USA) {
+	switch(alt) {
+	case USA:
+		return byState()*amount*price;
+		break;
+	case CANADA:
+		if(electionYear())
+			return 0.075*amount*price;
+		else
+			return 0.065*amount*price;
+		break;
+	// Seam point 3 - insert new country (violates open/closed principle).
+	default: throw "OOPS"; break;	// Error handling.
+	}
+}
+
+void clientCode(SalesOrder& order) {
+	char str[20];
+	double tax = taxAmount(order.amount, order.price, order.country);
+	sprintf(str, "$%.2f for %s order.", tax, CountryName[order.country]);
+	cout << str << "\n";
+}
+
+void demo() {
+	SalesOrder orders[] = {
+		{ 5, 10.00, USA },
+		{ 1, 20.00, CANADA },
+	};
+	for(size_t i=0; i<sizeof(orders)/sizeof(*orders); i++) {
+		cout << "  " << i+1 << ") ";
+		clientCode(orders[i]);
+	}
+
+	cout << endl;
+}
+
+}
+
+namespace strategy_problem {
+
+using namespace strategy_common;
+
+// In tax file...
+double taxAmount(int amount, double price, Alternative alt=USA) {
+	switch(alt) {
+	case USA:
+		return byState()*amount*price;
+		break;
+	case CANADA:
+		if(electionYear())	return 0.075*amount*price;
+		else				return 0.065*amount*price;
+		break;
+	// Seam point 3 - insert new country (violates open/closed principle).
+	case GERMANY:
+		if(luxurious(amount))	return 0.088*amount*price;
+		else					return 0.077*amount*price;
+		break;
+	default: throw "OOPS"; break;	// Error handling.
+	}
+}
+
+void clientCode(SalesOrder& order) {
+	char str[20];
+	double tax = taxAmount(order.amount, order.price, order.country);
+	sprintf(str, "$%.2f for %s order.", tax, CountryName[order.country]);
+	cout << str << "\n";
+}
+
+void demo() {
+	SalesOrder orders[] = {
+		{ 5, 10.00, USA },
+		{ 1, 20.00, CANADA },
+		{ 2, 99.99, GERMANY },
+	};
+	for(size_t i=0; i<sizeof(orders)/sizeof(*orders); i++) {
+		cout << "  " << i+1 << ") ";
+		clientCode(orders[i]);
+	}
+
+	cout << endl;
+}
+
+}
+
+namespace strategy_solution {
+
+using namespace strategy_common;
+
+class TaxStrategy {	// Range (y).
+public: virtual ~TaxStrategy() { cout << "    TaxStrategy dtor\n"; }
+public:
+	virtual double rate(double amount=0) const =0;
+};
+class ByState : public TaxStrategy {
+public:
+	double rate(double amount=0) const {
+		return byState();
+	}
+};
+class ByElectionYear : public TaxStrategy {
+public:
+	double rate(double amount=0) const {
+		if(electionYear())
+			return 0.075;
+		else
+			return 0.065;
+	}
+};
+class ByLuxuriousness : public TaxStrategy {
+public:
+	double rate(double amount=0) const {
+		if(luxurious(amount))
+			return 0.088;
+		else
+			return 0.077;
+	}
+};
+// Seam point 1 - add another tax strategy (follows open/closed principle).
+
+class Country {		// Domain (x).
+public:
+	const string name;
+	TaxStrategy* taxStrategy;
+public:
+	Country(const string& name, TaxStrategy* taxStrategy)
+	: name(name), taxStrategy(taxStrategy) {}
+	~Country() { delete taxStrategy; }
+};
+
+struct Sales {
+	int				amount;
+	double			price;
+	const Country&	country;
+};
+
+void clientCode(const Sales& order) {
+	char str[20];
+	double rate = order.country.taxStrategy->rate(order.amount);
+	double tax = rate*order.amount*order.price;
+	sprintf(str, "$%.2f for ", tax);
+	cout << str << order.country.name << " order.\n";
+}
+
+void demo() {
+	{
+	Country usa = Country("USA",	 new ByState());
+	Country can = Country("Canada",	 new ByElectionYear());
+	Country ger = Country("Germany", new ByLuxuriousness());
+	Sales orders[] = {
+		{ 5, 10.00, usa },
+		{ 1, 20.00, can },
+		{ 2, 99.99, ger },
+	};
+	for(size_t i=0; i<sizeof(orders)/sizeof(*orders); i++) {
+		cout << "  " << i+1 << ") ";
+		clientCode(orders[i]);
+	}
+	}
+
+	cout << endl;
+}
+
+}
+
+}
+
 /* Consider a sales order processing system.
  * It must compute tax amounts that depend on country.
  * The legacy code below is typical of how such a system may initially evolve.
  * However, it won't scale well.
  * The multiple switch statements are an Anti-Pattern.
- * Consider what is required to maintain these switch statements under new specs.
+ * Consider what's required to maintain these switch statements under new specs.
  * New specs:
  *   Add new tax rules for Canada
  *     Different rate for election years 6.9%
@@ -335,19 +557,6 @@ public:
 			Currency* currency=new Currency, DateFormat* fmt=new DateFormat)
 	: name(name), tax(tax), currency(currency), fmt(fmt) {}
 };
-class USA : public Country {
-public:
-	USA() : Country("USA", new FixedRate(0.075), new Dollar, new MMDDYY) {}
-};
-class Canada : public Country {
-public:
-	Canada() : Country("Canada", new ContingentRate, new Pound, new MMDDYY) {}
-};
-class Germany : public Country {
-public:
-	Germany() : Country("Germany", new FixedRate(0.105), new Euro, new DDMMCCYY) {}
-};
-// Country seam point (only 1).
 
 class SalesOrder {
 public:
@@ -362,19 +571,22 @@ public:
 		char str[20];
 		char   sym = country->currency->currencySymbol();
 		double tax = country->tax->amount(number, price);
-		string name = country->name;
 		string fmt = country->fmt->str();
 		sprintf(str, "%c%.2f for %s order on %s.",
-			sym, tax, name.c_str(), fmt.c_str());
+			sym, tax, country->name.c_str(), fmt.c_str());
 		cout << str << "\n";
 	}
 };
 
 void demo() {
+	Country
+		usa = Country("USA", new FixedRate(0.075), new Dollar, new MMDDYY),
+		can = Country("Canada", new ContingentRate, new Pound, new MMDDYY),
+		ger = Country("Germany", new FixedRate(0.105), new Euro, new DDMMCCYY);
 	SalesOrder* orders[] = {
-		new SalesOrder(5, 10.00, new USA),
-		new SalesOrder(1, 20.00, new Canada),
-		new SalesOrder(9, 99.99, new Germany),
+		new SalesOrder(5, 10.00, &usa),
+		new SalesOrder(1, 20.00, &can),
+		new SalesOrder(9, 99.99, &ger),
 	};
 
 	for(size_t i=0; i<sizeof(orders)/sizeof(SalesOrder*); i++) {
