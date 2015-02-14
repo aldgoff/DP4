@@ -48,6 +48,8 @@ using namespace std;
 #include "SideBySide/sideBySide.h"
 #include "PairWise/pairWise.h"
 #include "Skeletons/skeletons.h"
+#include "Problems/lab1_problem_strategy.h"
+#include "Problems/lab1_problem_adapter.h"
 
 #include "meta.h"
 #include "whatVaries.h"
@@ -249,12 +251,28 @@ int main(int argc, char* args[]) {
 		cout << "  Header files to include in DP4.cpp also listed.\n";
 		cout << endl;
 		meta("");
+		cout << "skeletons\n";
+		cout << "sideBySide\n";
+		cout << "pairWise\n";
+		cout << "final\n";
+		cout << "varies\n";
+		cout << "principles\n";
+		cout << "solti\n";
+		cout << "whatVaries\n";
+		cout << "virtualDtorBug\n";
+		cout << "lectures\n";
+		cout << "problems\n";
+		cout << "solutions\n";
+		cout << "midterm\n";
+		cout << "\n";
 	}
 
-	for(int i=1; i<argc; i++)
-		meta(string(args[i]));
+//	for(int i=1; i<argc; i++)
+//		meta(string(args[i]));
 
-	for(int i=0; i<argc; i++) {
+	for(int i=1; i<argc; i++) {
+		if(meta(string(args[i])))
+			continue;
 //		if(!strcmp(args[i], "facade"))		runFacade();
 //		if(!strcmp(args[i], "adapter"))		runAdapter();
 //		if(!strcmp(args[i], "strategy"))	runStrategy();
@@ -267,36 +285,30 @@ int main(int argc, char* args[]) {
 //
 //		if(!strcmp(args[i], "singleton"))		runSingleton();
 //		if(!strcmp(args[i], "factoryMethod"))	runFactoryMethod();
-//
-//		if(!strcmp(args[i], "midterm"))			runMidterm();
-//
 //		if(!strcmp(args[i], "composite"))				runComposite();
 //		if(!strcmp(args[i], "chainOfResponsibility"))	runChainOfResponsibility();
 //
 //		if(!strcmp(args[i], "iterator"))		runIterator();
 //		if(!strcmp(args[i], "visitor"))			runVisitor();
-//
 //		if(!strcmp(args[i], "command"))			runCommand();
 //
-//		if(!strcmp(args[i], "final"))			runFinal();
-//		if(!strcmp(args[i], "principles"))		principles::demo();
-//		if(!strcmp(args[i], "varies"))			runVaries();
-//
-//		if(!strcmp(args[i], "solti"))			runSolti();
-//
-//		if(!strcmp(args[i], "sideBySide"))		runSideBySide();
-//
-		if(!strcmp(args[i], "skeletons"))		runSkeletons();
-		if(!strcmp(args[i], "sideBySide"))		runSideBySide();
-		if(!strcmp(args[i], "pairWise"))		runPairWise();
-		if(!strcmp(args[i], "whatVaries"))		runWhatVaries();
-		if(!strcmp(args[i], "virtualDtorBug"))	runVirtualDtorBug();
-//
-//		// Seam point; can be eliminated by use of design patterns.
+		// Seam point; can be eliminated by use of design patterns.
+
+		else if(!strcmp(args[i], "final"))			runFinal();
+		else if(!strcmp(args[i], "principles"))		principles::demo();
+		else if(!strcmp(args[i], "varies"))			runVaries();
+		else if(!strcmp(args[i], "midterm"))		runMidterm();
+		else if(!strcmp(args[i], "solti"))			runSolti();
+		else if(!strcmp(args[i], "sideBySide"))		runSideBySide();
+		else if(!strcmp(args[i], "skeletons"))		runSkeletons();
+		else if(!strcmp(args[i], "sideBySide"))		runSideBySide();
+		else if(!strcmp(args[i], "pairWise"))		runPairWise();
+		else if(!strcmp(args[i], "whatVaries"))		runWhatVaries();
+		else if(!strcmp(args[i], "virtualDtorBug"))	runVirtualDtorBug();
+		else {
+			cout << "  <" << args[i] << "> command line arg NOT understood.\n";
+		}
 	}
-//
-//	for(int i=1; i<argc; i++)
-//		meta(string(args[i]));
 
 	cout << "Aloha DP4.\n";
 	return 0;

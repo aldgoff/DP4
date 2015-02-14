@@ -7,6 +7,47 @@
  * Desc: Apply principles of DP's to the class code.
  * 		 In particular, shouldn't have to add code in 5 places
  * 		 for each new design pattern - really? I'm teaching this stuff?!?
+ *
+ * Specs:
+ *   1) Separate files for problems and solutions to upload to Inside Blue.
+ *   2) All code runnable to confirm correctness.
+ *   3) Minimal duplication.
+ *   4) Experimental instances to explore phase space of implementations.
+ *   5) Displayable in class with Eclipse IDE.
+ *   6) Fit on single screen page.
+ *   7) Apply design patterns to general layout and architecture.
+ *   8) Support side by side comparisons.
+ *   9) Support pairwise comparisons.
+ *  10) Support skeletons.
+ *  11) Collect features across design patterns for orthogonality.
+ *  12) Snippets to PowerPoint lectures.
+ *  13) High orthogonality between design patterns.
+ *  14) Show temporal evolution of code.
+ *  15) Unknown args should produce error message.
+ *
+ * Requirements:
+ *   1) Folders:
+ *   		Problems, Solutions
+ *   	Namespaces:
+ *   		problem, solution
+ *  12) Folders:
+ *  		Lectures
+ *  	Namespace:
+ *  		lectures
+ *  	Sub namespaces <dp>_legacy/skeleton/problem/solution
+ *  13) namespaces <dp>_legacy/skeleton/problem/solution
+ *  14) namespaces <dp>_legacy/skeleton/problem/solution
+ *   8) namespace side_by_side
+ *   2) Args
+ *   	<dp> ala strategy, adapter, facade, templateMethod, etc.
+ *   	skeletons: runs all skeleton code
+ *   	sideBySide: runs all side_by_side code
+ *   	lectures:
+ *   	problems:
+ *   	solutions:
+ *   	experimentals:
+ *   	pariwiseLab1/2/3/4/5:
+ *   	final:
  */
 
 #ifndef META_H_
@@ -23,7 +64,12 @@ public:
 		name[0] = lowercase;
 	}
 	virtual ~DesignPattern() {}
+private:
+	void out(int i) { cout << i+1 << ") "; }
 public:
+	virtual void runProblem(int i) {
+//		out(i); problems::legacy();
+	}
 	virtual void run(int i) {	// Example of the Template Method design pattern.
 		cout << i+1 << ") ";	legacy();
 		cout << i+1 << ") ";	problem();
@@ -71,18 +117,18 @@ public:
 			cout << i+1 << ") ";	problem();
 			cout << i+1 << ") ";	solution();
 			break;
-		case LECTURES:
-			DesignPattern::legacy(i);	lectures::strategy_legacy::demo();
-			DesignPattern::skeleton(i);	lectures::strategy_skeleton::demo();
-			DesignPattern::problem(i);	lectures::strategy_problem::demo();
-			DesignPattern::solution(i);	lectures::strategy_solution::demo();
-			break;
-		case HOMEWORK:
-			DesignPattern::legacy(i);	homework::strategy_legacy::demo();
-//			DesignPattern::skeleton(i);	homework::strategy_skeleton::demo();
-			DesignPattern::problem(i);	homework::strategy_problem::demo();
-			DesignPattern::solution(i);	homework::strategy_solution::demo();
-			break;
+//		case LECTURES:
+//			DesignPattern::legacy(i);	lectures::strategy_legacy::demo();
+//			DesignPattern::skeleton(i);	lectures::strategy_skeleton::demo();
+//			DesignPattern::problem(i);	lectures::strategy_problem::demo();
+//			DesignPattern::solution(i);	lectures::strategy_solution::demo();
+//			break;
+//		case HOMEWORK:
+//			DesignPattern::legacy(i);	homework::strategy_legacy::demo();
+////			DesignPattern::skeleton(i);	homework::strategy_skeleton::demo();
+//			DesignPattern::problem(i);	homework::strategy_problem::demo();
+//			DesignPattern::solution(i);	homework::strategy_solution::demo();
+//			break;
 		}
 	}
 	void legacy() {
@@ -270,6 +316,11 @@ class DesPats : public DesignPattern {
 public:
 	DesPats() : DesignPattern("DesPats") {}
 };
+
+class Lectures : public DesignPattern {
+public:
+	Lectures() : DesignPattern("Lectures") {}
+};
 // Seam point.
 /*
  *
@@ -279,7 +330,7 @@ solti
 sideBySide
 
  */
-void meta(const string& arg) {
+bool meta(const string& arg) {
 	// Array and loop is O(n), inefficient if desPats is large.
 	// Map would be better, hash dispatch, but if n ~ 20, no big deal.
 	DesignPattern* desPats[] = {
@@ -299,6 +350,9 @@ void meta(const string& arg) {
 		new Iterator,
 		new Visitor,
 		new Command,
+
+		new Lectures,
+
 		new DesPats,
 		// Seam point.
 	};
@@ -320,9 +374,10 @@ void meta(const string& arg) {
 		if(arg == desPats[i]->name) {
 			desPats[i]->run(i);
 //			cout << "\n";
-			break;
+			return true;
 		}
 	}
+	return false;
 }
 
 #endif /* META_H_ */
