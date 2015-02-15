@@ -14,15 +14,16 @@ using namespace std;
 
 #include "Lectures/lectures.h"
 
-#include "facade.h"
-#include "adapter.h"
 #include "strategy.h"
+#include "adapter.h"
+#include "facade.h"
+#include "templateMethod.h"
+
 #include "bridge.h"
 #include "abstractFactory.h"
 #include "decorator.h"
 
 #include "observer.h"
-#include "templateMethod.h"
 
 #include "singleton.h"
 #include "factoryMethod.h"
@@ -251,24 +252,16 @@ int main(int argc, char* args[]) {
 		cout << "  Header files to include in DP4.cpp also listed.\n";
 		cout << endl;
 		meta("");
-		cout << "skeletons\n";
-		cout << "sideBySide\n";
-		cout << "pairWise\n";
-		cout << "final\n";
-		cout << "varies\n";
-		cout << "principles\n";
-		cout << "solti\n";
-		cout << "whatVaries\n";
-		cout << "virtualDtorBug\n";
-		cout << "lectures\n";
-		cout << "problems\n";
-		cout << "solutions\n";
-		cout << "midterm\n";
-		cout << "\n";
+//		cout << "pairWise\n";
+//		cout << "final\n";
+//		cout << "varies\n";
+//		cout << "principles\n";
+//		cout << "solti\n";
+//		cout << "whatVaries\n";
+//		cout << "virtualDtorBug\n";
+//		cout << "midterm\n";
+//		cout << "\n";
 	}
-
-//	for(int i=1; i<argc; i++)
-//		meta(string(args[i]));
 
 	for(int i=1; i<argc; i++) {
 		if(meta(string(args[i])))
@@ -299,9 +292,8 @@ int main(int argc, char* args[]) {
 		else if(!strcmp(args[i], "varies"))			runVaries();
 		else if(!strcmp(args[i], "midterm"))		runMidterm();
 		else if(!strcmp(args[i], "solti"))			runSolti();
-		else if(!strcmp(args[i], "sideBySide"))		runSideBySide();
-		else if(!strcmp(args[i], "skeletons"))		runSkeletons();
-		else if(!strcmp(args[i], "sideBySide"))		runSideBySide();
+//		else if(!strcmp(args[i], "sideBySide"))		runSideBySide();
+//		else if(!strcmp(args[i], "skeletons"))		runSkeletons();
 		else if(!strcmp(args[i], "pairWise"))		runPairWise();
 		else if(!strcmp(args[i], "whatVaries"))		runWhatVaries();
 		else if(!strcmp(args[i], "virtualDtorBug"))	runVirtualDtorBug();

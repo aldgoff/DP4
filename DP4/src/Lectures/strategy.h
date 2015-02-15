@@ -21,7 +21,7 @@
 #ifndef LECTURES_STRATEGY_H_
 #define LECTURES_STRATEGY_H_
 
-namespace lectures {
+namespace lecture {
 
 namespace strategy_common {
 

@@ -50,6 +50,35 @@
  *   	final:
  */
 
+/* Program control table
+ * Pattern/Group   | Lectures | Problems | Solutions | Skeletons | SideBySide | Pairwise |
+ * ----------------+----------+----------+-----------+-----------+------------+----------+
+ * Strategy        | lecture1 | strategy | sstrategy | kstrategy | bystrategy | lab1     |
+ * Adapter         |  l<dp>   | adapter  | sadapter  | kadapter  | byadapter  |          |
+ * Facade          | lecture2 | facade   | sfacade   | kfacade   | byfacade   | lab2     |
+ * TemplateMethod  |  l<dp>   | templateM| stemplateM| ktemplateM| bytemplateM|          |
+ * FactoryMethod   | lecture3 | factoryMe| sfactoryMe| kfactoryMe| byfactoryMe| lab3     |
+ * Decorator       |  l<dp>   | decorator| sdecorator| kdecorator| bydecorator|          |
+ * Observer        | lecture4 | observer | sobserver | kobserver | byobserver | lab4     |
+ * ChainOfResp     |  l<dp>   | chainOfRe| schainOfRe| kchainOfRe| bychainOfRe|          |
+ * Bridge          | lecture5 | bridge   | sbridge   | kbridge   | bybridge   | lab5     |
+ * AbstractFactory |  l<dp>   | abstractF| sabstractF| kabstractF| byabstractF|          |
+ * ----------------+----------+----------+-----------+-----------+------------+----------+
+ * Singleton       |          |          | s         | k         | by         |          |
+ * Composite       |          |          | s         | k         | by         |          |
+ * Iterator        |          |          | s         | k         | by         |          |
+ * Visitor         |          |          | s         | k         | by         |          |
+ * Command         |          |          | s         | k         | by         |          |
+ * ----------------+----------+----------+-----------+-----------+------------+----------+
+ * midterm         |          |          |           |           |            |          |
+ * varies          |          |          |           |           |            |          |
+ * principles      |          |          |           |           |            |          |
+ * solti           |          |          |           |           |            |          |
+ * whatVaries      |          |          |           |           |            |          |
+ * virtualDtorBug  |          |          |           |           |            |          |
+ * final           |          |          |           |           |            |          |
+ */
+
 #ifndef META_H_
 #define META_H_
 
@@ -64,22 +93,31 @@ public:
 		name[0] = lowercase;
 	}
 	virtual ~DesignPattern() {}
-private:
-	void out(int i) { cout << i+1 << ") "; }
+protected:
+	void out(int i) { cout << i << ") "; }
 public:
+	virtual void run()  { cout << "  DesignPattern Base.run().\n"; }
+	virtual void runC(int i) { cout << "  DesignPattern Base.runC().\n"; }	// Class (lecture).
+	virtual void runL(int i) { cout << "  DesignPattern Base.runL().\n"; }	// Legacy.
+	virtual void runP(int i) { cout << "  DesignPattern Base.runP().\n"; }	// Problem.
+	virtual void runS(int i) { cout << "  DesignPattern Base.runS().\n"; }	// Solution.
+	virtual void runK(int i) { cout << "  DesignPattern Base.runK().\n"; }	// Skeleton.
+	virtual void runBy(int i){ cout << "  DesignPattern Base.runBy().\n"; }	// SideBySide.
 	virtual void runProblem(int i) {
 //		out(i); problems::legacy();
 	}
 	virtual void run(int i) {	// Example of the Template Method design pattern.
-		cout << i+1 << ") ";	legacy();
-		cout << i+1 << ") ";	problem();
-		cout << i+1 << ") ";	solution();
+		cout << i << ") ";	legacy();
+		cout << i << ") ";	problem();
+		cout << i << ") ";	solution();
 	}
+
+	virtual void lecture() {
+		cout << "<< " << name << " lecture >>\n";
+	}
+
 	virtual void legacy() {
 		cout << "<< " << name << " legacy >>\n";
-	}
-	virtual void skeleton() {
-		cout << "<< " << name << " skeleton >>\n";
 	}
 	virtual void problem() {
 		cout << "<< " << name << " problem >>\n";
@@ -87,17 +125,28 @@ public:
 	virtual void solution() {
 		cout << "<< " << name << " solution >>\n";
 	}
+
 	virtual void legacy(int i) {
-		cout << i+1 << ") " << "<< " << name << " legacy >>\n";
+		cout << i << ") " << "<< " << name << " legacy >>\n";
 	}
-	virtual void skeleton(int i) {
-		cout << i+1 << ") " << "<< " << name << " skeleton >>\n";
+	virtual void skeleton(int i) {	// abstract is better name.
+		cout << i << ") " << "<< " << name << " skeleton >>\n";
 	}
 	virtual void problem(int i) {
-		cout << i+1 << ") " << "<< " << name << " problem >>\n";
+		cout << i << ") " << "<< " << name << " problem >>\n";
 	}
 	virtual void solution(int i) {
-		cout << i+1 << ") " << "<< " << name << " solution >>\n";
+		cout << i << ") " << "<< " << name << " solution >>\n";
+	}
+
+	virtual void skeleton() {
+		cout << "<< " << name << " skeleton >>\n";
+	}
+	virtual void sideBySide() {
+		cout << "<< " << name << " sideBySide >>\n";
+	}
+	virtual void pairWise() {
+		cout << "<< " << name << " pairWise >>\n";
 	}
 };
 class Strategy : public DesignPattern {
@@ -110,6 +159,7 @@ public:
 	Strategy() : DesignPattern("Strategy") {}
 public:
 	void run(int i) {	// Example of the Template Method design pattern.
+		out(i); cout << endl;
 		Option choice = HOMEWORK;
 		switch(choice) {
 		case ORIG:
@@ -130,6 +180,9 @@ public:
 //			DesignPattern::solution(i);	homework::strategy_solution::demo();
 //			break;
 		}
+	}
+	void skeleton() {
+		skeleton::clientStrategy();
 	}
 	void legacy() {
 		DesignPattern::legacy();
@@ -159,6 +212,9 @@ public:
 		cout << "<< " << name << " solution production >>\n";
 		adapter_solution_production::demo();
 	}
+	void skeleton() {
+		skeleton::clientAdapter();
+	}
 	void legacy() {
 		DesignPattern::legacy();
 		adapter_legacy::demo();
@@ -176,6 +232,9 @@ class Facade : public DesignPattern {
 public:
 	Facade() : DesignPattern("Facade") {}
 public:
+	void skeleton() {
+		skeleton::clientFacade();
+	}
 	void legacy() {
 		DesignPattern::legacy();
 		facade_legacy::demo();
@@ -320,6 +379,10 @@ public:
 class Lectures : public DesignPattern {
 public:
 	Lectures() : DesignPattern("Lectures") {}
+public:
+	void run() {
+		cout << "  Lectures\n";
+	}
 };
 // Seam point.
 /*
@@ -328,12 +391,11 @@ midterm
 varies
 solti
 sideBySide
-
  */
-bool meta(const string& arg) {
-	// Array and loop is O(n), inefficient if desPats is large.
-	// Map would be better, hash dispatch, but if n ~ 20, no big deal.
+
+namespace dp_list {
 	DesignPattern* desPats[] = {
+		new DesPats,	// Needs to be first to absorb the 0th element.
 		new Strategy,
 		new Adapter,
 		new Facade,
@@ -342,41 +404,117 @@ bool meta(const string& arg) {
 		new Decorator,
 		new Observer,
 		new ChainOfResponsibility,
-
 		new Bridge,
 		new AbstractFactory,
-		new Singleton,
-		new Composite,
-		new Iterator,
-		new Visitor,
-		new Command,
-
-		new Lectures,
-
-		new DesPats,
-		// Seam point.
 	};
 
+	void scanLectures() {
+		for(size_t i=0; i<COUNT(desPats); i++) {
+			desPats[i]->lecture();
+		}
+	}
+	void scanLegacies() {
+		for(size_t i=0; i<COUNT(desPats); i++) {
+			desPats[i]->legacy();
+		}
+	}
+	void scanProblems() {
+		for(size_t i=0; i<COUNT(desPats); i++) {
+			desPats[i]->problem();
+		}
+	}
+	void scanSolutions() {
+		for(size_t i=0; i<COUNT(desPats); i++) {
+			desPats[i]->solution();
+		}
+	}
+	void scanSkeletons() {
+		for(size_t i=0; i<COUNT(desPats); i++) {
+			desPats[i]->skeleton();
+		}
+	}
+	void scanSideBySide() {
+		for(size_t i=0; i<COUNT(desPats); i++) {
+			desPats[i]->sideBySide();
+		}
+	}
+	void scanPairWise(int n) {
+		assert(!(n%2));	// n should be even.
+		for(int i=n; i<n+2; i++) {
+			desPats[i]->pairWise();
+		}
+	}
+}
+
+bool dispatch(const string& arg) {
+	using namespace dp_list;
+	for(size_t i=0; i<COUNT(desPats); i++) {
+		if(		arg == 				 desPats[i]->name) desPats[i]->run(i); // lps.
+
+		else if(arg == string("c") + desPats[i]->name) desPats[i]->runC(i);
+		else if(arg == string("l") + desPats[i]->name) desPats[i]->runL(i);
+		else if(arg == string("p") + desPats[i]->name) desPats[i]->runP(i);
+		else if(arg == string("s") + desPats[i]->name) desPats[i]->runS(i);
+		else if(arg == string("k") + desPats[i]->name) desPats[i]->runK(i);
+		else if(arg == string("by")+ desPats[i]->name) desPats[i]->runBy(i);
+
+		else if(arg == "lectures")		scanLectures();		// Code for lectures.
+		else if(arg == "legacies")		scanLegacies();		// Homework clean original code.
+		else if(arg == "problems")		scanProblems();		// Homework anti pattern.
+		else if(arg == "solutions")		scanSolutions();	// Homework dp.
+		else if(arg == "skeletons")		scanSkeletons();	// Brief abstractions.
+		else if(arg == "sideBySide")	scanSideBySide();	// White spaced to align.
+
+		else if(arg == "lab1")			scanPairWise(0);	// Lab pair wise compare.
+		else if(arg == "lab2")			scanPairWise(2);	// ...
+		else if(arg == "lab3")			scanPairWise(4);
+		else if(arg == "lab4")			scanPairWise(6);
+		else if(arg == "lab5")			scanPairWise(8);
+		else {
+			continue;
+		}
+
+		return true;
+	}
+
+	return false;
+}
+
+bool meta(const string& arg) {
+	using namespace dp_list;
+	// Array and loop is O(n), inefficient if desPats is large.
+	// Map would be better, hash dispatch, but if n ~ 20, no big deal.
+//	DesignPattern* desPats[] = {
+//		new Singleton,
+//		new Composite,
+//		new Iterator,
+//		new Visitor,
+//		new Command,
+//		// Seam point.
+//	};
+
 	if(arg == "") {	// Auto generate to avoid 2 more seam points.
-		for(size_t i=0; i<COUNT(desPats); i++) {	// List for Run Configurations...
+		for(size_t i=0; i<COUNT(dp_list::desPats); i++) {	// List for Run Configurations...
 			cout << desPats[i]->name << endl;
 		}
+		cout << "prefixes: c, l, p, s, k, by\n";
+		cout << "lectures\n";
+		cout << "legacies\n";
+		cout << "problems\n";
+		cout << "solutions\n";
 		cout << "skeletons\n";
-
+		cout << "sideBySide\n";
 		cout << endl;
-		for(size_t i=0; i<COUNT(desPats); i++) {	// Include list (#include "desPat.h").
+
+		for(size_t i=0; i<COUNT(dp_list::desPats); i++) {	// Include list (#include "desPat.h").
 			cout << "#include \"" << desPats[i]->name << ".h\"\n";
 		}
 		cout << endl;
 	}
 
-	for(size_t i=0; i<COUNT(desPats); i++) {
-		if(arg == desPats[i]->name) {
-			desPats[i]->run(i);
-//			cout << "\n";
-			return true;
-		}
-	}
+	if(dispatch(arg))
+		return true;
+
 	return false;
 }
 
