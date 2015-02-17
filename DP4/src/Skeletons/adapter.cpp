@@ -69,7 +69,6 @@ public:
 };
 
 void clientAdapter() {
-	cout << "Adapter\n";
 	Adapter* interfaces[] = { new Interface1, new Interface2, new Interface3 };
 	for(size_t i=0; i<COUNT(interfaces); i++) {
 		interfaces[i]->method1();

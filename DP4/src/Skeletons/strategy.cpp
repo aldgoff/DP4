@@ -32,7 +32,6 @@ public:
 };
 
 void clientStrategy() {
-	cout << "Strategy\n";
 	Strategy* algorithms[] = { new Algorithm1, new Algorithm2, new Algorithm3 };
 	for(size_t i=0; i<COUNT(algorithms); i++) {
 		algorithms[i]->compute();

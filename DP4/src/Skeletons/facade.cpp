@@ -45,7 +45,6 @@ public:
 };
 
 void clientFacade() {
-	cout << "Facade\n";
 	API1 facade1;	facade1.simpleAPI1();
 					facade1.easyAPI1();
 	API2 facade2;	facade2.simpleAPI2();

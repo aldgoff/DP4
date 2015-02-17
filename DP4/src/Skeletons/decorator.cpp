@@ -27,7 +27,6 @@ public:
 };
 
 void clientDecorator() {
-	cout << "Decorator\n";
 	Decorator *decorator = new Decorator;
 	decorator = new Option1(decorator);
 	decorator = new Option2(decorator);

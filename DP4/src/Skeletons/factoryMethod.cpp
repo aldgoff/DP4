@@ -43,7 +43,6 @@ FactoryMethod* FactoryMethod::makeObject(int type) {
 }
 
 void clientFactoryMethod() {
-	cout << "Factory Method\n";
 	FactoryMethod* classes[] = { FactoryMethod::makeObject(1), FactoryMethod::makeObject(2), FactoryMethod::makeObject(3)};
 	for(size_t i=0; i<COUNT(classes); i++) {
 		classes[i]->compute();

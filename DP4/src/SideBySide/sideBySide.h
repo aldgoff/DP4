@@ -20,6 +20,7 @@ using namespace std;
 namespace side_by_side {
 
 void clientDesignPattern();
+
 void clientStrategy();
 void clientAdapter();
 void clientFacade();
@@ -27,6 +28,7 @@ void clientTemplateMethod();
 void clientFactoryMethod();
 void clientDecorator();
 void clientObserver();
+
 void clientCommand();
 
 }

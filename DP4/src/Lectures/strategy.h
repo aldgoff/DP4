@@ -77,7 +77,7 @@ void demo() {
 
 }
 
-namespace strategy_skeleton {
+namespace strategy_abstract {
 
 class Strategy {		// If the algorithms are varying...
 public:	virtual ~Strategy() {}

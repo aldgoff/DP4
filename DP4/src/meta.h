@@ -84,6 +84,107 @@
 
 #define COUNT(x) (sizeof(x)/sizeof(*x))
 
+/* Test args
+
+strategy
+adapter
+facade
+templateMethod
+factoryMethod
+decorator
+observer
+chainOfResponsibility
+bridge
+abstractFactory
+
+lectures
+legacies
+problems
+solutions
+skeletons
+sideBySide
+
+lab1
+lab2
+lab3
+lab4
+lab5
+
+final
+...
+
+cstrategy
+lstrategy
+pstrategy
+sstrategy
+kstrategy
+bystrategy
+
+cadapter
+ladapter
+padapter
+sadapter
+kadapter
+byadapter
+
+cfacade
+lfacade
+pfacade
+sfacade
+kfacade
+byfacade
+
+ctemplateMethod
+ltemplateMethod
+ptemplateMethod
+stemplateMethod
+ktemplateMethod
+bytemplateMethod
+
+cfactoryMethod
+lfactoryMethod
+pfactoryMethod
+sfactoryMethod
+kfactoryMethod
+byfactoryMethod
+
+cdecorator
+ldecorator
+pdecorator
+sdecorator
+kdecorator
+bydecorator
+
+cobserver
+lobserver
+pobserver
+sobserver
+kobserver
+byobserver
+
+cchainOfResponsibility
+lchainOfResponsibility
+pchainOfResponsibility
+schainOfResponsibility
+kchainOfResponsibility
+bychainOfResponsibility
+
+cbridge
+lbridge
+pbridge
+sbridge
+kbridge
+bybridge
+
+cabstractFactory
+labstractFactory
+pabstractFactory
+sabstractFactory
+kabstractFactory
+byabstractFactory
+
+ */
+
 class DesignPattern {
 public:
 	string	name;
@@ -96,241 +197,259 @@ public:
 protected:
 	void out(int i) { cout << i << ") "; }
 public:
-	virtual void run()  { cout << "  DesignPattern Base.run().\n"; }
-	virtual void runC(int i) { cout << "  DesignPattern Base.runC().\n"; }	// Class (lecture).
-	virtual void runL(int i) { cout << "  DesignPattern Base.runL().\n"; }	// Legacy.
-	virtual void runP(int i) { cout << "  DesignPattern Base.runP().\n"; }	// Problem.
-	virtual void runS(int i) { cout << "  DesignPattern Base.runS().\n"; }	// Solution.
-	virtual void runK(int i) { cout << "  DesignPattern Base.runK().\n"; }	// Skeleton.
-	virtual void runBy(int i){ cout << "  DesignPattern Base.runBy().\n"; }	// SideBySide.
-	virtual void runProblem(int i) {
-//		out(i); problems::legacy();
-	}
-	virtual void run(int i) {	// Example of the Template Method design pattern.
-		cout << i << ") ";	legacy();
-		cout << i << ") ";	problem();
-		cout << i << ") ";	solution();
+	virtual void run(int i) {	// Run homework example.
+		legacy(i);
+		problem(i);
+		solution(i);
 	}
 
-	virtual void lecture() {
-		cout << "<< " << name << " lecture >>\n";
+	virtual void lecture(int i) {	// PowerPoint Class lecture.
+		cout << i << ") " << "<< " << name << " lecture >>\n";
 	}
 
-	virtual void legacy() {
-		cout << "<< " << name << " legacy >>\n";
-	}
-	virtual void problem() {
-		cout << "<< " << name << " problem >>\n";
-	}
-	virtual void solution() {
-		cout << "<< " << name << " solution >>\n";
-	}
-
-	virtual void legacy(int i) {
+	virtual void legacy(int i) {	// Legacy example.
 		cout << i << ") " << "<< " << name << " legacy >>\n";
 	}
-	virtual void skeleton(int i) {	// abstract is better name.
-		cout << i << ") " << "<< " << name << " skeleton >>\n";
+	virtual void abstract(int i) {	// Abstract example.
+		cout << i << ") " << "<< " << name << " abstract >>\n";
 	}
-	virtual void problem(int i) {
+	virtual void problem(int i) {	// Problem example.
 		cout << i << ") " << "<< " << name << " problem >>\n";
 	}
-	virtual void solution(int i) {
+	virtual void solution(int i) {	// Solution example.
 		cout << i << ") " << "<< " << name << " solution >>\n";
 	}
 
-	virtual void skeleton() {
-		cout << "<< " << name << " skeleton >>\n";
+	virtual void skeleton(int i) {	// Skeleton example.
+		cout << i << ") " << "<< " << name << " skeleton >>\n";
 	}
-	virtual void sideBySide() {
-		cout << "<< " << name << " sideBySide >>\n";
+	virtual void sideBySide(int i) {// Side by side example.
+		cout << i << ") " << "<< " << name << " sideBySide >>\n";
 	}
-	virtual void pairWise() {
-		cout << "<< " << name << " pairWise >>\n";
+	virtual void pairWise(int i) {	// Pair wise example.
+		cout << i << ") " << "<< " << name << " pairWise >>\n";
 	}
 };
 class Strategy : public DesignPattern {
-	enum Option {
-		ORIG,
-		LECTURES,
-		HOMEWORK,
-	};
 public:
 	Strategy() : DesignPattern("Strategy") {}
 public:
-	void run(int i) {	// Example of the Template Method design pattern.
-		out(i); cout << endl;
-		Option choice = HOMEWORK;
-		switch(choice) {
-		case ORIG:
-			cout << i+1 << ") ";	legacy();
-			cout << i+1 << ") ";	problem();
-			cout << i+1 << ") ";	solution();
-			break;
-//		case LECTURES:
-//			DesignPattern::legacy(i);	lectures::strategy_legacy::demo();
-//			DesignPattern::skeleton(i);	lectures::strategy_skeleton::demo();
-//			DesignPattern::problem(i);	lectures::strategy_problem::demo();
-//			DesignPattern::solution(i);	lectures::strategy_solution::demo();
-//			break;
-//		case HOMEWORK:
-//			DesignPattern::legacy(i);	homework::strategy_legacy::demo();
-////			DesignPattern::skeleton(i);	homework::strategy_skeleton::demo();
-//			DesignPattern::problem(i);	homework::strategy_problem::demo();
-//			DesignPattern::solution(i);	homework::strategy_solution::demo();
-//			break;
-		}
+	void lecture(int i) {	// PowerPoint Class lecture.
+		DesignPattern::lecture(i);
+		lecture::strategy_legacy::demo();
+		lecture::strategy_abstract::demo();
+		lecture::strategy_problem::demo();
+		lecture::strategy_solution::demo();
 	}
-	void skeleton() {
+	void legacy(int i) {	// Legacy example.
+		DesignPattern::legacy(i);
+		homework::strategy_legacy::demo();
+	}
+	void problem(int i) {	// Problem example.
+		DesignPattern::problem(i);
+		homework::strategy_problem::demo();
+	}
+	void solution(int i) {	// Solution example.
+		DesignPattern::solution(i);
+		homework::strategy_solution::demo();
+	}
+	void skeleton(int i) {	// Skeleton example.
+		DesignPattern::skeleton(i);
 		skeleton::clientStrategy();
 	}
-	void legacy() {
-		DesignPattern::legacy();
-		strategy_legacy::demo();
+	void sideBySide(int i) {// Side by side example.
+		DesignPattern::sideBySide(i);
+		side_by_side::clientStrategy();
 	}
-	void problem() {
-		DesignPattern::problem();
-		strategy_problem::demo();
-	}
-	void solution() {
-		DesignPattern::solution();
-		strategy_solution::demo();
+	void pairWise(int i) {	// Pair wise example.
+		DesignPattern::pairWise(i);
+		pair_wise::clientStrategy();
 	}
 };
 class Adapter : public DesignPattern {
 public:
 	Adapter() : DesignPattern("Adapter") {}
 public:
-	void run(int i) {	// Example of the Template Method design pattern.
-		cout << i+1 << ") ";	legacy();
-		cout << i+1 << ") ";	problem();
-		cout << i+1 << ") ";	solution();
-		cout << i+1 << ") ";
-		cout << "<< " << name << " problem production >>\n";
-		adapter_problem_production::demo();
-		cout << i+1 << ") ";
-		cout << "<< " << name << " solution production >>\n";
-		adapter_solution_production::demo();
-	}
-	void skeleton() {
-		skeleton::clientAdapter();
-	}
-	void legacy() {
-		DesignPattern::legacy();
+//	void run(int i) {	// TODO: remove the production files as well.
+//		cout << i << ") ";	legacy(i);
+//		cout << i << ") ";	problem(i);
+//		cout << i << ") ";	solution(i);
+//		cout << i << ") ";
+//		cout << "<< " << name << " problem production >>\n";
+//		adapter_problem_production::demo();
+//		cout << i << ") ";
+//		cout << "<< " << name << " solution production >>\n";
+//		adapter_solution_production::demo();
+//	}
+	void legacy(int i) {
+		DesignPattern::legacy(i);
 		adapter_legacy::demo();
 	}
-	void problem() {
-		DesignPattern::problem();
+	void problem(int i) {
+		DesignPattern::problem(i);
 		adapter_problem::demo();
 	}
-	void solution() {
-		DesignPattern::solution();
+	void solution(int i) {
+		DesignPattern::solution(i);
 		adapter_solution::demo();
+	}
+	void skeleton(int i) {
+		DesignPattern::skeleton(i);
+		skeleton::clientAdapter();
+	}
+	void sideBySide(int i) {
+		DesignPattern::sideBySide(i);
+		side_by_side::clientAdapter();
+	}
+	void pairWise(int i) {	// Pair wise example.
+		DesignPattern::pairWise(i);
+		pair_wise::clientAdapter();
 	}
 };
 class Facade : public DesignPattern {
 public:
 	Facade() : DesignPattern("Facade") {}
 public:
-	void skeleton() {
-		skeleton::clientFacade();
-	}
-	void legacy() {
-		DesignPattern::legacy();
+	void legacy(int i) {
+		DesignPattern::legacy(i);
 		facade_legacy::demo();
 	}
-	void problem() {
-		DesignPattern::problem();
+	void problem(int i) {
+		DesignPattern::problem(i);
 		facade_problem::demo();
 	}
-	void solution() {
-		DesignPattern::solution();
+	void solution(int i) {
+		DesignPattern::solution(i);
 		facade_solution::demo();
+	}
+	void skeleton(int i) {
+		DesignPattern::skeleton(i);
+		skeleton::clientFacade();
+	}
+	void sideBySide(int i) {
+		DesignPattern::sideBySide(i);
+		side_by_side::clientFacade();
 	}
 };
 class TemplateMethod : public DesignPattern {
 public:
 	TemplateMethod() : DesignPattern("TemplateMethod") {}
 public:
-	void legacy() {
-		DesignPattern::legacy();
+	void legacy(int i) {
+		DesignPattern::legacy(i);
 		template_method_legacy::demo();
 	}
-	void problem() {
-		DesignPattern::problem();
+	void problem(int i) {
+		DesignPattern::problem(i);
 		template_method_problem::demo();
 	}
-	void solution() {
-		DesignPattern::solution();
+	void solution(int i) {
+		DesignPattern::solution(i);
 		template_method_solution::demo();
+	}
+	void skeleton(int i) {
+		DesignPattern::skeleton(i);
+		skeleton::clientTemplateMethod();
+	}
+	void sideBySide(int i) {
+		DesignPattern::sideBySide(i);
+		side_by_side::clientTemplateMethod();
 	}
 };
 class FactoryMethod : public DesignPattern {
 public:
 	FactoryMethod() : DesignPattern("FactoryMethod") {}
 public:
-	void legacy() {
-		DesignPattern::legacy();
+	void legacy(int i) {
+		DesignPattern::legacy(i);
 		factory_method_legacy::demo();
 	}
-	void problem() {
-		DesignPattern::problem();
+	void problem(int i) {
+		DesignPattern::problem(i);
 		factory_method_problem::demo();
 	}
-	void solution() {
-		DesignPattern::solution();
+	void solution(int i) {
+		DesignPattern::solution(i);
 		factory_method_solution::demo();
+	}
+	void skeleton(int i) {
+		DesignPattern::skeleton(i);
+		skeleton::clientFactoryMethod();
+	}
+	void sideBySide(int i) {
+		DesignPattern::sideBySide(i);
+		side_by_side::clientFactoryMethod();
 	}
 };
 class Decorator : public DesignPattern {
 public:
 	Decorator() : DesignPattern("Decorator") {}
 public:
-	void legacy() {
-		DesignPattern::legacy();
+	void legacy(int i) {
+		DesignPattern::legacy(i);
 		decorator_legacy::demo();
 	}
-	void problem() {
-		DesignPattern::problem();
+	void problem(int i) {
+		DesignPattern::problem(i);
 		decorator_problem::demo();
 	}
-	void solution() {
-		DesignPattern::solution();
+	void solution(int i) {
+		DesignPattern::solution(i);
 		decorator_solution::demo();
+	}
+	void skeleton(int i) {
+		DesignPattern::skeleton(i);
+		skeleton::clientDecorator();
+	}
+	void sideBySide(int i) {
+		DesignPattern::sideBySide(i);
+		side_by_side::clientDecorator();
 	}
 };
 class Observer : public DesignPattern {
 public:
 	Observer() : DesignPattern("Observer") {}
 public:
-	void legacy() {
-		DesignPattern::legacy();
+	void legacy(int i) {
+		DesignPattern::legacy(i);
 		observer_legacy::demo();
 	}
-	void problem() {
-		DesignPattern::problem();
+	void problem(int i) {
+		DesignPattern::problem(i);
 		observer_problem::demo();
 	}
-	void solution() {
-		DesignPattern::solution();
+	void solution(int i) {
+		DesignPattern::solution(i);
 		observer_solution::demo();
+	}
+	void skeleton(int i) {
+		DesignPattern::skeleton(i);
+		skeleton::clientObserver();
+	}
+	void sideBySide(int i) {
+		DesignPattern::sideBySide(i);
+		side_by_side::clientObserver();
 	}
 };
 class ChainOfResponsibility : public DesignPattern {
 public:
 	ChainOfResponsibility() : DesignPattern("ChainOfResponsibility") {}
 public:
-	void legacy() {
-		DesignPattern::legacy();
+	void legacy(int i) {
+		DesignPattern::legacy(i);
 		chain_of_resp_legacy::demo();
 	}
-	void problem() {
-		DesignPattern::problem();
+	void problem(int i) {
+		DesignPattern::problem(i);
 		chain_of_resp_problem::demo();
 	}
-	void solution() {
-		DesignPattern::solution();
+	void solution(int i) {
+		DesignPattern::solution(i);
 		chain_of_resp_solution::demo();
+	}
+	void skeleton(int i) {
+		DesignPattern::skeleton(i);
+		skeleton::clientChainOfResponsibility();
 	}
 };
 
@@ -338,18 +457,19 @@ class Bridge : public DesignPattern {
 public:
 	Bridge() : DesignPattern("Bridge") {}
 public:
-	void problem() {
-		DesignPattern::problem();
-		cout << "    details...\n";
-	}
-	void solution() {
-		DesignPattern::solution();
-		cout << "    details...\n";
+	void skeleton(int i) {
+		DesignPattern::skeleton(i);
+		skeleton::clientBridge();
 	}
 };
 class AbstractFactory : public DesignPattern {
 public:
 	AbstractFactory() : DesignPattern("AbstractFactory") {}
+public:
+	void skeleton(int i) {
+		DesignPattern::skeleton(i);
+		skeleton::clientAbstractFactory();
+	}
 };
 class Singleton : public DesignPattern {
 public:
@@ -374,15 +494,6 @@ public:
 class DesPats : public DesignPattern {
 public:
 	DesPats() : DesignPattern("DesPats") {}
-};
-
-class Lectures : public DesignPattern {
-public:
-	Lectures() : DesignPattern("Lectures") {}
-public:
-	void run() {
-		cout << "  Lectures\n";
-	}
 };
 // Seam point.
 /*
@@ -409,54 +520,68 @@ namespace dp_list {
 	};
 
 	void scanLectures() {
-		for(size_t i=0; i<COUNT(desPats); i++) {
-			desPats[i]->lecture();
+		cout << "Lectures:\n";
+		for(size_t i=1; i<COUNT(desPats); i++) {
+			desPats[i]->lecture(i);
 		}
+		cout << endl;
 	}
 	void scanLegacies() {
-		for(size_t i=0; i<COUNT(desPats); i++) {
-			desPats[i]->legacy();
+		cout << "Legacies:\n";
+		for(size_t i=1; i<COUNT(desPats); i++) {
+			desPats[i]->legacy(i);
 		}
+		cout << endl;
 	}
 	void scanProblems() {
-		for(size_t i=0; i<COUNT(desPats); i++) {
-			desPats[i]->problem();
+		cout << "Problems:\n";
+		for(size_t i=1; i<COUNT(desPats); i++) {
+			desPats[i]->problem(i);
 		}
+		cout << endl;
 	}
 	void scanSolutions() {
-		for(size_t i=0; i<COUNT(desPats); i++) {
-			desPats[i]->solution();
+		cout << "Solutions:\n";
+		for(size_t i=1; i<COUNT(desPats); i++) {
+			desPats[i]->solution(i);
 		}
+		cout << endl;
 	}
 	void scanSkeletons() {
-		for(size_t i=0; i<COUNT(desPats); i++) {
-			desPats[i]->skeleton();
+		cout << "Skeletons:\n";
+		for(size_t i=1; i<COUNT(desPats); i++) {
+			desPats[i]->skeleton(i);
 		}
+		cout << endl;
 	}
 	void scanSideBySide() {
-		for(size_t i=0; i<COUNT(desPats); i++) {
-			desPats[i]->sideBySide();
+		cout << "SideBySide:\n";
+		for(size_t i=1; i<COUNT(desPats); i++) {
+			desPats[i]->sideBySide(i);
 		}
+		cout << endl;
 	}
 	void scanPairWise(int n) {
-		assert(!(n%2));	// n should be even.
+		cout << "PairWise:\n";
+		assert(n%2);	// n should be odd.
 		for(int i=n; i<n+2; i++) {
-			desPats[i]->pairWise();
+			desPats[i]->pairWise(i);
 		}
+		cout << endl;
 	}
 }
 
 bool dispatch(const string& arg) {
 	using namespace dp_list;
 	for(size_t i=0; i<COUNT(desPats); i++) {
-		if(		arg == 				 desPats[i]->name) desPats[i]->run(i); // lps.
+		if(		arg == 				 desPats[i]->name) desPats[i]->run(i); // LPS.
 
-		else if(arg == string("c") + desPats[i]->name) desPats[i]->runC(i);
-		else if(arg == string("l") + desPats[i]->name) desPats[i]->runL(i);
-		else if(arg == string("p") + desPats[i]->name) desPats[i]->runP(i);
-		else if(arg == string("s") + desPats[i]->name) desPats[i]->runS(i);
-		else if(arg == string("k") + desPats[i]->name) desPats[i]->runK(i);
-		else if(arg == string("by")+ desPats[i]->name) desPats[i]->runBy(i);
+		else if(arg == string("c") + desPats[i]->name) desPats[i]->lecture(i);
+		else if(arg == string("l") + desPats[i]->name) desPats[i]->legacy(i);
+		else if(arg == string("p") + desPats[i]->name) desPats[i]->problem(i);
+		else if(arg == string("s") + desPats[i]->name) desPats[i]->solution(i);
+		else if(arg == string("k") + desPats[i]->name) desPats[i]->skeleton(i);
+		else if(arg == string("by")+ desPats[i]->name) desPats[i]->sideBySide(i);
 
 		else if(arg == "lectures")		scanLectures();		// Code for lectures.
 		else if(arg == "legacies")		scanLegacies();		// Homework clean original code.
@@ -465,11 +590,11 @@ bool dispatch(const string& arg) {
 		else if(arg == "skeletons")		scanSkeletons();	// Brief abstractions.
 		else if(arg == "sideBySide")	scanSideBySide();	// White spaced to align.
 
-		else if(arg == "lab1")			scanPairWise(0);	// Lab pair wise compare.
-		else if(arg == "lab2")			scanPairWise(2);	// ...
-		else if(arg == "lab3")			scanPairWise(4);
-		else if(arg == "lab4")			scanPairWise(6);
-		else if(arg == "lab5")			scanPairWise(8);
+		else if(arg == "lab1")			scanPairWise(1);	// Lab pair wise compare.
+		else if(arg == "lab2")			scanPairWise(3);	// ...
+		else if(arg == "lab3")			scanPairWise(5);
+		else if(arg == "lab4")			scanPairWise(7);
+		else if(arg == "lab5")			scanPairWise(9);
 		else {
 			continue;
 		}

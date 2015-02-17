@@ -4,7 +4,7 @@ namespace pair_wise {
 
 class LegacyClass1 {
 public:
-	void func1() { cout << "LC1.funn1().\n"; }
+	void func1() { cout << "LC1.func1().\n"; }
 };
 class LegacyClass2 {
 public:
@@ -24,17 +24,17 @@ public:
 class Interface1 : public Adapter {
 	LegacyClass1	legacyClass1;
 public:
-	void method1() { cout << "  Interface1::method1()"; legacyClass1.func1(); }
+	void method1() { cout << "  Interface1::method1()."; legacyClass1.func1(); }
 };
 class Interface2 : public Adapter {
 	LegacyClass2	legacyClass2;
 public:
-	void method1() { cout << "  Interface2::method1()"; legacyClass2.func1(); }
+	void method1() { cout << "  Interface2::method1()."; legacyClass2.func1(); }
 };
 class Interface3 : public Adapter {
 	LegacyClass3	legacyClass3;
 public:
-	void method1() { cout << "  Interface3::method1()"; legacyClass3.sub(); }
+	void method1() { cout << "  Interface3::method1()."; legacyClass3.sub(); }
 };
 
 void clientAdapter() {

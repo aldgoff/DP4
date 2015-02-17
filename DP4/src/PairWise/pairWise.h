@@ -26,7 +26,9 @@ void clientAdapter();
 //void clientFactoryMethod();
 //void clientDecorator();
 //void clientObserver();
-//void clientCommand();
+//void clientChainOfResponsibility();
+//void clientBridge();
+//void clientAbstractFactory();
 
 }
 
