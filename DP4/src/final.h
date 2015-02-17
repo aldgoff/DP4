@@ -263,7 +263,6 @@ public:
 	}
 };
 
-
 namespace final_problem {
 
 void getMold(string loc) {	// Uses if/else to get mold.
@@ -323,6 +322,7 @@ enum Finish {
 	sanded
 };
 class Mold {
+public:
 	string		 name;		// "duck", "car", "hero" -- "dino".
 	Metal*		 metal;		// Steel -- Aluminum.
 	const int	 cavities;	// 1, 2, 4 -- 8
@@ -438,16 +438,16 @@ class StyreneCleaning		: public Cleaning {};
 class Nylon66Cleaning		: public Cleaning {};
 
 class Order {		// Template Method pattern - each injection run.
-	int			number;		// Variable
-	int			runSize;	// Variable
-	Mold*		mold;		// Class
-	GetMold*	getMold;	// Chain of Responsibility (inventory, mill -- purchase)
-	Tags*		tags;		// Decorator (nullTag, modelNumber, countryMadeIn, dateMade -- incCounter)
-	Additives*	additives;	// Decorator (UVInhibitor -- antiBacterial, microFibers)
-	Flow*		flow;		// Strategy (depend on metal & plastic)
-	Bins*		bins;		// Observer (plastic, color, UVInhibitor, IJM, packager -- antiBacterial, microFibers, conveyer)
-	Packaging*	packaging;	// Factory Method (bulk, shrinkWrap, hardPack -- zipLock)
-	Cleaning*	cleaning;	// Adapter (ABS, poly, PET -- styrene, nylon)
+//	int			number;		// Variable
+//	int			runSize;	// Variable
+//	Mold*		mold;		// Class
+//	GetMold*	getMold;	// Chain of Responsibility (inventory, mill -- purchase)
+//	Tags*		tags;		// Decorator (nullTag, modelNumber, countryMadeIn, dateMade -- incCounter)
+//	Additives*	additives;	// Decorator (UVInhibitor -- antiBacterial, microFibers)
+//	Flow*		flow;		// Strategy (depend on metal & plastic)
+//	Bins*		bins;		// Observer (plastic, color, UVInhibitor, IJM, packager -- antiBacterial, microFibers, conveyer)
+//	Packaging*	packaging;	// Factory Method (bulk, shrinkWrap, hardPack -- zipLock)
+//	Cleaning*	cleaning;	// Adapter (ABS, poly, PET -- styrene, nylon)
 };
 
 struct RasterMilling {	// Facade pattern - existing interface.
@@ -544,6 +544,7 @@ class Nylon66		: public FlowStrategy {};
 namespace adapter { // The mold cleaning technique. DONE.
 
 class Mold {
+public:
 	string		name;
 	string		metal;
 	int			cavities;

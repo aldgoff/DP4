@@ -17,7 +17,6 @@
  *   http://sourcemaking.com/design_patterns/strategy
  */
 
-
 #ifndef LECTURES_STRATEGY_H_
 #define LECTURES_STRATEGY_H_
 
