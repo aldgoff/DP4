@@ -3,6 +3,8 @@
  *
  * Desc: Adapt interfaces so classes can work together polymorphically.
  *
+ * Category: Structural
+ *
  *  Created on: Mar 8, 2014
  *      Author: aldgoff
  *

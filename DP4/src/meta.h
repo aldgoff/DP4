@@ -43,32 +43,33 @@
  *   	skeletons: runs all skeleton code
  *   	sideBySide: runs all side_by_side code
  *   	lectures:
+ *   	legacies:
  *   	problems:
  *   	solutions:
  *   	experimentals:
- *   	pariwiseLab1/2/3/4/5:
- *   	final:
+ *   	lab1/2/3/4/5:
+ *   	final
  */
 
 /* Program control table
  * Pattern/Group   | Lectures | Problems | Solutions | Skeletons | SideBySide | Pairwise |
  * ----------------+----------+----------+-----------+-----------+------------+----------+
- * Strategy        | lecture1 | strategy | sstrategy | kstrategy | bystrategy | lab1     |
- * Adapter         |  l<dp>   | adapter  | sadapter  | kadapter  | byadapter  |          |
- * Facade          | lecture2 | facade   | sfacade   | kfacade   | byfacade   | lab2     |
- * TemplateMethod  |  l<dp>   | templateM| stemplateM| ktemplateM| bytemplateM|          |
- * FactoryMethod   | lecture3 | factoryMe| sfactoryMe| kfactoryMe| byfactoryMe| lab3     |
- * Decorator       |  l<dp>   | decorator| sdecorator| kdecorator| bydecorator|          |
- * Observer        | lecture4 | observer | sobserver | kobserver | byobserver | lab4     |
- * ChainOfResp     |  l<dp>   | chainOfRe| schainOfRe| kchainOfRe| bychainOfRe|          |
- * Bridge          | lecture5 | bridge   | sbridge   | kbridge   | bybridge   | lab5     |
- * AbstractFactory |  l<dp>   | abstractF| sabstractF| kabstractF| byabstractF|          |
+ * Strategy        |          | strategy | sstrategy | kstrategy | bystrategy | lab1     |
+ * Adapter         |          | adapter  | sadapter  | kadapter  | byadapter  |          |
+ * Facade          |          | facade   | sfacade   | kfacade   | byfacade   | lab2     |
+ * TemplateMethod  |          | templateM| stemplateM| ktemplateM| bytemplateM|          |
+ * FactoryMethod   |          | factoryMe| sfactoryMe| kfactoryMe| byfactoryMe| lab3     |
+ * Decorator       |          | decorator| sdecorator| kdecorator| bydecorator|          |
+ * Observer        |          | observer | sobserver | kobserver | byobserver | lab4     |
+ * ChainOfResp     |          | chainOfRe| schainOfRe| kchainOfRe| bychainOfRe|          |
+ * Bridge          |          | bridge   | sbridge   | kbridge   | bybridge   | lab5     |
+ * AbstractFactory |          | abstractF| sabstractF| kabstractF| byabstractF|          |
  * ----------------+----------+----------+-----------+-----------+------------+----------+
- * Singleton       |          |          | s         | k         | by         |          |
- * Composite       |          |          | s         | k         | by         |          |
- * Iterator        |          |          | s         | k         | by         |          |
- * Visitor         |          |          | s         | k         | by         |          |
- * Command         |          |          | s         | k         | by         |          |
+ * Singleton       | c        | l/p      | s         | k         | by         |          |
+ * Composite       | c        | l/p      | s         | k         | by         |          |
+ * Iterator        | c        | l/p      | s         | k         | by         |          |
+ * Visitor         | c        | l/p      | s         | k         | by         |          |
+ * Command         | c        | l/p      | s         | k         | by         |          |
  * ----------------+----------+----------+-----------+-----------+------------+----------+
  * midterm         |          |          |           |           |            |          |
  * varies          |          |          |           |           |            |          |
@@ -270,17 +271,6 @@ class Adapter : public DesignPattern {
 public:
 	Adapter() : DesignPattern("Adapter") {}
 public:
-//	void run(int i) {	// TODO: remove the production files as well.
-//		cout << i << ") ";	legacy(i);
-//		cout << i << ") ";	problem(i);
-//		cout << i << ") ";	solution(i);
-//		cout << i << ") ";
-//		cout << "<< " << name << " problem production >>\n";
-//		adapter_problem_production::demo();
-//		cout << i << ") ";
-//		cout << "<< " << name << " solution production >>\n";
-//		adapter_solution_production::demo();
-//	}
 	void legacy(int i) {
 		DesignPattern::legacy(i);
 		adapter_legacy::demo();
@@ -310,42 +300,66 @@ class Facade : public DesignPattern {
 public:
 	Facade() : DesignPattern("Facade") {}
 public:
-	void legacy(int i) {
+	void lecture(int i) {	// PowerPoint Class lecture.
+		DesignPattern::lecture(i);
+		lecture::facade_legacy::demo();
+		lecture::facade_problem::demo();
+		lecture::facade_solution::demo();
+	}
+	void legacy(int i) {	// Legacy example.
 		DesignPattern::legacy(i);
-		facade_legacy::demo();
+		homework::facade_legacy::demo();
 	}
-	void problem(int i) {
+	void problem(int i) {	// Problem example.
 		DesignPattern::problem(i);
-		facade_problem::demo();
+		homework::facade_problem::demo();
 	}
-	void solution(int i) {
+	void solution(int i) {	// Solution example.
 		DesignPattern::solution(i);
-		facade_solution::demo();
+		homework::facade_solution::demo();
 	}
-	void skeleton(int i) {
+	void skeleton(int i) {	// Skeleton example.
 		DesignPattern::skeleton(i);
 		skeleton::clientFacade();
 	}
-	void sideBySide(int i) {
+	void sideBySide(int i) {// Side by side example.
 		DesignPattern::sideBySide(i);
 		side_by_side::clientFacade();
+	}
+	void pairWise(int i) {	// Pair wise example.
+		DesignPattern::pairWise(i);
+		pair_wise::clientFacade();
 	}
 };
 class TemplateMethod : public DesignPattern {
 public:
 	TemplateMethod() : DesignPattern("TemplateMethod") {}
 public:
+	void run(int i) {	// Run homework example.
+		DesignPattern::legacy(i);
+		experimental::template_method_legacy::demo();
+		DesignPattern::problem(i);
+		experimental::template_method_problem::demo();
+		DesignPattern::problem(i);
+		experimental::template_method_solution::demo();
+	}
+	void lecture(int i) {	// PowerPoint Class lecture.
+		DesignPattern::lecture(i);
+		lecture::template_method_legacy::demo();
+		lecture::template_method_problem::demo();
+		lecture::template_method_solution::demo();
+	}
 	void legacy(int i) {
 		DesignPattern::legacy(i);
-		template_method_legacy::demo();
+		homework::template_method_legacy::demo();
 	}
 	void problem(int i) {
 		DesignPattern::problem(i);
-		template_method_problem::demo();
+		homework::template_method_problem::demo();
 	}
 	void solution(int i) {
 		DesignPattern::solution(i);
-		template_method_solution::demo();
+		homework::template_method_solution::demo();
 	}
 	void skeleton(int i) {
 		DesignPattern::skeleton(i);
@@ -354,6 +368,10 @@ public:
 	void sideBySide(int i) {
 		DesignPattern::sideBySide(i);
 		side_by_side::clientTemplateMethod();
+	}
+	void pairWise(int i) {	// Pair wise example.
+		DesignPattern::pairWise(i);
+		pair_wise::clientTemplateMethod();
 	}
 };
 class FactoryMethod : public DesignPattern {

@@ -20,6 +20,8 @@
 
 typedef unsigned int uint;
 
+namespace lecture {
+
 namespace template_method_common {
 
 enum Alternatives {
@@ -161,9 +163,166 @@ void demo() {
 
 }
 
+}
+
+namespace experimental {
+
+namespace template_method_common {
+
+void client1() {
+	cout << "   Same step 1.\n";
+	cout << "   Usual step 2.\n";
+	cout << "   Occasional step 3.\n";
+	cout << "   Client 1 diff step 4.\n";
+	cout << "   Step 5a.\n";
+	cout << "   Step 5b.\n";
+	cout << "   Same step 6.\n";
+	cout << endl;
+}
+void client2() {
+	cout << "   Same step 1.\n";
+	cout << "   Usual step 2.\n";
+	cout << "   Client 2 diff step 3.\n";
+	cout << "   Client 2 diff step 4.\n";
+	cout << "   Step 5a.\n";
+	cout << "   Step 5b.\n";
+	cout << "   Same step 6.\n";
+	cout << endl;
+}
+
+}
+
+namespace template_method_new_specs {
+
+void client3() {
+	cout << "   Same step 1.\n";
+	cout << "   Unusual step 2.\n";
+	cout << "   Client 3 diff step 3.\n";
+	cout << "   Client 3 diff step 4.\n";
+	cout << "   Option 2 step 5.\n";
+	cout << "   Step 5b.\n";
+	cout << "   Step 5a.\n";
+	cout << "   Same step 6.\n";
+	cout << endl;
+}
+void client4() {
+	cout << "   Same step 1.\n";
+	cout << "   Usual step 2.\n";
+	cout << "   Client 4 diff step 3.\n";
+	cout << "   Client 4 diff step 4.\n";
+	cout << "   Step 5b.\n";
+	cout << "   Step 5a.\n";
+	cout << "   Same step 6.\n";
+	cout << endl;
+}
+
+}
+
+namespace template_method_legacy {
+
+using namespace template_method_common;
+
+void demo() {
+	client1();
+	client2();
+}
+
+}
+
+namespace template_method_problem {
+
+using namespace template_method_common;
+using namespace template_method_new_specs;
+
+void demo() {
+	client1();
+	client2();
+	client3();
+	client4();
+}
+
+}
+
+namespace template_method_solution {
+
+using namespace template_method_common;
+using namespace template_method_new_specs;
+
+class TemplateMethod {
+public: virtual ~TemplateMethod() { cout << "  ** TM dtor.\n"; }
+public:
+	void run() {
+		alwaysSameStep1();
+		usuallySameStep2();
+		occasionalSameStep3();
+		alwaysDifferentStep4();
+		twoOptionsStep5();
+		alwaysSameStep6();
+		cout << endl;
+	}
+private:
+	void alwaysSameStep1() {				cout << "   Same step 1.\n";}
+protected:
+	virtual void usuallySameStep2() {		cout << "   Usual step 2.\n";}
+	virtual void occasionalSameStep3() {	cout << "   Occasional step 3.\n";}
+	virtual void alwaysDifferentStep4()=0;
+	virtual void twoOptionsStep5() { order1Step5(); }
+protected:
+	void order1Step5 () { cout << "   Step 5a.\n   Step 5b.\n"; }
+	void order2Step5 () { cout << "   Step 5b.\n   Step 5a.\n"; }
+private:
+	void alwaysSameStep6() {				cout << "   Same step 6.\n";	}
+};
+
+class Client1 : public TemplateMethod {
+public:
+	void alwaysDifferentStep4() { cout << "   Client 1 diff step 4.\n"; }
+	void twoOptionsStep5() { order1Step5(); }
+};
+class Client2 : public TemplateMethod {
+public:
+	void occasionalSameStep3()	{ cout << "   Client 2 diff step 3.\n";}
+	void alwaysDifferentStep4() { cout << "   Client 2 diff step 4.\n"; }
+	void twoOptionsStep5() { order1Step5(); }
+};
+class Client3 : public TemplateMethod {
+public:
+	void usuallySameStep2() 	{ cout << "   Unusual step 2.\n";}
+	void occasionalSameStep3()	{ cout << "   Client 3 diff step 3.\n";}
+	void alwaysDifferentStep4() { cout << "   Client 3 diff step 4.\n"; }
+	void twoOptionsStep5() { order2Step5(); }
+};
+class Client4 : public TemplateMethod {
+public:
+	void occasionalSameStep3()	{ cout << "   Client 4 diff step 3.\n";}
+	void alwaysDifferentStep4() { cout << "   Client 4 diff step 4.\n"; }
+	void twoOptionsStep5() { order2Step5(); }
+};
+
+void demo() {
+	TemplateMethod* clients[] =  {
+		new Client1(), new Client2(), new Client3(), new Client4()
+	};
+	for(size_t i=0; i<sizeof(clients)/sizeof(*clients); i++) {
+		cout << "  Client " << i+1 << "\n";
+		clients[i]->run();
+	}
+
+	for(size_t i=0; i<sizeof(clients)/sizeof(*clients); i++) {
+		delete clients[i];
+	}
+	cout << endl;
+}
+
+}
+
+}
+
+namespace homework {
+
 /* Consider a company that has written a number of games, and plans more.
  * All of their games involve players taking turns.
- * Below is troubled code that 'represents' the historical development of their products.
+ * Below is troubled code that represents the historical development of their products.
  * Rewrite it using the Template Method design pattern to eliminate duplication.
  * Removing the structural duplication will facilitate faster development of new games.
  * Part of the challenge of design patterns is spotting when one is applicable.
@@ -171,9 +330,10 @@ void demo() {
  * It is therefore more like what you will find in the wild versus the classroom.
  * Hint #1: you may want to review Stepanov's concept of uplift.
  * Hint #2: refactoring is your friend.
+ * Hint #3: what is common (conceptually) between the games?
  */
 
-namespace duplicated_skelaton {
+namespace template_method_common {
 
 void playGo() {
 	cout << "  Setup Go board, 9-stone handicap.\n";
@@ -181,7 +341,7 @@ void playGo() {
 
 	short int turns = 0;
 	unsigned short count = 0;
-	while(count < 4) {
+	while(count < 4) {	// For academic exercise, game over on move 4.
 		if(turns == 0) ++count;
 		turns = (turns+1) % 2;
 		if(turns%2 == 1) {
@@ -204,7 +364,7 @@ void playChess() {
 
 	int play = 0;
 	int n = 0;
-	while(n < 4) {
+	while(n < 4) {	// For academic exercise, game over on move 4.
 		if(play == 0) ++n;
 		play = (play+1) % TWO;
 		if(play%TWO == 1)
@@ -218,6 +378,10 @@ void playChess() {
 	cout << endl;
 }
 
+}
+
+namespace template_method_new_specs {
+
 #define PLAYERS 2
 
 void playCheckers() {
@@ -226,7 +390,7 @@ void playCheckers() {
 
 	uint side = 0;
 	uint moves = 0;
-	while(moves < 4) {
+	while(moves < 4) {	// For academic exercise, game over on move 4.
 		if(side == 0) ++moves;
 		side = (side+1) % PLAYERS;
 		if(side%PLAYERS == 1) {
@@ -245,7 +409,7 @@ void playQuantumTicTacToe() {
 	cout << "      X        O\n";
 
 	short move = 0;
-	while(move < 9) {
+	while(move < 9) {	// For academic exercise, game over on move 9.
 		++move;
 		cout << "  " << move << ": " << move << "-" << (move)%9 + 1;
 		if(move%2 == 0)
@@ -258,9 +422,25 @@ void playQuantumTicTacToe() {
 	cout << endl;
 }
 
-void demo() {
-	cout << "<< Template Method problem >>\n";
+}
 
+namespace template_method_legacy {
+
+using namespace template_method_common;
+
+void demo() {
+	playGo();
+	playChess();
+}
+
+}
+
+namespace template_method_problem {
+
+using namespace template_method_common;
+using namespace template_method_new_specs;
+
+void demo() {
 	playGo();
 	playChess();
 	playCheckers();
@@ -269,7 +449,18 @@ void demo() {
 
 }
 
-namespace templateMethod {
+namespace template_method_solution {
+
+/* What do all four games have in common?
+ * 1) There is intialization.
+ * 2) A loop that makes moves and tests for game over.
+ * 3) A way to count moves.
+ * 4) A way to determine which player moves next.
+ * 5) Reporting the score.
+ */
+
+using namespace template_method_common;
+using namespace template_method_new_specs;
 
 class Game {
 protected:
@@ -381,8 +572,6 @@ public:
 };
 
 void demo() {
-	cout << "<< Template Method solution >>\n";
-
 	Game* games[] = { new Go, new Chess, new Checkers, new QuantumTicTacToe };
 
 	for(size_t i=0; i<sizeof(games)/sizeof(Game*); i++) {
@@ -394,6 +583,8 @@ void demo() {
 	for(size_t i=0; i<sizeof(games)/sizeof(Game*); i++) {
 		delete games[i];
 	}
+}
+
 }
 
 }

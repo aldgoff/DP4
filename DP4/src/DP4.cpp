@@ -58,14 +58,14 @@ using namespace std;
 /*====================================================================================================================*/
 
 void runFacade() {
-	facade::Facade house;
-	house.goToWork(); cout << endl;
-	house.comeHome(); cout << endl;
+//	facade::Facade house;
+//	house.goToWork(); cout << endl;
+//	house.comeHome(); cout << endl;
 }
 
 void runAdapter() {
-	adapter_problem::demo();
-	adapter_solution::demo();
+//	adapter_problem::demo();
+//	adapter_solution::demo();
 }
 
 void runStrategy() {
@@ -108,8 +108,8 @@ void runObserver() {
 }
 
 void runTemplateMethod() {
-	duplicated_skelaton::demo();
-	templateMethod::demo();
+//	homework::demo();
+//	templateMethod::demo();
 }
 
 void runSingleton() {

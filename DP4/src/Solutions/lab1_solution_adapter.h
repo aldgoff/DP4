@@ -1,8 +1,18 @@
 /*
  * adapter.h
  *
- *  Created on: Feb 13, 2015
+ * Desc: Adapt interfaces so classes can work together polymorphically.
+ *
+ * Category: Structural
+ *
+ *  Created on: Mar 8, 2014
  *      Author: aldgoff
+ *
+ *  URLs:
+ *  	http://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns#Adapter
+ *  	http://www.dofactory.com/net/adapter-design-pattern
+ *  	http://www.netobjectives.com/resources/books/design-patterns-explained/review-questions#Chapter7
+ *  	http://sourcemaking.com/design_patterns/adapter
  */
 
 #ifndef ADAPTER_H_
