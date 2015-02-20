@@ -337,11 +337,11 @@ public:
 public:
 	void run(int i) {	// Run homework example.
 		DesignPattern::legacy(i);
-		experimental::template_method_legacy::demo();
+		home_work::template_method_legacy::demo();
 		DesignPattern::problem(i);
-		experimental::template_method_problem::demo();
-		DesignPattern::problem(i);
-		experimental::template_method_solution::demo();
+		home_work::template_method_problem::demo();
+		DesignPattern::solution(i);
+		home_work::template_method_solution::demo();
 	}
 	void lecture(int i) {	// PowerPoint Class lecture.
 		DesignPattern::lecture(i);
@@ -351,15 +351,15 @@ public:
 	}
 	void legacy(int i) {
 		DesignPattern::legacy(i);
-		homework::template_method_legacy::demo();
+		home_work::template_method_legacy::demo();
 	}
 	void problem(int i) {
 		DesignPattern::problem(i);
-		homework::template_method_problem::demo();
+		home_work::template_method_problem::demo();
 	}
 	void solution(int i) {
 		DesignPattern::solution(i);
-		homework::template_method_solution::demo();
+		home_work::template_method_solution::demo();
 	}
 	void skeleton(int i) {
 		DesignPattern::skeleton(i);
