@@ -266,9 +266,8 @@ void demo() {
 
 namespace template_method_solution {
 
-using namespace template_method_common;
-
 class TemplateMethod {
+	bool morning() { return true; }
 public: virtual ~TemplateMethod() {}
 public:
 	void run() {	// A 6 step process.

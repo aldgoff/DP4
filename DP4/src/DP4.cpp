@@ -13,6 +13,7 @@
 using namespace std;
 
 #include "Lectures/lectures.h"
+#include "Variations/templateMethod.h"
 
 #include "strategy.h"
 #include "adapter.h"

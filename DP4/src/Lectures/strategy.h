@@ -128,7 +128,7 @@ void compute2()	{ cout << "    compute 2.\n"; }
 void compute3()	{ cout << "    compute 3.\n"; }
 // Seam point 2 - add another alternative.
 
-void clientCodeRun(Domain alt) {	// Client code maps domain to range y.
+void clientCodeRun(Domain alt) {		// Client code maps domain to range y.
 	switch(alt) {
 	case ONE:	run1();	break;
 	case TWO:	run2();	break;
@@ -137,7 +137,7 @@ void clientCodeRun(Domain alt) {	// Client code maps domain to range y.
 	default: throw "OOPS"; break;	// Requires error handling.
 	}
 }
-void clientCodeCalc(Domain alt) {	// Client code maps domain to range z.
+void clientCodeCalc(Domain alt) {		// Client code maps domain to range z.
 	switch(alt) {
 	case ONE:	calc1();	break;
 	case TWO:	calc2();	break;

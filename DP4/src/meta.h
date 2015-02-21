@@ -220,6 +220,9 @@ public:
 	virtual void solution(int i) {	// Solution example.
 		cout << i << ") " << "<< " << name << " solution >>\n";
 	}
+	virtual void variation(int i) {	// Variation example.
+		cout << i << ") " << "<< " << name << " variation >>\n";
+	}
 
 	virtual void skeleton(int i) {	// Skeleton example.
 		cout << i << ") " << "<< " << name << " skeleton >>\n";
@@ -360,6 +363,10 @@ public:
 	void solution(int i) {
 		DesignPattern::solution(i);
 		home_work::template_method_solution::demo();
+	}
+	void variation(int i) {
+		DesignPattern::variation(i);
+		template_method_variation_strategy::demo();
 	}
 	void skeleton(int i) {
 		DesignPattern::skeleton(i);
@@ -598,6 +605,7 @@ bool dispatch(const string& arg) {
 		else if(arg == string("l") + desPats[i]->name) desPats[i]->legacy(i);
 		else if(arg == string("p") + desPats[i]->name) desPats[i]->problem(i);
 		else if(arg == string("s") + desPats[i]->name) desPats[i]->solution(i);
+		else if(arg == string("v") + desPats[i]->name) desPats[i]->variation(i);
 		else if(arg == string("k") + desPats[i]->name) desPats[i]->skeleton(i);
 		else if(arg == string("by")+ desPats[i]->name) desPats[i]->sideBySide(i);
 
