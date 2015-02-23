@@ -274,6 +274,17 @@ class Adapter : public DesignPattern {
 public:
 	Adapter() : DesignPattern("Adapter") {}
 public:
+//	void run(int i) {	// TODO: remove the production files as well.
+//		cout << i << ") ";	legacy(i);
+//		cout << i << ") ";	problem(i);
+//		cout << i << ") ";	solution(i);
+//		cout << i << ") ";
+//		cout << "<< " << name << " problem production >>\n";
+//		adapter_problem_production::demo();
+//		cout << i << ") ";
+//		cout << "<< " << name << " solution production >>\n";
+//		adapter_solution_production::demo();
+//	}
 	void legacy(int i) {
 		DesignPattern::legacy(i);
 		adapter_legacy::demo();
@@ -329,10 +340,6 @@ public:
 		DesignPattern::sideBySide(i);
 		side_by_side::clientFacade();
 	}
-	void pairWise(int i) {	// Pair wise example.
-		DesignPattern::pairWise(i);
-		pair_wise::clientFacade();
-	}
 };
 class TemplateMethod : public DesignPattern {
 public:
@@ -385,17 +392,27 @@ class FactoryMethod : public DesignPattern {
 public:
 	FactoryMethod() : DesignPattern("FactoryMethod") {}
 public:
+	virtual void run(int i) {	// Run homework example.
+		problem(i);
+		solution(i);
+	}
+	void lecture(int i) {	// PowerPoint Class lecture.
+		DesignPattern::lecture(i);
+		lecture::factory_method_legacy::demo();
+		lecture::factory_method_problem::demo();
+		lecture::factory_method_solution::demo();
+	}
 	void legacy(int i) {
 		DesignPattern::legacy(i);
-		factory_method_legacy::demo();
+		homework::factory_method_legacy::demo();
 	}
 	void problem(int i) {
 		DesignPattern::problem(i);
-		factory_method_problem::demo();
+		homework::factory_method_problem::demo();
 	}
 	void solution(int i) {
 		DesignPattern::solution(i);
-		factory_method_solution::demo();
+		homework::factory_method_solution::demo();
 	}
 	void skeleton(int i) {
 		DesignPattern::skeleton(i);
@@ -601,6 +618,12 @@ bool dispatch(const string& arg) {
 	for(size_t i=0; i<COUNT(desPats); i++) {
 		if(		arg == 				 desPats[i]->name) desPats[i]->run(i); // LPS.
 
+		else if(arg == string("c") + desPats[i]->name) desPats[i]->lecture(i);
+		else if(arg == string("l") + desPats[i]->name) desPats[i]->legacy(i);
+		else if(arg == string("p") + desPats[i]->name) desPats[i]->problem(i);
+		else if(arg == string("s") + desPats[i]->name) desPats[i]->solution(i);
+		else if(arg == string("k") + desPats[i]->name) desPats[i]->skeleton(i);
+		else if(arg == string("by")+ desPats[i]->name) desPats[i]->sideBySide(i);
 		else if(arg == string("c") + desPats[i]->name) desPats[i]->lecture(i);
 		else if(arg == string("l") + desPats[i]->name) desPats[i]->legacy(i);
 		else if(arg == string("p") + desPats[i]->name) desPats[i]->problem(i);

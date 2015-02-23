@@ -22,8 +22,11 @@
 #ifndef FACTORYMETHOD_H_
 #define FACTORYMETHOD_H_
 
+#include <string>
 #include <vector>
 using namespace std;
+
+namespace lecture {
 
 namespace factory_method_common {
 
@@ -254,6 +257,354 @@ void demo() {
 
 }
 
+}
+
+namespace homework {
+
+/* Problem: sending encrypted video streams.
+ * What varies
+ *   1) Display Types (DisplayPort, HDMI, MIPI, Widi) (HEVC)
+ *   2) Crypto Protocols (PVP, ID1, RSE) (RDX)
+ *   3) Resolutions ([640,480], [1920,1080]) ([3840,2160])
+ *   4) Framerates (48, 50, 60) (75, 120)
+ * Model as
+ *   1) Classes
+ *   2) Classes
+ *   3) Pair of integers
+ *   4) Integer
+ * Use factory method to reduce coupling & avoid combinatorial explosion.
+ */
+
+namespace factory_method_common {	// Deprecated.
+
+char str[80];
+
+class Framerate {
+	int	framesPerSec;
+public:
+	Framerate(int framesPerSec) : framesPerSec(framesPerSec) {}
+	string operator()() {
+		sprintf(str, "%d", framesPerSec);
+		return str;
+	}
+};
+
+class Resolution {
+	int	h;
+	int	v;
+public:
+	Resolution(int h, int v) : h(h), v(v) {}
+	string operator()() {
+		sprintf(str, "[%d, %d]", h, v);
+		return str;
+	}
+};
+
+}
+
+namespace factory_method_legacy {	// Deprecated.
+
+using namespace factory_method_common;
+
+class Crypto {
+	string name;
+public:
+	Crypto(const string& name) : name(name) {}
+	string operator()() { return name; }
+};
+
+class DisplayPort {
+	string		name;
+	Resolution	res;
+	Crypto		protocol;
+	Framerate	framerate;
+public:
+	DisplayPort(
+		const string&	name,
+		Resolution		res,
+		Crypto			protocol,
+		Framerate		framerate)
+	: name(name), res(res), protocol(protocol), framerate(framerate) {}
+	string operator()() {
+		sprintf(str, "  %s%s via %s at %s fps.\n", name.c_str(),
+			res().c_str(), protocol().c_str(), framerate().c_str());
+		return str;
+	}
+};
+
+void demo() {
+	Framerate	framerate(60);
+	Resolution	res(1920,1080);
+	Crypto		protocol("PVP");
+	DisplayPort	dp("DisplayPort", res, protocol, framerate);
+	cout << dp();
+
+	cout << endl;
+}
+
+}
+
+namespace factory_method_problem {
+
+enum Crypto {
+	PVP,
+	ID1,
+	RSA,
+	// Seam point 1 - insert another crypto protocol.
+};
+const char* crypto_names[] = {
+	"PVP",
+	"ID1",
+	"RSA",
+	// Seam point 2 - insert another crypto protocol.
+};
+
+enum Display {
+	DISPLAY_PORT,
+	HDMI,
+	MIPI,
+	WIDI,
+	// Seam point A - insert another display type.
+};
+const char* display_names[] = {
+	"DisplayPort",
+	"HDMI",
+	"MIPI",
+	"Widi",
+	// Seam point B - insert another display type.
+};
+
+class Pvp {
+public:
+	const char* encrypt_video() { return "PVP"; }
+};
+class Id1 {
+public:
+	const char* encrypt_video() { return "ID1"; }
+};
+class Rsa {
+public:
+	const char* encrypt_video() { return "RSA"; }
+};
+// Seam point 3 - add another crypto protocol - SOLID.
+
+// Imagine that these are all in separate files. Do you even know all the
+// display types that will have to change when a new crypto procotol is added?
+class DisplayPort {
+public:
+	string send_video(int* res, Crypto crypto, int framerate) {
+		string protocol;
+		switch(crypto) {
+		case PVP:	protocol = Pvp().encrypt_video();	break;
+		case ID1:	protocol = Id1().encrypt_video();	break;
+		case RSA:	protocol = Rsa().encrypt_video();	break;
+		// Seam point i - insert another crypto protocol.
+		default: throw "OOPS"; break;
+		}
+		char str[80];
+		sprintf(str, "  Send DisplayPort[%d,%d] via %s at %d fps.",
+			res[0], res[1], protocol.c_str(), framerate);
+		return str;
+	}
+};
+class Hdmi {
+public:
+	string send_video(int* res, Crypto crypto, int framerate) {
+		string protocol;
+		switch(crypto) {
+		case PVP:	protocol = Pvp().encrypt_video();	break;
+		case ID1:	protocol = Id1().encrypt_video();	break;
+		case RSA:	protocol = Rsa().encrypt_video();	break;
+		// Seam point j - insert another crypto protocol.
+		default: throw "OOPS"; break;
+		}
+		char str[80];
+		sprintf(str, "  Send HDMI[%d,%d] via %s at %d fps.",
+			res[0], res[1], protocol.c_str(), framerate);
+		return str;
+	}
+};
+class Mipi {
+public:
+	string send_video(int* res, Crypto crypto, int framerate) {
+		string protocol;
+		switch(crypto) {
+		case PVP:	protocol = Pvp().encrypt_video();	break;
+		case ID1:	protocol = Id1().encrypt_video();	break;
+		case RSA:	protocol = Rsa().encrypt_video();	break;
+		// Seam point k - insert another crypto protocol.
+		default: throw "OOPS"; break;
+		}
+		char str[80];
+		sprintf(str, "  Send MIPI[%d,%d] via %s at %d fps.",
+			res[0], res[1], protocol.c_str(), framerate);
+		return str;
+	}
+};
+class Widi {
+public:
+	string send_video(int* res, Crypto crypto, int framerate) {
+		string protocol;
+		switch(crypto) {
+		case PVP:	protocol = Pvp().encrypt_video();	break;
+		case ID1:	protocol = Id1().encrypt_video();	break;
+		case RSA:	protocol = Rsa().encrypt_video();	break;
+		// Seam point l - insert another crypto protocol.
+		default: throw "OOPS"; break;
+		}
+		char str[80];
+		sprintf(str, "  Send Widi[%d,%d] via %s at %d fps.",
+			res[0], res[1], protocol.c_str(), framerate);
+		return str;
+	}
+};
+// Seam point C - add another display type - SOLID.
+
+// Client code, also in a separate file.
+void send_video(Display display, int* res, Crypto crypto, int framerate) {
+	switch(display) {
+	case DISPLAY_PORT:
+		cout << DisplayPort().send_video(res, crypto, framerate) << "\n";
+		break;
+	case HDMI:
+		cout << Hdmi().send_video(res, crypto, framerate) << "\n";
+		break;
+	case MIPI:
+		cout << Mipi().send_video(res, crypto, framerate) << "\n";
+		break;
+	case WIDI:
+		cout << Widi().send_video(res, crypto, framerate) << "\n";
+		break;
+	// Seam point D - insert another display type.
+	default:
+	throw "OOPS";
+	break;
+	}
+}
+
+void demo() {
+	int res[] = {1920, 1080};
+	int framerate = 60;
+	Display displays[] = {DISPLAY_PORT, HDMI, MIPI, WIDI};
+	Crypto cryptos[] = {PVP, ID1, RSA};
+
+	for(size_t i=0; i<sizeof(displays)/sizeof(*displays); i++) {
+		for(size_t j=0; j<sizeof(cryptos)/sizeof(*cryptos); j++) {
+			send_video(displays[i], res, cryptos[j], framerate);
+		}
+		cout << endl;
+	}
+}
+
+}
+
+namespace factory_method_solution {
+
+class Crypto {
+public: virtual ~Crypto() {}
+public:
+	static Crypto* makeObject(const string& type);
+	virtual const char* encrypt_video()=0;
+};
+class PVP : public Crypto {
+public:
+	const char* encrypt_video() { return "PVP"; }
+};
+class ID1 : public Crypto {
+public:
+	const char* encrypt_video() { return "ID1"; }
+};
+class RSA : public Crypto {
+public:
+	const char* encrypt_video() { return "RSA"; }
+};
+// Seam point 1 - add another crypto protocol - SOLID.
+Crypto* Crypto::makeObject(const string& type) {
+	if(     type == "PVP")	return new PVP;
+	else if(type == "ID1")	return new ID1;
+	else if(type == "RSA")	return new RSA;
+	// Seam point 3 - insert another crypto protocol.
+	else {
+		throw "OOPS";
+	}
+}
+
+class Display {
+protected:
+	char str[80];
+public: virtual ~Display() {}
+public:
+	static Display* makeObject(const string& type);
+	virtual void send_video(int* res, Crypto* crypto, int framerate)=0;
+};
+class DisplayPort : public Display {
+public:
+	void send_video(int* res, Crypto* crypto, int framerate) {
+		sprintf(str, "DisplayPort[%d,%d] via %s at %d fps.",
+			res[0], res[1], crypto->encrypt_video(), framerate);
+		cout << "  Send " << str << "\n";
+	}
+};
+class HDMI : public Display {
+public:
+	void send_video(int* res, Crypto* crypto, int framerate) {
+		sprintf(str, "HDMI[%d,%d] via %s at %d fps.",
+			res[0], res[1], crypto->encrypt_video(), framerate);
+		cout << "  Send " << str << "\n";
+	}
+};
+class MIPI : public Display {
+public:
+	void send_video(int* res, Crypto* crypto, int framerate) {
+		sprintf(str, "MIPI[%d,%d] via %s at %d fps.",
+			res[0], res[1], crypto->encrypt_video(), framerate);
+		cout << "  Send " << str << "\n";
+	}
+};
+class Widi : public Display {
+public:
+	void send_video(int* res, Crypto* crypto, int framerate) {
+		sprintf(str, "Widi[%d,%d] via %s at %d fps.",
+			res[0], res[1], crypto->encrypt_video(), framerate);
+		cout << "  Send " << str << "\n";
+	}
+};
+// Seam point 2 - add another display type - SOLID.
+Display* Display::makeObject(const string& type) {
+	if(type == "DisplayPort")	return new DisplayPort;
+	else if(type == "HDMI")		return new HDMI;
+	else if(type == "MIPI")		return new MIPI;
+	else if(type == "Widi")		return new Widi;
+	// Seam point 4 - insert another display type.
+	else {
+		throw "OOPS";
+	}
+}
+
+void send_video(Display* display, int* res, Crypto* crypto, int framerate) {
+	display->send_video(res, crypto, framerate);
+}
+
+void demo() {
+	int res[] = {1920, 1080};
+	int framerate = 60;
+	string displays[] = { "DisplayPort", "HDMI", "MIPI", "Widi"};
+	string cryptos[] = { "PVP", "ID1", "RSA"};
+
+	for(size_t i=0; i<sizeof(displays)/sizeof(*displays); i++) {
+		for(size_t j=0; j<sizeof(cryptos)/sizeof(*cryptos); j++) {
+			Display* display = Display::makeObject(displays[i]);
+			Crypto* crypto = Crypto::makeObject(cryptos[j]);
+			send_video(display, res, crypto, framerate);
+		}
+		cout << endl;
+	}
+}
+
+}
+
+}
+
 
 /* Consider the problem of sending encrypted video streams to
  * a variety of display types under different crypto protocols
@@ -265,9 +616,73 @@ void demo() {
  * we want to avoid any combinatorial explosions.
  */
 
-namespace factory_method_problem2 {
+namespace factory_method_common {
 
-void send_video(int* res, int frameRate, int display, int protocol);
+char str[80];
+
+class Framerate {
+	int	framesPerSec;
+public:
+	Framerate(int framesPerSec) : framesPerSec(framesPerSec) {}
+	string operator()() {
+		sprintf(str, "at %d fps.\n", framesPerSec);
+		return str;
+	}
+};
+
+class Resolution {
+	int	h;
+	int	v;
+public:
+	Resolution(int h, int v) : h(h), v(v) {}
+	string operator()() {
+		sprintf(str, "[%d, %d] ", h, v);
+		return str;
+	}
+};
+
+class Display {
+	string name;
+public:
+	Display(const string& name) : name(name) {}
+	string operator()() {
+		sprintf(str, "  %s", name.c_str());
+		return str; }
+};
+
+class Crypto {
+	string name;
+public:
+	Crypto(const string& name) : name(name) {}
+	string operator()() {
+		sprintf(str, "via %s ", name.c_str());
+		return str;
+	}
+};
+
+}
+
+namespace factory_method_legacy {
+
+using namespace factory_method_common;
+
+void demo() {
+	Display		display("DisplayPort");
+	Crypto		crypto("PVP");
+	Resolution	res(1920,1080);
+	Framerate	framerate = 60;
+	switch(1) {
+	case 1:	cout << display() << res() << crypto() << framerate(); break;
+	}
+
+	cout << endl;
+}
+
+}
+
+namespace factory_method_problem {
+
+//void send_video(int* res, int frameRate, int display, int protocol);
 
 class DisplayPort {
 public:
@@ -345,8 +760,6 @@ void send_video(int* res, int frameRate, int display, int protocol)
 }
 
 void demo() {
-	cout << "<< Factory Method problem >>\n";
-
 	int	res[] = {1920, 1080};
 	int	frameRate = 60;
 
@@ -360,7 +773,7 @@ void demo() {
 
 }
 
-namespace factory_method {	// Each class hierarchy is an example of the Factory Method design pattern.
+namespace factory_method_solution {	// Each class hierarchy is an example of the Factory Method design pattern.
 
 class Crypto {
 public:
@@ -434,8 +847,6 @@ Display* Display::makeObject(int selection) {
 }
 
 void demo() {
-	cout << "<< Factory Method solution >>\n";
-
 	int	res[] = {1920, 1080};
 	int	frameRate = 60;
 

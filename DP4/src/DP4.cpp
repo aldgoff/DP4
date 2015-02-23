@@ -121,8 +121,8 @@ void runSingleton() {
 }
 
 void runFactoryMethod() {
-	factory_method_problem2::demo();
-	factory_method::demo();
+//	factory_method_problem2::demo();
+//	factory_method::demo();
 }
 
 
