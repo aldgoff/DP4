@@ -58,17 +58,6 @@ using namespace std;
 
 /*====================================================================================================================*/
 
-void runFacade() {
-//	facade::Facade house;
-//	house.goToWork(); cout << endl;
-//	house.comeHome(); cout << endl;
-}
-
-void runAdapter() {
-//	adapter_problem::demo();
-//	adapter_solution::demo();
-}
-
 void runStrategy() {
 //	wikibooks_cpp_pcdp::demo_strategy(); cout << endl;
 
@@ -108,21 +97,11 @@ void runObserver() {
 	observer::demo();
 }
 
-void runTemplateMethod() {
-//	homework::demo();
-//	templateMethod::demo();
-}
-
 void runSingleton() {
 	too_many::demo();
 	singleton::demo();
 //	double_checked_locking_pattern::demo();
 //	polyton::demo();
-}
-
-void runFactoryMethod() {
-//	factory_method_problem2::demo();
-//	factory_method::demo();
 }
 
 
@@ -194,6 +173,10 @@ void runSolti() {
 void runPairWise() {
 	pair_wise::clientStrategy();
 	pair_wise::clientAdapter();
+	pair_wise::clientFacade();
+	pair_wise::clientTemplateMethod();
+	pair_wise::clientFactoryMethod();
+	pair_wise::clientDecorator();
 }
 
 void runSideBySide() {
@@ -206,19 +189,6 @@ void runSideBySide() {
 	side_by_side::clientDecorator();
 	side_by_side::clientObserver();
 	side_by_side::clientCommand();
-}
-
-void runSkeletons() {
-	skeleton::clientStrategy();
-	skeleton::clientAdapter();
-	skeleton::clientFacade();
-	skeleton::clientTemplateMethod();
-	skeleton::clientFactoryMethod();
-	skeleton::clientDecorator();
-	skeleton::clientObserver();
-	skeleton::clientChainOfResponsibility();
-	skeleton::clientBridge();
-	skeleton::clientAbstractFactory();
 }
 
 void runWhatVaries() {
@@ -253,32 +223,28 @@ int main(int argc, char* args[]) {
 		cout << "  Header files to include in DP4.cpp also listed.\n";
 		cout << endl;
 		meta("");
-//		cout << "pairWise\n";
-//		cout << "final\n";
-//		cout << "varies\n";
-//		cout << "principles\n";
-//		cout << "solti\n";
-//		cout << "whatVaries\n";
-//		cout << "virtualDtorBug\n";
-//		cout << "midterm\n";
-//		cout << "\n";
+		cout << "final\n";
+		cout << "principles\n";
+		cout << "varies\n";
+		cout << "midterm\n";
+		cout << "solti\n";
+		cout << "pairWise\n";
+		cout << "whatVaries\n";
+		cout << "virtualDtorBug\n";
+		cout << "\n";
 	}
 
 	for(int i=1; i<argc; i++) {
 		if(meta(string(args[i])))
 			continue;
-//		if(!strcmp(args[i], "facade"))		runFacade();
-//		if(!strcmp(args[i], "adapter"))		runAdapter();
 //		if(!strcmp(args[i], "strategy"))	runStrategy();
 //		if(!strcmp(args[i], "bridge"))		runBridge();
 //
 //		if(!strcmp(args[i], "abstractFactory"))	runAbstractFactory();
 //		if(!strcmp(args[i], "decorator"))		runDecorator();
 //		if(!strcmp(args[i], "observer"))		runObserver();
-//		if(!strcmp(args[i], "templateMethod"))	runTemplateMethod();
 //
 //		if(!strcmp(args[i], "singleton"))		runSingleton();
-//		if(!strcmp(args[i], "factoryMethod"))	runFactoryMethod();
 //		if(!strcmp(args[i], "composite"))				runComposite();
 //		if(!strcmp(args[i], "chainOfResponsibility"))	runChainOfResponsibility();
 //
@@ -293,8 +259,6 @@ int main(int argc, char* args[]) {
 		else if(!strcmp(args[i], "varies"))			runVaries();
 		else if(!strcmp(args[i], "midterm"))		runMidterm();
 		else if(!strcmp(args[i], "solti"))			runSolti();
-//		else if(!strcmp(args[i], "sideBySide"))		runSideBySide();
-//		else if(!strcmp(args[i], "skeletons"))		runSkeletons();
 		else if(!strcmp(args[i], "pairWise"))		runPairWise();
 		else if(!strcmp(args[i], "whatVaries"))		runWhatVaries();
 		else if(!strcmp(args[i], "virtualDtorBug"))	runVirtualDtorBug();

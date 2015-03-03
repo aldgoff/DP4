@@ -18,13 +18,253 @@
 #ifndef DECORATOR_H_
 #define DECORATOR_H_
 
+#include <memory>		// Apparently, desktop does not have C++11 installed.
+using namespace std;	// No shared_ptr defined.
+
+namespace lecture {
+
+namespace decorator_wikipedia_problem {
+
+class Window {
+public:
+	virtual void draw() { cout << "  Draw window\n"; }
+};
+class WindowWithBorder : public Window {
+public:
+	void draw() { cout << "  Draw window with border\n"; }
+};
+class ScrollingHWindow : public Window {
+public:
+	void draw() { cout << "  Draw window with horizontal scroll bar\n"; }
+};
+class ScrollingVWindow : public Window {
+public:
+	void draw() { cout << "  Draw window with vertical scroll bar\n"; }
+};
+class ScrollingHVWindow : public Window {
+public:
+	void draw() { cout << "  Draw window with scroll bars\n"; }
+};
+class ScrollingHWindowWithBoarder : public Window {
+public:
+	void draw() { cout << "  Draw window with border horizontal scroll bar\n"; }
+};
+class ScrollingVWindowWithBoarder : public Window {
+public:
+	void draw() { cout << "  Draw window with border vertical scroll bar\n"; }
+};
+class ScrollingHVWindowWithBoarder : public Window {
+public:
+	void draw() { cout << "  Draw window with border with scroll bars\n"; }
+};
+
+void demo() {
+	Window().draw();
+	WindowWithBorder().draw();
+	ScrollingHWindow().draw();
+	ScrollingVWindow().draw();
+	ScrollingHVWindow().draw();
+	ScrollingHWindowWithBoarder().draw();
+	ScrollingVWindowWithBoarder().draw();
+	ScrollingHVWindowWithBoarder().draw();
+	cout << endl;
+}
+
+}
+
+namespace decorator_wikipedia_solution {
+
+class Window {
+public: virtual ~Window() { cout << "  ** Window dtor\n"; }
+public:
+	virtual void draw() { cout << "  Draw window"; }
+	virtual string getDesc() { return "Simple window"; }
+};
+class WindowDecorator : public Window {
+public:	Window* decoration;
+public:
+	WindowDecorator(Window* window) : decoration(window) {}
+	virtual ~WindowDecorator() { cout << "  >< WindowDecorator dtor\n"; }
+public:
+};
+class WindowWithBorder : public WindowDecorator {
+public:
+	WindowWithBorder(Window* window) : WindowDecorator(window) {}
+	~WindowWithBorder() { cout << "  <> WindowWithBorder dtor\n"; }
+public:
+	void draw() { decoration->draw(); cout << " with border"; }
+	string getDesc() { return "Window with border"; }
+};
+class ScrollingHWindow : public WindowDecorator {
+public:
+	ScrollingHWindow(Window* window) : WindowDecorator(window) {}
+	~ScrollingHWindow() { cout << "  <> ScrollingHWindow dtor\n"; }
+public:
+	void draw() { decoration->draw(); cout << " with horizontal scroll bar"; }
+	string getDesc() { return "Window with horizontal scrolling"; }
+};
+class ScrollingVWindow : public WindowDecorator {
+public:
+	ScrollingVWindow(Window* window) : WindowDecorator(window) {}
+	~ScrollingVWindow() { cout << "  <> ScrollingVWindow dtor\n"; }
+public:
+	void draw() { decoration->draw(); cout << " with vertical scroll bar"; }
+	string getDesc() { return "Window with vertical scrolling"; }
+};
+
+void demo() {
+	{
+	Window simpleWindow;
+	WindowWithBorder border(&simpleWindow);
+	ScrollingHWindow horizontal(&border);
+	ScrollingVWindow vertical(&horizontal);
+	vertical.draw();
+	cout << endl;
+	}
+	cout << endl;
+}
+
+void demoViaHeap() {
+	cout << "  lecture::decorator_wikipedia_solution::demoViaHeap()\n";
+	Window* window = 0;
+	window = new Window();
+	window = new WindowWithBorder(window);
+	window = new ScrollingHWindow(window);
+	window = new ScrollingVWindow(window);
+	window->draw();
+	cout << endl;
+	WindowDecorator* prev = dynamic_cast<WindowDecorator*>(window);
+	prev = dynamic_cast<WindowDecorator*>(prev->decoration);
+	Window* base = dynamic_cast<WindowDecorator*>(prev->decoration)->decoration;
+	cout << base->getDesc() << endl;
+	cout << prev->decoration->getDesc() << endl;
+	cout << prev->getDesc() << endl;
+	cout << window->getDesc() << endl;
+	delete base;
+	delete prev->decoration;
+	delete prev;
+	delete window;
+}
+
+void demo2() {
+	cout << "  auto_ptr();\n";
+//    std::shared_ptr<Window> window = 0;
+//	window = new Window();
+
+	cout << endl;
+}
+
+}
+
+namespace decorator_legacy {
+
+string base() { return "base"; }
+string opt1() { return "opt1"; }
+string opt2() { return "opt2"; }
+string opt3() { return "opt3"; }
+string opt4() { return "opt4"; }
+
+void demo() {
+	cout << "  lecture::decorator_legacy::demo()\n";
+
+	cout << "  ";
+	cout << opt4() << " + ";
+	cout << opt2() << " + ";
+	cout << opt1() << " + ";
+	cout << base() << ".\n";
+
+	cout << endl;
+}
+
+}
+
+namespace decorator_problem {
+
+class Option {
+
+};
+
+void clientListOptions(const vector<Option*>& opts) {
+	cout << "  List...\n";
+}
+
+void clientTallyCosts(const vector<Option*>& opts) {
+	cout << "  Tally...\n";
+}
+
+void demo() {
+	cout << "  lecture::decorator_problem::demo()\n";
+	vector<Option*> opts;
+	opts.push_back(new Option);
+	opts.push_back(new Option);
+	clientListOptions(opts);
+	clientTallyCosts(opts);
+
+	cout << endl;
+}
+
+}
+
+namespace decorator_solution {
+
+class Decorator {
+public: virtual ~Decorator() {
+	cout << "  ** dtor " << name << ".\n";
+	if(chain)
+		delete chain;
+	}
+protected:
+	Decorator* chain;
+	string		name;
+public:
+	Decorator(Decorator* chain=0, const string& name="base")
+		: chain(chain), name(name) {}
+	virtual string option() { return "base"; }
+};
+class Option1 : public Decorator {
+public:
+	Option1(Decorator* chain) : Decorator(chain, "opt1") {}
+	string option() { return name + " + " + chain->option(); }
+};
+class Option2 : public Decorator {
+public:
+	Option2(Decorator* chain) : Decorator(chain, "opt2") {}
+	string option() { return name + " + " + chain->option(); }
+};
+class Option3 : public Decorator {
+public:
+	Option3(Decorator* chain) : Decorator(chain, "opt3") {}
+	string option() { return name + " + " + chain->option(); }
+};
+class Option4 : public Decorator {
+public:
+	Option4(Decorator* chain) : Decorator(chain, "opt4") {}
+	string option() { return name + " + " + chain->option(); }
+};
+
+void demo() {
+	cout << "  lecture::decorator_solution::demo()\n";
+	Decorator* build = new Decorator;
+	build = new Option1(build);
+	build = new Option2(build);
+	build = new Option4(build);
+	cout << "  " << build->option() << ".\n";
+
+	delete build;
+	cout << endl;
+}
+
+}
+
+}
+
+// Still a bit of a mess.
+
 struct Data {
 	int	optA;
 	int	optB;
 	int optC;
 };
-
-// Still a bit of a mess.
 
 namespace decorator_legacy {
 

@@ -238,34 +238,34 @@ class Strategy : public DesignPattern {
 public:
 	Strategy() : DesignPattern("Strategy") {}
 public:
-	void lecture(int i) {	// PowerPoint Class lecture.
+	void lecture(int i) {
 		DesignPattern::lecture(i);
 		lecture::strategy_legacy::demo();
 		lecture::strategy_abstract::demo();
 		lecture::strategy_problem::demo();
 		lecture::strategy_solution::demo();
 	}
-	void legacy(int i) {	// Legacy example.
+	void legacy(int i) {
 		DesignPattern::legacy(i);
 		homework::strategy_legacy::demo();
 	}
-	void problem(int i) {	// Problem example.
+	void problem(int i) {
 		DesignPattern::problem(i);
 		homework::strategy_problem::demo();
 	}
-	void solution(int i) {	// Solution example.
+	void solution(int i) {
 		DesignPattern::solution(i);
 		homework::strategy_solution::demo();
 	}
-	void skeleton(int i) {	// Skeleton example.
+	void skeleton(int i) {
 		DesignPattern::skeleton(i);
 		skeleton::clientStrategy();
 	}
-	void sideBySide(int i) {// Side by side example.
+	void sideBySide(int i) {
 		DesignPattern::sideBySide(i);
 		side_by_side::clientStrategy();
 	}
-	void pairWise(int i) {	// Pair wise example.
+	void pairWise(int i) {
 		DesignPattern::pairWise(i);
 		pair_wise::clientStrategy();
 	}
@@ -274,17 +274,6 @@ class Adapter : public DesignPattern {
 public:
 	Adapter() : DesignPattern("Adapter") {}
 public:
-//	void run(int i) {	// TODO: remove the production files as well.
-//		cout << i << ") ";	legacy(i);
-//		cout << i << ") ";	problem(i);
-//		cout << i << ") ";	solution(i);
-//		cout << i << ") ";
-//		cout << "<< " << name << " problem production >>\n";
-//		adapter_problem_production::demo();
-//		cout << i << ") ";
-//		cout << "<< " << name << " solution production >>\n";
-//		adapter_solution_production::demo();
-//	}
 	void legacy(int i) {
 		DesignPattern::legacy(i);
 		adapter_legacy::demo();
@@ -305,7 +294,7 @@ public:
 		DesignPattern::sideBySide(i);
 		side_by_side::clientAdapter();
 	}
-	void pairWise(int i) {	// Pair wise example.
+	void pairWise(int i) {
 		DesignPattern::pairWise(i);
 		pair_wise::clientAdapter();
 	}
@@ -314,29 +303,29 @@ class Facade : public DesignPattern {
 public:
 	Facade() : DesignPattern("Facade") {}
 public:
-	void lecture(int i) {	// PowerPoint Class lecture.
+	void lecture(int i) {
 		DesignPattern::lecture(i);
 		lecture::facade_legacy::demo();
 		lecture::facade_problem::demo();
 		lecture::facade_solution::demo();
 	}
-	void legacy(int i) {	// Legacy example.
+	void legacy(int i) {
 		DesignPattern::legacy(i);
 		homework::facade_legacy::demo();
 	}
-	void problem(int i) {	// Problem example.
+	void problem(int i) {
 		DesignPattern::problem(i);
 		homework::facade_problem::demo();
 	}
-	void solution(int i) {	// Solution example.
+	void solution(int i) {
 		DesignPattern::solution(i);
 		homework::facade_solution::demo();
 	}
-	void skeleton(int i) {	// Skeleton example.
+	void skeleton(int i) {
 		DesignPattern::skeleton(i);
 		skeleton::clientFacade();
 	}
-	void sideBySide(int i) {// Side by side example.
+	void sideBySide(int i) {
 		DesignPattern::sideBySide(i);
 		side_by_side::clientFacade();
 	}
@@ -345,7 +334,7 @@ class TemplateMethod : public DesignPattern {
 public:
 	TemplateMethod() : DesignPattern("TemplateMethod") {}
 public:
-	void run(int i) {	// Run homework example.
+	void run(int i) {
 		DesignPattern::legacy(i);
 		home_work::template_method_legacy::demo();
 		DesignPattern::problem(i);
@@ -353,7 +342,7 @@ public:
 		DesignPattern::solution(i);
 		home_work::template_method_solution::demo();
 	}
-	void lecture(int i) {	// PowerPoint Class lecture.
+	void lecture(int i) {
 		DesignPattern::lecture(i);
 		lecture::template_method_legacy::demo();
 		lecture::template_method_problem::demo();
@@ -383,7 +372,7 @@ public:
 		DesignPattern::sideBySide(i);
 		side_by_side::clientTemplateMethod();
 	}
-	void pairWise(int i) {	// Pair wise example.
+	void pairWise(int i) {
 		DesignPattern::pairWise(i);
 		pair_wise::clientTemplateMethod();
 	}
@@ -392,11 +381,11 @@ class FactoryMethod : public DesignPattern {
 public:
 	FactoryMethod() : DesignPattern("FactoryMethod") {}
 public:
-	virtual void run(int i) {	// Run homework example.
+	void run(int i) {
 		problem(i);
 		solution(i);
 	}
-	void lecture(int i) {	// PowerPoint Class lecture.
+	void lecture(int i) {
 		DesignPattern::lecture(i);
 		lecture::factory_method_legacy::demo();
 		lecture::factory_method_problem::demo();
@@ -427,6 +416,14 @@ class Decorator : public DesignPattern {
 public:
 	Decorator() : DesignPattern("Decorator") {}
 public:
+	void lecture(int i) {
+		DesignPattern::lecture(i);
+		lecture::decorator_wikipedia_problem::demo();
+		lecture::decorator_wikipedia_solution::demo();
+		lecture::decorator_legacy::demo();
+		lecture::decorator_problem::demo();
+		lecture::decorator_solution::demo();
+	}
 	void legacy(int i) {
 		DesignPattern::legacy(i);
 		decorator_legacy::demo();
@@ -622,12 +619,6 @@ bool dispatch(const string& arg) {
 		else if(arg == string("l") + desPats[i]->name) desPats[i]->legacy(i);
 		else if(arg == string("p") + desPats[i]->name) desPats[i]->problem(i);
 		else if(arg == string("s") + desPats[i]->name) desPats[i]->solution(i);
-		else if(arg == string("k") + desPats[i]->name) desPats[i]->skeleton(i);
-		else if(arg == string("by")+ desPats[i]->name) desPats[i]->sideBySide(i);
-		else if(arg == string("c") + desPats[i]->name) desPats[i]->lecture(i);
-		else if(arg == string("l") + desPats[i]->name) desPats[i]->legacy(i);
-		else if(arg == string("p") + desPats[i]->name) desPats[i]->problem(i);
-		else if(arg == string("s") + desPats[i]->name) desPats[i]->solution(i);
 		else if(arg == string("v") + desPats[i]->name) desPats[i]->variation(i);
 		else if(arg == string("k") + desPats[i]->name) desPats[i]->skeleton(i);
 		else if(arg == string("by")+ desPats[i]->name) desPats[i]->sideBySide(i);
@@ -671,7 +662,7 @@ bool meta(const string& arg) {
 		for(size_t i=0; i<COUNT(dp_list::desPats); i++) {	// List for Run Configurations...
 			cout << desPats[i]->name << endl;
 		}
-		cout << "prefixes: c, l, p, s, k, by\n";
+		cout << "prefixes: c, l, p, s, v, k, by\n";
 		cout << "lectures\n";
 		cout << "legacies\n";
 		cout << "problems\n";
