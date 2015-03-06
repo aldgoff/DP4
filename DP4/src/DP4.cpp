@@ -50,11 +50,20 @@ using namespace std;
 #include "SideBySide/sideBySide.h"
 #include "PairWise/pairWise.h"
 #include "Skeletons/skeletons.h"
+
 #include "Problems/lab1_problem_strategy.h"
 #include "Problems/lab1_problem_adapter.h"
 #include "Problems/lab2_problem_facade.h"
 #include "Problems/lab2_problem_templateMethod.h"
 #include "Problems/lab3_problem_factoryMethod.h"
+#include "Problems/lab3_problem_decorator.h"
+
+#include "Solutions/lab1_solution_strategy.h"
+#include "Solutions/lab1_solution_adapter.h"
+#include "Solutions/lab2_solution_facade.h"
+#include "Solutions/lab2_solution_templateMethod.h"
+#include "Solutions/lab3_solution_factoryMethod.h"
+#include "Solutions/lab3_solution_decorator.h"
 
 #include "meta.h"
 #include "whatVaries.h"

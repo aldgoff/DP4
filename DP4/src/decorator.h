@@ -18,9 +18,6 @@
 #ifndef DECORATOR_H_
 #define DECORATOR_H_
 
-#include <memory>		// Apparently, desktop does not have C++11 installed.
-using namespace std;	// No shared_ptr defined.
-
 namespace lecture {
 
 namespace decorator_wikipedia_problem {
