@@ -47,7 +47,7 @@ void demo() {
 
 }
 
-namespace grid {
+namespace grid {	// Text font set to 8 points.
 
 /*  0
  *  1

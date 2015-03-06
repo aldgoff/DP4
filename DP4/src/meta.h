@@ -426,15 +426,15 @@ public:
 	}
 	void legacy(int i) {
 		DesignPattern::legacy(i);
-		decorator_legacy::demo();
+		homework::decorator_legacy::demo();
 	}
 	void problem(int i) {
 		DesignPattern::problem(i);
-		decorator_problem::demo();
+		homework::decorator_problem::demo();
 	}
 	void solution(int i) {
 		DesignPattern::solution(i);
-		decorator_solution::demo();
+		homework::decorator_solution::demo();
 	}
 	void skeleton(int i) {
 		DesignPattern::skeleton(i);

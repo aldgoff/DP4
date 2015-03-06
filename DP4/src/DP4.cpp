@@ -52,6 +52,9 @@ using namespace std;
 #include "Skeletons/skeletons.h"
 #include "Problems/lab1_problem_strategy.h"
 #include "Problems/lab1_problem_adapter.h"
+#include "Problems/lab2_problem_facade.h"
+#include "Problems/lab2_problem_templateMethod.h"
+#include "Problems/lab3_problem_factoryMethod.h"
 
 #include "meta.h"
 #include "whatVaries.h"
