@@ -165,30 +165,6 @@ public:
 
 }
 
-namespace facade_new_specs {
-
-class TV {
-public:
-	void on() {
-		cout << "  TV on." << endl;
-	}
-	void off() {
-		cout << "  TV off." << endl;
-	}
-};
-class Lights {
-public:
-	void on() {
-		cout << "  Lights on." << endl;
-	}
-	void off() {
-		cout << "  Lights off." << endl;
-	}
-};
-// ... ad infinitum
-
-}
-
 namespace facade_legacy {	// Smart house with large, complicated interface.
 
 using namespace facade_common;
@@ -214,6 +190,30 @@ void demo() {
 
 	cout << endl;
 }
+
+}
+
+namespace facade_new_specs {
+
+class TV {
+public:
+	void on() {
+		cout << "  TV on." << endl;
+	}
+	void off() {
+		cout << "  TV off." << endl;
+	}
+};
+class Lights {
+public:
+	void on() {
+		cout << "  Lights on." << endl;
+	}
+	void off() {
+		cout << "  Lights off." << endl;
+	}
+};
+// ... ad infinitum
 
 }
 

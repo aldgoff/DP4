@@ -186,7 +186,7 @@ void fast() {
 		cout << "  highHeat\n";
 	else
 		cout << "  lowHeat\n";
-	cout << "  Fast optimized\n";
+	cout << "  Fast optimized\n";		// This step is always different.
 	cout << "  usual cleanup\n";
 	cout << "  putaway\n";
 	cout << endl;
@@ -199,7 +199,7 @@ void economic() {
 		cout << "  highHeat\n";
 	else
 		cout << "  lowHeat\n";
-	cout << "  Economic optimized\n";
+	cout << "  Economic optimized\n";	// This step is always different.
 	cout << "  usual cleanup\n";
 	cout << "  putaway\n";
 	cout << endl;
@@ -218,8 +218,8 @@ void critical() {
 		cout << "  highHeat\n";
 	else
 		cout << "  lowHeat\n";
-	cout << "  Critical optimized\n";
-	cout << "  meticulous cleanup\n";
+	cout << "  Critical optimized\n";	// This step is always different.
+	cout << "  meticulous cleanup\n";	// Now this step can differ too.
 	cout << "  putaway\n";
 	cout << endl;
 }
@@ -231,8 +231,8 @@ void npc() {
 		cout << "  highHeat\n";
 	else
 		cout << "  lowHeat\n";
-	cout << "  NPC optimized\n";
-	cout << "  meticulous cleanup\n";
+	cout << "  NPC optimized\n";		// This step is always different.
+	cout << "  meticulous cleanup\n";	// Now this step can differ too.
 	cout << "  putaway\n";
 	cout << endl;
 }
