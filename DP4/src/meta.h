@@ -449,17 +449,24 @@ class Observer : public DesignPattern {
 public:
 	Observer() : DesignPattern("Observer") {}
 public:
-	void legacy(int i) {
-		DesignPattern::legacy(i);
-		observer_legacy::demo();
+	virtual void run(int i) {	// Run homework example.
+//		legacy(i);
+		problem(i);
+		solution(i);
+//		ripples::demo();
+//		observer::demo();
 	}
+//	void legacy(int i) {
+//		DesignPattern::legacy(i);
+//		homework::observer_legacy::demo();
+//	}
 	void problem(int i) {
 		DesignPattern::problem(i);
-		observer_problem::demo();
+		homework::observer_problem::demo();
 	}
 	void solution(int i) {
 		DesignPattern::solution(i);
-		observer_solution::demo();
+		homework::observer_solution::demo();
 	}
 	void skeleton(int i) {
 		DesignPattern::skeleton(i);
