@@ -450,16 +450,17 @@ public:
 	Observer() : DesignPattern("Observer") {}
 public:
 	virtual void run(int i) {	// Run homework example.
-//		legacy(i);
 		problem(i);
 		solution(i);
 //		ripples::demo();
 //		observer::demo();
 	}
-//	void legacy(int i) {
-//		DesignPattern::legacy(i);
-//		homework::observer_legacy::demo();
-//	}
+	void lecture(int i) {
+		DesignPattern::lecture(i);
+//		lecture::observer_legacy::demo();
+//		lecture::observer_problem::demo();
+		lecture::observer_solution::demo();
+	}
 	void problem(int i) {
 		DesignPattern::problem(i);
 		homework::observer_problem::demo();

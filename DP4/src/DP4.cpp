@@ -225,6 +225,21 @@ void runVirtualDtorBug() {
 //	ref_study::demo();
 }
 
+void runMaestroTests() {
+	cout << "  Hello Meastro.\n";
+
+	unsigned const char	sam[] = "Sam I am.\n";
+	unsigned const char*	iam = sam;
+	const char* ham = "I do like green eggs and ham.\n";
+
+	cout << "  " << sizeof(sam) << endl;
+	cout << "  " << sizeof(iam) << endl;
+	cout << "  " << sizeof(*iam) << endl;
+	cout << "  " << strlen(ham) << endl;
+
+	cout << "  Aloha Meastro.\n";
+	}
+
 /*====================================================================================================================*/
 
 int main(int argc, char* args[]) {
@@ -243,6 +258,7 @@ int main(int argc, char* args[]) {
 		cout << "pairWise\n";
 		cout << "whatVaries\n";
 		cout << "virtualDtorBug\n";
+		cout << "maestro\n";
 		cout << "\n";
 	}
 
@@ -274,6 +290,7 @@ int main(int argc, char* args[]) {
 		else if(!strcmp(args[i], "pairWise"))		runPairWise();
 		else if(!strcmp(args[i], "whatVaries"))		runWhatVaries();
 		else if(!strcmp(args[i], "virtualDtorBug"))	runVirtualDtorBug();
+		else if(!strcmp(args[i], "maestro"))		runMaestroTests();
 		else {
 			cout << "  <" << args[i] << "> command line arg NOT understood.\n";
 		}
