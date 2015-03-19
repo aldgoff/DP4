@@ -189,6 +189,8 @@ void runPairWise() {
 	pair_wise::clientTemplateMethod();
 	pair_wise::clientFactoryMethod();
 	pair_wise::clientDecorator();
+	pair_wise::clientObserver();
+	pair_wise::clientChainOfResponsibility();
 }
 
 void runSideBySide() {

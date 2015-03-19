@@ -21,12 +21,16 @@ namespace pair_wise {
 //void clientDesignPattern();
 void clientStrategy();
 void clientAdapter();
+
 void clientFacade();
 void clientTemplateMethod();
+
 void clientFactoryMethod();
 void clientDecorator();
-//void clientObserver();
-//void clientChainOfResponsibility();
+
+void clientObserver();
+void clientChainOfResponsibility();
+
 //void clientBridge();
 //void clientAbstractFactory();
 

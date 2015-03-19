@@ -449,7 +449,7 @@ class Observer : public DesignPattern {
 public:
 	Observer() : DesignPattern("Observer") {}
 public:
-	virtual void run(int i) {	// Run homework example.
+	void run(int i) {	// Run homework example.
 		problem(i);
 		solution(i);
 //		ripples::demo();
@@ -482,17 +482,27 @@ class ChainOfResponsibility : public DesignPattern {
 public:
 	ChainOfResponsibility() : DesignPattern("ChainOfResponsibility") {}
 public:
+	void run(int i) {
+		DesignPattern::problem(i);	decisions::demo();
+		DesignPattern::solution(i);	chainOfResponsibility::demo();
+	}
+	void lecture(int i) {
+		DesignPattern::lecture(i);
+		lecture::chain_of_resp_legacy::demo();
+		lecture::chain_of_resp_problem::demo();
+		lecture::chain_of_resp_solution::demo();
+	}
 	void legacy(int i) {
 		DesignPattern::legacy(i);
-		chain_of_resp_legacy::demo();
+		homework::chain_of_resp_legacy::demo();
 	}
 	void problem(int i) {
 		DesignPattern::problem(i);
-		chain_of_resp_problem::demo();
+		homework::chain_of_resp_problem::demo();
 	}
 	void solution(int i) {
 		DesignPattern::solution(i);
-		chain_of_resp_solution::demo();
+		homework::chain_of_resp_solution::demo();
 	}
 	void skeleton(int i) {
 		DesignPattern::skeleton(i);

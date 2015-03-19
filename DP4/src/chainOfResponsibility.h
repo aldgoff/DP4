@@ -18,6 +18,300 @@
 #ifndef CHAINOFRESPONSIBILITY_H_
 #define CHAINOFRESPONSIBILITY_H_
 
+namespace lecture {
+
+namespace chain_of_resp_legacy {
+
+class Clerk {
+public:
+	Clerk() { cout << "  +Clerk ctor.\n"; }
+	~Clerk() { cout << "  ~Clerk dtor.\n"; }
+public:
+	void approves(float amount) {
+		cout << "  Clerk approves $" << amount << ".\n";
+	}
+};
+
+class Owner {
+public:
+	Owner() { cout << "  +Owner ctor.\n"; }
+	~Owner() { cout << "  ~Owner dtor.\n"; }
+public:
+	void approves(float amount) {
+		cout << "  Owner approves $" << amount << ".\n";
+	}
+};
+
+void clientCode(float amount) {	// Client coupled with lots of classes.
+	{
+	static Clerk	clerk;
+	static Owner	owner;
+	// Seam point - insert another approval class.
+
+	if(amount < 20.00)
+		clerk.approves(amount);
+	else if(amount < 500.00)
+		owner.approves(amount);
+	// Seam point - insert another approval level.
+	else
+		cout << "  Denied $" << amount << ", the buck stops here.\n";
+	}
+}
+
+void demo() {
+	cout << "  chain_of_resp_legacy::demo().\n";
+
+	float data[] = { 10.01, 44.77, 111.88, 333.99, 555.22, 999.99, 1010.55 };
+	for(size_t i=0; i<sizeof(data)/sizeof(*data); i++) {
+		clientCode(data[i]);
+	}
+
+	cout << endl;
+}
+
+}
+
+namespace chain_of_resp_problem {
+
+class ChainOfResp {
+protected:
+	ChainOfResp*	successor;
+public:
+	ChainOfResp() : successor(0) {}
+	virtual ~ChainOfResp() { cout << "  ~ChainOfResp\n"; }
+public:
+	void setSuccessor(ChainOfResp* successor) {
+		this->successor = successor;
+	}
+	virtual void handleRequest(float amount) {
+		cout << "  Denied $" << amount << ", the buck stops here.\n";
+	}
+};
+class Clerk : public ChainOfResp {
+public:	~Clerk() { cout << "  ~Clerk"; }
+	void handleRequest(float amount) {
+		if(amount < 20.00)	cout << "  Clerk approves $" << amount << ".\n";
+		else if(successor)	successor->handleRequest(amount);
+		else				ChainOfResp::handleRequest(amount);
+	}
+};
+class Supervisor : public ChainOfResp {
+public:	~Supervisor() { cout << "  ~Supervisor"; }
+	void handleRequest(float amount) {
+		if(amount < 100.00)	cout << "  Supervisor approves $" << amount << ".\n";
+		else if(successor)	successor->handleRequest(amount);
+		else				ChainOfResp::handleRequest(amount);
+	}
+};
+class Manager : public ChainOfResp {
+public:	~Manager() { cout << "  ~Manager"; }
+	void handleRequest(float amount) {
+		if(amount < 200.00)	cout << "  Manager approves $" << amount << ".\n";
+		else if(successor)	successor->handleRequest(amount);
+		else				ChainOfResp::handleRequest(amount);
+	}
+};
+class Director : public ChainOfResp {
+public:	~Director() { cout << "  ~Director"; }
+	void handleRequest(float amount) {
+		if(amount < 400.00)	cout << "  Director approves $" << amount << ".\n";
+		else if(successor)	successor->handleRequest(amount);
+		else				ChainOfResp::handleRequest(amount);
+	}
+};
+class VP : public ChainOfResp {
+public:	~VP() { cout << "  ~VP"; }
+	void handleRequest(float amount) {
+		if(amount < 600.00)	cout << "  VP approves $" << amount << ".\n";
+		else if(successor)	successor->handleRequest(amount);
+		else				ChainOfResp::handleRequest(amount);
+	}
+};
+class President : public ChainOfResp {
+public:	~President() { cout << "  ~President"; }
+	void handleRequest(float amount) {
+		if(amount < 1000.00) cout << "  President approves $" << amount <<".\n";
+		else if(successor)	successor->handleRequest(amount);
+		else				ChainOfResp::handleRequest(amount);
+	}
+};
+
+void clientCode(ChainOfResp* chain, float amount) {
+	chain->handleRequest(amount);
+}
+
+void demo() {
+	cout << "  chain_of_resp_problem::demo().\n";
+	{
+	Clerk		clerk;
+	Supervisor	supervisor;	clerk.setSuccessor(&supervisor);
+	Manager		manager;	supervisor.setSuccessor(&manager);
+	Director	director;	manager.setSuccessor(&director);
+	VP			vp;			director.setSuccessor(&vp);
+	President	president;	vp.setSuccessor(&president);
+
+	float data[] = { 10.01, 44.77, 111.88, 333.99, 555.22, 999.99, 1010.55 };
+	for(size_t i=0; i<sizeof(data)/sizeof(*data); i++) {
+		clientCode(&clerk, data[i]);
+	}
+	}
+
+	cout << endl;
+}
+
+}
+
+namespace chain_of_resp_solution {
+
+class ApprovalStrategy {
+public: virtual  ~ApprovalStrategy() { cout << "  ~ApprovalStrategy"; }
+	virtual bool operator()(float amount) const { return false; }
+};
+struct ClerkLogic : public ApprovalStrategy {
+	~ClerkLogic() { cout << "  ~ClerkLogic"; }
+	bool operator()(float amount) const { return(amount < 20.00); }
+};
+struct SupervisorLogic : public ApprovalStrategy {
+	~SupervisorLogic() { cout << "  ~SupervisorLogic"; }
+	bool operator()(float amount) const { return(amount < 100.00); }
+};
+struct ManagerLogic : public ApprovalStrategy {
+	~ManagerLogic() { cout << "  ~ManagerLogic"; }
+	bool operator()(float amount) const { return(amount < 200.00); }
+};
+struct DirectorLogic : public ApprovalStrategy {
+	~DirectorLogic() { cout << "  ~DirectorLogic"; }
+	bool operator()(float amount) const { return(amount < 400.00); }
+};
+struct VPLogic : public ApprovalStrategy {
+	~VPLogic() { cout << "  ~VPLogic"; }
+	bool operator()(float amount) const { return(amount < 600.00); }
+};
+struct PresidentLogic : public ApprovalStrategy {
+	~PresidentLogic() { cout << "  ~PresidentLogic"; }
+	bool operator()(float amount) const { return(amount < 1000.00); }
+};
+
+class ChainOfResp {
+protected:
+	ApprovalStrategy*	approval;
+	ChainOfResp*		successor;
+public:
+	ChainOfResp(ApprovalStrategy* approval=0)
+		: approval(approval), successor(0) {}
+	virtual ~ChainOfResp() {
+		delete approval;
+		cout << "  ~ChainOfResp\n";
+	}
+public:
+	void setSuccessor(ChainOfResp* successor) {
+		this->successor = successor;
+	}
+	virtual void handleRequest(float amount) {
+		cout << "  Denied $" << amount << ", the buck stops here.\n";
+	}
+};
+class Clerk : public ChainOfResp {
+	const ApprovalStrategy&	logic;
+public:
+	Clerk() : ChainOfResp(new ClerkLogic), logic(*approval) {}
+	~Clerk() { cout << "  ~Clerk"; }
+	void handleRequest(float amount) {
+		if(logic(amount))	cout << "  Clerk approves $" << amount << ".\n";
+		else if(successor)	successor->handleRequest(amount);
+		else				ChainOfResp::handleRequest(amount);
+	}
+};
+class Supervisor : public ChainOfResp {
+	const ApprovalStrategy&	logic;
+public:
+	Supervisor() : ChainOfResp(new SupervisorLogic), logic(*approval) {}
+	~Supervisor() { cout << "  ~Supervisor"; }
+	void handleRequest(float amount) {
+		if(logic(amount))	cout << "  Supervisor approves $" << amount << ".\n";
+		else if(successor)	successor->handleRequest(amount);
+		else				ChainOfResp::handleRequest(amount);
+	}
+};
+class Manager : public ChainOfResp {
+	const ApprovalStrategy&	logic;
+public:
+	Manager() : ChainOfResp(new ManagerLogic), logic(*approval) {}
+	~Manager() { cout << "  ~Manager"; }
+	void handleRequest(float amount) {
+		if(logic(amount))	cout << "  Manager approves $" << amount << ".\n";
+		else if(successor)	successor->handleRequest(amount);
+		else				ChainOfResp::handleRequest(amount);
+	}
+};
+class Director : public ChainOfResp {
+	const ApprovalStrategy&	logic;
+public:
+	Director() : ChainOfResp(new DirectorLogic), logic(*approval) {}
+	~Director() { cout << "  ~Director"; }
+	void handleRequest(float amount) {
+		if(amount < 400.00)	cout << "  Director approves $" << amount << ".\n";
+		else if(successor)	successor->handleRequest(amount);
+		else				ChainOfResp::handleRequest(amount);
+	}
+};
+class VP : public ChainOfResp {
+	const ApprovalStrategy&	logic;
+public:
+	VP() : ChainOfResp(new VPLogic), logic(*approval) {}
+	~VP() { cout << "  ~VP"; }
+	void handleRequest(float amount) {
+		if(amount < 600.00)	cout << "  VP approves $" << amount << ".\n";
+		else if(successor)	successor->handleRequest(amount);
+		else				ChainOfResp::handleRequest(amount);
+	}
+};
+class President : public ChainOfResp {
+	const ApprovalStrategy&	logic;
+public:
+	President() : ChainOfResp(new PresidentLogic), logic(*approval) {}
+	~President() { cout << "  ~President"; }
+	void handleRequest(float amount) {
+		if(logic(amount)) cout << "  President approves $" << amount << ".\n";
+		else if(successor)	successor->handleRequest(amount);
+		else				ChainOfResp::handleRequest(amount);
+	}
+};
+
+void clientCode(ChainOfResp* chain, float amount) {
+	chain->handleRequest(amount);
+}
+
+void demo() {
+	cout << "  chain_of_resp_solution::demo().\n";
+	{
+	Clerk		clerk;
+	Supervisor	supervisor;	clerk.setSuccessor(&supervisor);
+	Manager		manager;	supervisor.setSuccessor(&manager);
+	Director	director;	manager.setSuccessor(&director);
+	VP			vp;			director.setSuccessor(&vp);
+	President	president;	vp.setSuccessor(&president);
+
+	float data[] = { 10.01, 44.77, 111.88, 333.99, 555.22, 999.99, 1010.55 };
+	for(size_t i=0; i<sizeof(data)/sizeof(*data); i++) {
+		clientCode(&clerk, data[i]);
+	}
+	}
+
+	cout << endl;
+}
+
+}
+
+}
+
+namespace homework {
+
+/* Consider how to model decision making in a military chain of command.
+ * Simple decisions get made by the junior officers,
+ * harder ones by the senior officers.
+ */
+
 namespace chain_of_resp_legacy {
 
 void demo() {
@@ -42,8 +336,11 @@ void demo() {
 
 }
 
+}
+
 /* Consider how to model decision making in a military chain of command.
- * Simple decisions get made by the junior officers, harder ones by the senior officers.
+ * Simple decisions get made by the junior officers,
+ * harder ones by the senior officers.
  */
 
 namespace decisions  {
@@ -129,8 +426,6 @@ public:
 };
 
 void demo() {
-	cout << "<< Chain of Responsibility problem >>\n";
-
 	Lieutenant	lieutenant;
 	Captain		captain;
 	Major		major;
@@ -257,8 +552,6 @@ public:
 };
 
 void demo() {
-	cout << "<< Chain of Responsibility solution >>\n";
-
 	Officer* lieutenant = new Lieutenant;
 	Officer* captain	= new Captain;
 	Officer* major		= new Major;
