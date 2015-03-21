@@ -633,56 +633,48 @@ public:
 	double getCost() { return build->getCost() + 2000.00; }
 	~TwoDoors() OD_Dtor
 };
-
 class FourDoors : public OptionsDecorator {
 public:
 	FourDoors(Car* build) : OptionsDecorator(build, "4 doors") {}
 	double getCost() { return build->getCost() + 4000.00; }
 	~FourDoors() OD_Dtor
 };
-
 class AC : public OptionsDecorator {
 public:
 	AC(Car* build) : OptionsDecorator(build, "AC") {}
 	double getCost() { return build->getCost() + 1500.00; }
 	~AC() OD_Dtor
 };
-
 class PremiumSoundSystem : public OptionsDecorator {
 public:
 	PremiumSoundSystem(Car* build) : OptionsDecorator(build, "premium sound system") {}
 	double getCost() { return build->getCost() + 1000.00; }
 	~PremiumSoundSystem() OD_Dtor
 };
-
 class Navigation : public OptionsDecorator {
 public:
 	Navigation(Car* build) : OptionsDecorator(build, "navigation") {}
 	double getCost() { return build->getCost() + 2000.00; }
 	~Navigation() OD_Dtor
 };
-
 class ManualTransmission : public OptionsDecorator {
 public:
 	ManualTransmission(Car* build) : OptionsDecorator(build, "manual transmission") {}
 	double getCost() { return build->getCost() + 2500.00; }
 	~ManualTransmission() OD_Dtor
 };
-
 class AutomaticTransmission : public OptionsDecorator {
 public:
 	AutomaticTransmission(Car* build) : OptionsDecorator(build, "automatic transmission") {}
 	double getCost() { return build->getCost() + 3000.00; }
 	~AutomaticTransmission() OD_Dtor
 };
-
 class V8 : public OptionsDecorator {
 public:
 	V8(Car* build) : OptionsDecorator(build, "V8") {}
 	double getCost() { return build->getCost() + 6000.00; }
 	~V8() OD_Dtor
 };
-
 class SuperCharger : public OptionsDecorator {
 public:
 	SuperCharger(Car* build) : OptionsDecorator(build, "super-charger") {}

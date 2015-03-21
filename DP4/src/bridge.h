@@ -9,12 +9,154 @@
  *      Author: aldgoff
  *
  *  URL: http://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns#Bridge
+ *  URLs:
+ *  	http://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns#Bridge
+ *  	http://www.dofactory.com/net/bridge-design-pattern
+ *  	http://www.netobjectives.com/resources/books/design-patterns-explained/review-questions#Chapter10
+ *  	http://sourcemaking.com/design_patterns/bridge
  */
 
 #ifndef BRIDGE_H_
 #define BRIDGE_H_
 
 #include <math.h>
+
+namespace lecture {
+
+/* The client code needs different thread schedulers, such as
+ *   preemptive, roundRobin, timeSliced, prioritized, etc.
+ * but the implementations for each of these is platform dependent, that is
+ *   Unix, Windows, OS10, iOS, JVM, etc.
+ */
+
+namespace bridge_legacy {
+
+void demo() {
+	cout << endl;
+}
+
+}
+
+namespace bridge_problem {
+
+void demo() {
+	cout << endl;
+}
+
+}
+
+namespace bridge_solution {
+
+class Platform {	// Implementation.
+public: virtual ~Platform() { cout << "  ~Platform.\n"; }
+public:
+	virtual void run() { cout << "  Derived class needs to override this.\n"; }
+};
+class Unix : public Platform {
+public:
+	void run() { cout << " Unix platform.\n"; }
+};
+class Windows : public Platform {
+public:
+	void run() { cout << " Windows platform.\n"; }
+};
+class OS10 : public Platform {
+public:
+	void run() { cout << " OS10 platform.\n"; }
+};
+class iOS : public Platform {
+public:
+	void run() { cout << " iOS platform.\n"; }
+};
+class JVM : public Platform {
+public:
+	void run() { cout << " JVM platform.\n"; }
+};
+
+class ThreadScheduler {	// Abstraction.
+public:
+	Platform* platform;
+public: virtual ~ThreadScheduler() {}
+public:
+	virtual void run() { platform->run(); }
+};
+class Preemptive : public ThreadScheduler {
+public:
+	void run() {
+		cout << "  Preemptive thread scheduler running on";
+		platform->run(); }
+};
+class RoundRobin : public ThreadScheduler {
+public:
+	virtual void run() {
+		cout << "  RoundRobin thread scheduler running on";
+		platform->run(); }
+};
+class TimeSliced : public ThreadScheduler {
+public:
+	virtual void run() {
+		cout << "  TimeSliced thread scheduler running on";
+		platform->run(); }
+};
+class Prioritized : public ThreadScheduler {
+public:
+	virtual void run() {
+		cout << "  Prioritized thread scheduler running on";
+		platform->run(); }
+};
+
+void clientCode(ThreadScheduler* scheduler) {
+	scheduler->run();
+}
+
+void demo() {
+	ThreadScheduler* schedulers[] = {
+		new Preemptive, new RoundRobin, new TimeSliced, new Prioritized
+	};
+	Platform* platforms[] = {
+		new Unix, new Windows, new OS10, new iOS, new JVM
+	};
+
+	for(size_t i=0; i<sizeof(schedulers)/sizeof(*schedulers); i++) {
+		for(size_t j=0; j<sizeof(platforms)/sizeof(*platforms); j++) {
+			schedulers[i]->platform = platforms[j];
+			clientCode(schedulers[i]);
+		}
+		cout << endl;
+	}
+}
+
+}
+
+}
+
+namespace homework {
+
+namespace bridge_legacy {
+
+void demo() {
+	cout << endl;
+}
+
+}
+
+namespace bridge_problem {
+
+void demo() {
+	cout << endl;
+}
+
+}
+
+namespace bridge_solution {
+
+void demo() {
+	cout << endl;
+}
+
+}
+
+}
 
 namespace wikibooks_cpp_pcdp {
 

@@ -514,6 +514,17 @@ class Bridge : public DesignPattern {
 public:
 	Bridge() : DesignPattern("Bridge") {}
 public:
+	void run(int i) {
+		DesignPattern::legacy(i);	homework::bridge_legacy::demo();
+		DesignPattern::problem(i);	homework::bridge_problem::demo();
+		DesignPattern::solution(i);	homework::bridge_solution::demo();
+	}
+	void lecture(int i) {
+		DesignPattern::lecture(i);
+		lecture::bridge_legacy::demo();
+		lecture::bridge_problem::demo();
+		lecture::bridge_solution::demo();
+	}
 	void skeleton(int i) {
 		DesignPattern::skeleton(i);
 		skeleton::clientBridge();
@@ -523,11 +534,23 @@ class AbstractFactory : public DesignPattern {
 public:
 	AbstractFactory() : DesignPattern("AbstractFactory") {}
 public:
+	void run(int i) {
+		DesignPattern::legacy(i);	homework::abstract_factory_legacy::demo();
+		DesignPattern::problem(i);	homework::abstract_factory_problem::demo();
+		DesignPattern::solution(i);	homework::abstract_factory_solution::demo();
+	}
+	void lecture(int i) {
+		DesignPattern::lecture(i);
+		lecture::abstract_factory_legacy::demo();
+		lecture::abstract_factory_problem::demo();
+		lecture::abstract_factory_solution::demo();
+	}
 	void skeleton(int i) {
 		DesignPattern::skeleton(i);
 		skeleton::clientAbstractFactory();
 	}
 };
+
 class Singleton : public DesignPattern {
 public:
 	Singleton() : DesignPattern("Singleton") {}

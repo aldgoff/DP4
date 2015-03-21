@@ -14,6 +14,62 @@
 #ifndef ABSTRACTFACTORY_H_
 #define ABSTRACTFACTORY_H_
 
+namespace lecture {
+
+namespace abstract_factory_legacy {
+
+void demo() {
+	cout << endl;
+}
+
+}
+
+namespace abstract_factory_problem {
+
+void demo() {
+	cout << endl;
+}
+
+}
+
+namespace abstract_factory_solution {
+
+void demo() {
+	cout << endl;
+}
+
+}
+
+}
+
+namespace homework {
+
+namespace abstract_factory_legacy {
+
+void demo() {
+	cout << endl;
+}
+
+}
+
+namespace abstract_factory_problem {
+
+void demo() {
+	cout << endl;
+}
+
+}
+
+namespace abstract_factory_solution {
+
+void demo() {
+	cout << endl;
+}
+
+}
+
+}
+
 namespace complicated_relationships {
 
 /* Consider a wild life simulation with different animals and continents.
