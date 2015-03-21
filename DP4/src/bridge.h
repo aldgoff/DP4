@@ -31,15 +31,379 @@ namespace lecture {
 
 namespace bridge_legacy {
 
+/* Initial requirements:
+ *   Two kinds of thread schedulers:
+ *     preemptive and round robin.
+ *   Two kinds of platforms:
+ *     Unix and Windows.
+ */
+
+enum Scheduler {
+	PRE_EMPTIVE,
+	ROUND_ROBIN,
+	// Seam point - insert another enumerated type, violates open/closed.
+};
+enum Platform {
+	UNIX,
+	WINDOWS,
+	// Seam point - insert another enumerated type, violates open/closed.
+};
+
+class Preemptive {
+private:
+	void runOnUnix() {
+		cout << "  Preemptive thread scheduler running on Unix platform.\n";
+	}
+	void runOnWindows() {
+		cout << "  Preemptive thread scheduler running on Windows platform.\n";
+	}
+	// Seam point - insert another method, violates open/closed.
+public:
+	void run(Platform plat) {
+		switch(plat) {
+		case UNIX: runOnUnix();	break;
+		case WINDOWS: runOnWindows(); break;
+		// Seam point - insert another case, violates open/closed.
+		default: cout << "  OOPS!\n"; break;
+		}
+	}
+};
+
+class RoundRobin {
+private:
+	void runOnUnix() {
+		cout << "  Round robin thread scheduler running on Unix platform.\n";
+	}
+	void runOnWindows() {
+		cout << "  Round robin thread scheduler running on Windows platform.\n";
+	}
+	// Seam point - insert another method, violates open/closed.
+public:
+	void run(Platform plat) {
+		switch(plat) {
+		case UNIX: runOnUnix();	break;
+		case WINDOWS: runOnWindows(); break;
+		// Seam point - insert another case, violates open/closed.
+		default: cout << "  OOPS!\n"; break;
+		}
+	}
+};
+
+void clientCode(Scheduler type, Platform plat) {
+	switch(type) {
+	case PRE_EMPTIVE:
+		{
+			Preemptive scheduler;
+			scheduler.run(plat);
+		}
+		break;
+	case ROUND_ROBIN:
+		{
+			RoundRobin scheduler;
+			scheduler.run(plat);
+		}
+		break;
+	// Seam point - insert another case, violates open/closed.
+	default:
+		cout << "  OOPS!\n";
+		break;
+	}
+}
+
 void demo() {
-	cout << endl;
+	cout << "  << legacy >>\n";
+	Scheduler types[] = { PRE_EMPTIVE, ROUND_ROBIN };
+	Platform plats[] = { UNIX, WINDOWS };
+	for(size_t i=0; i<sizeof(types)/sizeof(*types); i++) {
+		for(size_t j=0; j<sizeof(plats)/sizeof(*plats); j++) {
+			clientCode(types[i], plats[j]);
+		}
+		cout << endl;
+	}
 }
 
 }
 
 namespace bridge_problem {
 
+/* New requirements:
+ *   Add two kinds of thread schedulers:
+ *     time sliced and prioritized.
+ *   Add three kinds of platforms:
+ *     OS10, iOS and JVM.
+ */
+
+enum Scheduler {
+	PRE_EMPTIVE,
+	ROUND_ROBIN,
+	// Seam point - insert another enumerated type, violates open/closed.
+	TIME_SLICED,
+	PRIORITIZED,
+};
+enum Platform {
+	UNIX,
+	WINDOWS,
+	// Seam point - insert another enumerated type, violates open/closed.
+	OS10,
+	IOS,
+	JVM,
+};
+
+class Preemptive {
+private:
+	void runOnUnix() {
+		cout << "  Preemptive thread scheduler running on Unix platform.\n";
+	}
+	void runOnWindows() {
+		cout << "  Preemptive thread scheduler running on Windows platform.\n";
+	}
+	// Seam point - insert another method, violates open/closed.
+	void runOnOS10() {
+		cout << "  Preemptive thread scheduler running on OS10 platform.\n";
+	}
+	void runOnIOS() {
+		cout << "  Preemptive thread scheduler running on iOS platform.\n";
+	}
+	void runOnJVM() {
+		cout << "  Preemptive thread scheduler running on JVM platform.\n";
+	}
+public:
+	void run(Platform plat) {
+		switch(plat) {
+		case UNIX: runOnUnix();	break;
+		case WINDOWS: runOnWindows(); break;
+		// Seam point - insert another case, violates open/closed.
+		case OS10: runOnOS10();	break;
+		case IOS: runOnIOS();	break;
+		case JVM: runOnJVM();	break;
+		default: cout << "  OOPS!\n"; break;
+		}
+	}
+};
+
+class RoundRobin {
+private:
+	void runOnUnix() {
+		cout << "  Round robin thread scheduler running on Unix platform.\n";
+	}
+	void runOnWindows() {
+		cout << "  Round robin thread scheduler running on Windows platform.\n";
+	}
+	// Seam point - insert another method, violates open/closed.
+	void runOnOS10() {
+		cout << "  Round robin thread scheduler running on OS10 platform.\n";
+	}
+	void runOnIOS() {
+		cout << "  Round robin thread scheduler running on iOS platform.\n";
+	}
+	void runOnJVM() {
+		cout << "  Round robin thread scheduler running on JVM platform.\n";
+	}
+public:
+	void run(Platform plat) {
+		switch(plat) {
+		case UNIX: runOnUnix();	break;
+		case WINDOWS: runOnWindows(); break;
+		// Seam point - insert another case, violates open/closed.
+		case OS10: runOnOS10();	break;
+		case IOS: runOnIOS();	break;
+		case JVM: runOnJVM();	break;
+		default: cout << "  OOPS!\n"; break;
+		}
+	}
+};
+
+class TimeSliced {
+private:
+	void runOnUnix() {
+		cout << "  Time sliced thread scheduler running on Unix platform.\n";
+	}
+	void runOnWindows() {
+		cout << "  Time sliced thread scheduler running on Windows platform.\n";
+	}
+	// Seam point - insert another method, violates open/closed.
+	void runOnOS10() {
+		cout << "  Time sliced thread scheduler running on OS10 platform.\n";
+	}
+	void runOnIOS() {
+		cout << "  Time sliced thread scheduler running on iOS platform.\n";
+	}
+	void runOnJVM() {
+		cout << "  Time sliced thread scheduler running on JVM platform.\n";
+	}
+public:
+	void run(Platform plat) {
+		switch(plat) {
+		case UNIX: runOnUnix();	break;
+		case WINDOWS: runOnWindows(); break;
+		// Seam point - insert another case, violates open/closed.
+		case OS10: runOnOS10();	break;
+		case IOS: runOnIOS();	break;
+		case JVM: runOnJVM();	break;
+		default: cout << "  OOPS!\n"; break;
+		}
+	}
+};
+
+class Prioritized {
+private:
+	void runOnUnix() {
+		cout << "  Prioritized thread scheduler running on Unix platform.\n";
+	}
+	void runOnWindows() {
+		cout << "  Prioritized thread scheduler running on Windows platform.\n";
+	}
+	// Seam point - insert another method, violates open/closed.
+	void runOnOS10() {
+		cout << "  Prioritized thread scheduler running on OS10 platform.\n";
+	}
+	void runOnIOS() {
+		cout << "  Prioritized thread scheduler running on iOS platform.\n";
+	}
+	void runOnJVM() {
+		cout << "  Prioritized thread scheduler running on JVM platform.\n";
+	}
+public:
+	void run(Platform plat) {
+		switch(plat) {
+		case UNIX: runOnUnix();	break;
+		case WINDOWS: runOnWindows(); break;
+		// Seam point - insert another case, violates open/closed.
+		case OS10: runOnOS10();	break;
+		case IOS: runOnIOS();	break;
+		case JVM: runOnJVM();	break;
+		default: cout << "  OOPS!\n"; break;
+		}
+	}
+};
+
+void clientCode(Scheduler type, Platform plat) {
+	switch(type) {
+	case PRE_EMPTIVE:
+		{
+			Preemptive scheduler;
+			scheduler.run(plat);
+		}
+		break;
+	case ROUND_ROBIN:
+		{
+			RoundRobin scheduler;
+			scheduler.run(plat);
+		}
+		break;
+	// Seam point - insert another case, violates open/closed.
+	case TIME_SLICED:
+		{
+			TimeSliced scheduler;
+			scheduler.run(plat);
+		}
+		break;
+	case PRIORITIZED:
+		{
+			Prioritized scheduler;
+			scheduler.run(plat);
+		}
+		break;
+	default:
+		cout << "  OOPS!\n";
+		break;
+	}
+}
+
 void demo() {
+	cout << "  << problem >>\n";
+	Scheduler types[] = { PRE_EMPTIVE, ROUND_ROBIN, TIME_SLICED, PRIORITIZED };
+	Platform plats[] = { UNIX, WINDOWS, OS10, IOS, JVM };
+	for(size_t i=0; i<sizeof(types)/sizeof(*types); i++) {
+		for(size_t j=0; j<sizeof(plats)/sizeof(*plats); j++) {
+			clientCode(types[i], plats[j]);
+		}
+		cout << endl;
+	}
+}
+
+}
+
+namespace bridge_combinatorial_explosion {	// OOP is no help.
+
+class ThreadScheduler {	// Subclasses scale quadratically.
+public: virtual ~ThreadScheduler() { cout << " ~ThreadScheduler\n"; }
+public:
+	virtual void run() { cout << "  run().\n"; }
+};
+
+class TSPreEmptiveUnix : public ThreadScheduler {
+public: ~TSPreEmptiveUnix() { cout << "  ~TSPreEmptiveUnix"; }
+	void run() {
+		cout << "  Preemptive thread scheduler running on Unix platform.\n";
+	}
+};
+class TSPreEmptiveWindows : public ThreadScheduler {
+public: ~TSPreEmptiveWindows() { cout << "  ~TSPreEmptiveWindows"; }
+	void run() {
+		cout << "  Preemptive thread scheduler running on Windows platform.\n";
+	}
+};
+class TSPreEmptiveJVM : public ThreadScheduler {
+public: ~TSPreEmptiveJVM() { cout << "  ~TSPreEmptiveJVM"; }
+	void run() {
+		cout << "  Preemptive thread scheduler running on JVM platform.\n";
+	}
+};
+
+class TSRoundRobinUnix : public ThreadScheduler {
+public: ~TSRoundRobinUnix() { cout << "  ~TSRoundRobinUnix"; }
+	void run() {
+		cout << "  RoundRobin thread scheduler running on Unix platform.\n";
+	}
+};
+class TSRoundRobinWindows : public ThreadScheduler {
+public: ~TSRoundRobinWindows() { cout << "  ~TSRoundRobinWindows"; }
+	void run() {
+		cout << "  RoundRobin thread scheduler running on Windows platform.\n";
+	}
+};
+class TSRoundRobinJVM : public ThreadScheduler {
+public: ~TSRoundRobinJVM() { cout << "  ~TSRoundRobinJVM"; }
+	void run() {
+		cout << "  RoundRobin thread scheduler running on JVM platform.\n";
+	}
+};
+
+class TSTimeSlicedUnix : public ThreadScheduler {
+public: ~TSTimeSlicedUnix() { cout << "  ~TSTimeSlicedUnix"; }
+	void run() {
+		cout << "  TimeSliced thread scheduler running on Unix platform.\n";
+	}
+};
+class TSTimeSlicedWindows : public ThreadScheduler {
+public: ~TSTimeSlicedWindows() { cout << "  ~TSTimeSlicedWindows"; }
+	void run() {
+		cout << "  TimeSliced thread scheduler running on Windows platform.\n";
+	}
+};
+class TSTimeSlicedJVM : public ThreadScheduler {
+public: ~TSTimeSlicedJVM() { cout << "  ~TSTimeSlicedJVM"; }
+	void run() {
+		cout << "  TimeSliced thread scheduler running on JVM platform.\n";
+	}
+};
+
+void demo() {
+	cout << "  << combinatorial explosion >>\n";
+	ThreadScheduler* threads[] = {
+		new TSPreEmptiveUnix, new TSPreEmptiveWindows, new TSPreEmptiveJVM,
+		new TSRoundRobinUnix, new TSRoundRobinWindows, new TSRoundRobinJVM,
+		new TSTimeSlicedUnix, new TSTimeSlicedWindows, new TSTimeSlicedJVM,
+	};
+	for(size_t i=0; i<sizeof(threads)/sizeof(*threads); i++) {
+		threads[i]->run();
+	}
+	cout << endl;
+
+	for(size_t i=0; i<sizeof(threads)/sizeof(*threads); i++) {	// Dtors.
+		delete threads[i];
+	}
 	cout << endl;
 }
 
@@ -48,57 +412,67 @@ void demo() {
 namespace bridge_solution {
 
 class Platform {	// Implementation.
-public: virtual ~Platform() { cout << "  ~Platform.\n"; }
+public: virtual ~Platform() { cout << " ~Platform"; }
 public:
 	virtual void run() { cout << "  Derived class needs to override this.\n"; }
 };
 class Unix : public Platform {
+public: ~Unix() { cout << " ~Unix"; }
 public:
 	void run() { cout << " Unix platform.\n"; }
 };
 class Windows : public Platform {
-public:
+public: ~Windows() { cout << " ~Windows"; }
 	void run() { cout << " Windows platform.\n"; }
 };
 class OS10 : public Platform {
-public:
+public: ~OS10() { cout << " ~OS10"; }
 	void run() { cout << " OS10 platform.\n"; }
 };
 class iOS : public Platform {
-public:
+public: ~iOS() { cout << " ~iOS"; }
 	void run() { cout << " iOS platform.\n"; }
 };
 class JVM : public Platform {
-public:
+public: ~JVM() { cout << " ~JVM"; }
 	void run() { cout << " JVM platform.\n"; }
 };
 
 class ThreadScheduler {	// Abstraction.
 public:
 	Platform* platform;
-public: virtual ~ThreadScheduler() {}
+public:
+	ThreadScheduler() : platform(0) {}
+	virtual ~ThreadScheduler() {
+		if(platform) delete platform;
+		cout << " ~ThreadScheduler\n";
+	}
 public:
 	virtual void run() { platform->run(); }
 };
 class Preemptive : public ThreadScheduler {
+public: ~Preemptive() { cout << "  ~Preemptive"; }
 public:
 	void run() {
 		cout << "  Preemptive thread scheduler running on";
 		platform->run(); }
 };
 class RoundRobin : public ThreadScheduler {
+public: ~RoundRobin() { cout << "  ~RoundRobin"; }
 public:
 	virtual void run() {
 		cout << "  RoundRobin thread scheduler running on";
 		platform->run(); }
 };
 class TimeSliced : public ThreadScheduler {
+public: ~TimeSliced() { cout << "  ~TimeSliced"; }
 public:
 	virtual void run() {
 		cout << "  TimeSliced thread scheduler running on";
 		platform->run(); }
 };
 class Prioritized : public ThreadScheduler {
+public: ~Prioritized() { cout << "  ~Prioritized"; }
 public:
 	virtual void run() {
 		cout << "  Prioritized thread scheduler running on";
@@ -110,20 +484,32 @@ void clientCode(ThreadScheduler* scheduler) {
 }
 
 void demo() {
-	ThreadScheduler* schedulers[] = {
-		new Preemptive, new RoundRobin, new TimeSliced, new Prioritized
-	};
-	Platform* platforms[] = {
-		new Unix, new Windows, new OS10, new iOS, new JVM
-	};
+	cout << "  << solution >>\n";
+	ThreadScheduler* threads[4][5] = {{0},{0},{0},{0}};
 
-	for(size_t i=0; i<sizeof(schedulers)/sizeof(*schedulers); i++) {
+	for(size_t i=0; i<4; i++) {
+		Platform* platforms[] = {
+			new Unix, new Windows, new OS10, new iOS, new JVM
+		};
 		for(size_t j=0; j<sizeof(platforms)/sizeof(*platforms); j++) {
-			schedulers[i]->platform = platforms[j];
-			clientCode(schedulers[i]);
+			switch(i) {
+			case 0: threads[i][j] = new Preemptive;	 break;
+			case 1: threads[i][j] = new RoundRobin;	 break;
+			case 2: threads[i][j] = new TimeSliced;	 break;
+			case 3: threads[i][j] = new Prioritized; break;
+			}
+			threads[i][j]->platform = platforms[j];
+			clientCode(threads[i][j]);
 		}
 		cout << endl;
 	}
+
+	for(size_t i=0; i<4; i++) {		// Call dtors.
+		for(size_t j=0; j<5; j++) {
+			delete threads[i][j];
+		}
+	}
+	cout << endl;
 }
 
 }

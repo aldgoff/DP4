@@ -68,6 +68,8 @@ using namespace std;
 #include "meta.h"
 #include "whatVaries.h"
 
+#include "dttc.h"
+
 /*====================================================================================================================*/
 
 void runStrategy() {
@@ -240,7 +242,17 @@ void runMaestroTests() {
 	cout << "  " << strlen(ham) << endl;
 
 	cout << "  Aloha Meastro.\n";
-	}
+}
+
+void runDttcLecture() {
+	cout << "  Hello dttc lecture.\n";
+
+	using namespace dttc;
+	legacy::demo();
+	design_pattern::demo();
+
+	cout << "  Aloha dttc lecture.\n";
+}
 
 /*====================================================================================================================*/
 
@@ -261,6 +273,7 @@ int main(int argc, char* args[]) {
 		cout << "whatVaries\n";
 		cout << "virtualDtorBug\n";
 		cout << "maestro\n";
+		cout << "dttc\n";
 		cout << "\n";
 	}
 
@@ -293,6 +306,7 @@ int main(int argc, char* args[]) {
 		else if(!strcmp(args[i], "whatVaries"))		runWhatVaries();
 		else if(!strcmp(args[i], "virtualDtorBug"))	runVirtualDtorBug();
 		else if(!strcmp(args[i], "maestro"))		runMaestroTests();
+		else if(!strcmp(args[i], "dttc"))		runDttcLecture();
 		else {
 			cout << "  <" << args[i] << "> command line arg NOT understood.\n";
 		}

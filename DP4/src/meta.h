@@ -523,6 +523,7 @@ public:
 		DesignPattern::lecture(i);
 		lecture::bridge_legacy::demo();
 		lecture::bridge_problem::demo();
+		lecture::bridge_combinatorial_explosion::demo();
 		lecture::bridge_solution::demo();
 	}
 	void skeleton(int i) {
@@ -676,6 +677,7 @@ bool dispatch(const string& arg) {
 		else if(arg == "lab3")			scanPairWise(5);
 		else if(arg == "lab4")			scanPairWise(7);
 		else if(arg == "lab5")			scanPairWise(9);
+
 		else {
 			continue;
 		}
