@@ -515,7 +515,6 @@ public:
 	Bridge() : DesignPattern("Bridge") {}
 public:
 	void run(int i) {
-		DesignPattern::legacy(i);	homework::bridge_legacy::demo();
 		DesignPattern::problem(i);	homework::bridge_problem::demo();
 		DesignPattern::solution(i);	homework::bridge_solution::demo();
 	}
@@ -706,12 +705,13 @@ bool meta(const string& arg) {
 			cout << desPats[i]->name << endl;
 		}
 		cout << "prefixes: c, l, p, s, v, k, by\n";
-		cout << "lectures\n";
-		cout << "legacies\n";
-		cout << "problems\n";
-		cout << "solutions\n";
-		cout << "skeletons\n";
-		cout << "sideBySide\n";
+		cout << "c - lectures\n";
+		cout << "l - legacies\n";
+		cout << "p - problems\n";
+		cout << "s - solutions\n";
+		cout << "v - variations\n";
+		cout << "k - skeletons\n";
+		cout << "by- sideBySide\n";
 		cout << endl;
 
 		for(size_t i=0; i<COUNT(dp_list::desPats); i++) {	// Include list (#include "desPat.h").
