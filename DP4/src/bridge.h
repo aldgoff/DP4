@@ -8,7 +8,6 @@
  *  Created on: Apr 5, 2014
  *      Author: aldgoff
  *
- *  URL: http://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns#Bridge
  *  URLs:
  *  	http://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns#Bridge
  *  	http://www.dofactory.com/net/bridge-design-pattern

@@ -59,6 +59,8 @@ using namespace std;
 #include "Problems/lab3_problem_decorator.h"
 #include "Problems/lab4_problem_chainOfResponsibility.h"
 #include "Problems/lab4_problem_observer.h"
+#include "Problems/lab5_problem_bridge.h"
+#include "Problems/lab5_problem_abstractFactory.h"
 
 #include "Solutions/lab1_solution_strategy.h"
 #include "Solutions/lab1_solution_adapter.h"
@@ -68,6 +70,8 @@ using namespace std;
 #include "Solutions/lab3_solution_decorator.h"
 #include "Solutions/lab4_solution_chainOfResponsibility.h"
 #include "Solutions/lab4_solution_observer.h"
+#include "Solutions/lab5_solution_bridge.h"
+#include "Solutions/lab5_solution_abstractFactory.h"
 
 #include "meta.h"
 #include "whatVaries.h"

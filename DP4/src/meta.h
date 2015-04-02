@@ -509,7 +509,6 @@ public:
 		skeleton::clientChainOfResponsibility();
 	}
 };
-
 class Bridge : public DesignPattern {
 public:
 	Bridge() : DesignPattern("Bridge") {}
@@ -535,14 +534,14 @@ public:
 	AbstractFactory() : DesignPattern("AbstractFactory") {}
 public:
 	void run(int i) {
-		DesignPattern::legacy(i);	homework::abstract_factory_legacy::demo();
+//		DesignPattern::legacy(i);	homework::abstract_factory_legacy::demo();
 		DesignPattern::problem(i);	homework::abstract_factory_problem::demo();
 		DesignPattern::solution(i);	homework::abstract_factory_solution::demo();
 	}
 	void lecture(int i) {
 		DesignPattern::lecture(i);
-		lecture::abstract_factory_legacy::demo();
-		lecture::abstract_factory_problem::demo();
+//		lecture::abstract_factory_legacy::demo();
+//		lecture::abstract_factory_problem::demo();
 		lecture::abstract_factory_solution::demo();
 	}
 	void skeleton(int i) {

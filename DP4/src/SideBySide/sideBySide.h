@@ -28,6 +28,9 @@ void clientTemplateMethod();
 void clientFactoryMethod();
 void clientDecorator();
 void clientObserver();
+void clientChainOfResponsibility();
+void clientBridge();
+void clientAbstractFactory();
 
 void clientCommand();
 

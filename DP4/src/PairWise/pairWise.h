@@ -19,6 +19,7 @@ using namespace std;
 namespace pair_wise {
 
 //void clientDesignPattern();
+
 void clientStrategy();
 void clientAdapter();
 
@@ -31,8 +32,8 @@ void clientDecorator();
 void clientObserver();
 void clientChainOfResponsibility();
 
-//void clientBridge();
-//void clientAbstractFactory();
+void clientBridge();
+void clientAbstractFactory();
 
 }
 
