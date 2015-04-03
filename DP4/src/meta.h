@@ -498,15 +498,19 @@ public:
 	}
 	void problem(int i) {
 		DesignPattern::problem(i);
-		homework::chain_of_resp_problem::demo();
+		decisions::demo();
 	}
 	void solution(int i) {
 		DesignPattern::solution(i);
-		homework::chain_of_resp_solution::demo();
+		chainOfResponsibility::demo();
 	}
 	void skeleton(int i) {
 		DesignPattern::skeleton(i);
 		skeleton::clientChainOfResponsibility();
+	}
+	void sideBySide(int i) {
+		DesignPattern::sideBySide(i);
+		side_by_side::clientChainOfResponsibility();
 	}
 };
 class Bridge : public DesignPattern {
@@ -524,9 +528,21 @@ public:
 		lecture::bridge_combinatorial_explosion::demo();
 		lecture::bridge_solution::demo();
 	}
+	void problem(int i) {
+		DesignPattern::problem(i);
+		homework::bridge_problem::demo();
+	}
+	void solution(int i) {
+		DesignPattern::solution(i);
+		homework::bridge_solution::demo();
+	}
 	void skeleton(int i) {
 		DesignPattern::skeleton(i);
 		skeleton::clientBridge();
+	}
+	void sideBySide(int i) {
+		DesignPattern::sideBySide(i);
+		side_by_side::clientBridge();
 	}
 };
 class AbstractFactory : public DesignPattern {
@@ -544,9 +560,21 @@ public:
 //		lecture::abstract_factory_problem::demo();
 		lecture::abstract_factory_solution::demo();
 	}
+	void problem(int i) {
+		DesignPattern::problem(i);
+		homework::abstract_factory_problem::demo();
+	}
+	void solution(int i) {
+		DesignPattern::solution(i);
+		homework::abstract_factory_solution::demo();
+	}
 	void skeleton(int i) {
 		DesignPattern::skeleton(i);
 		skeleton::clientAbstractFactory();
+	}
+	void sideBySide(int i) {
+		DesignPattern::sideBySide(i);
+		side_by_side::clientAbstractFactory();
 	}
 };
 

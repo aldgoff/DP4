@@ -1,16 +1,9 @@
-#include "sideBySide.h"
+#include "pairWise.h"
 
-namespace side_by_side {
-
-
-
-
-
-
+namespace pair_wise {
 
 class BridgeImp {		// If the implementations are varying...
 public: virtual ~BridgeImp() {}
-public:
 	virtual void concreteA()=0;
 	virtual void concreteB()=0;
 };
@@ -29,6 +22,11 @@ public:
 	void concreteA() { cout << "    concrete A implementation 3.\n"; }
 	void concreteB() { cout << "    concrete B implementation 3.\n"; }
 };
+
+
+
+
+
 
 class BridgeAbstract {	// If the abstractions are also varying...
 protected:
@@ -65,7 +63,6 @@ void clientBridge() {
 			abs[j]->run();
 		cout << endl;
 	}
-	cout << endl;
 }
 
 }

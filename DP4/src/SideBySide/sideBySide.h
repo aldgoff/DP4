@@ -8,7 +8,6 @@
 #ifndef SIDEBYSIDE_H_
 #define SIDEBYSIDE_H_
 
-
 #include <cstdio>
 #include <cstring>
 #include <iostream>
