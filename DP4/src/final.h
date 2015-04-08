@@ -34,7 +34,7 @@
  *  x Cleaning:			Adapter			- existing classes to clean molds
  *    Milling:			Facade			- only need shape & finish, don't need tips, despurring, sharpening, etc.???
  */
-/* Stages
+/* Stages: confirmed 4/6/15.
  * Stage 1 (prior to last day of class):
  *   Procedural code with input file of orders and output file of the runs.
  *   Run the procedural code on the orders and confirm you match the output.
@@ -45,7 +45,7 @@
  *   Add code until you can process the new order file and match the new output file.
  *   Grade: A <= 1 hr, B <= 2 hrs, C <= 3 hrs, D <= 4 hrs, F > 4 hrs. A D is passing.
  */
-/* List of files:
+/* List of files: confirmed 4/6/15.
  * Stage 1:
  *   Provided by instructor:
  *     processOrdersAP.cpp	 - Original C++ code, filled with anti-patterns.
@@ -97,19 +97,32 @@
  */
 /* Variations:
  * Mold   RunSize   Plastic        Color   Additives      Metal     Cavities  Finish   Tags           Bins       Sequences  Packaging   Cleaning   GetMold       Milling    InjectionMachine
- * Class  Variable  Class          Enum    Decorator      Class     Variable  Enum     Decorator      Observer   Strategy   Factory     Adapter    ChainOfR      Facade     AbstractFactory
+ * Class  Variable  Class          Enum    6 Decorator    Class     Variable  Enum     6 Decorator    7 Observer 1 Strategy 5 FactoryM  2 Adapter  8 ChainOfR    3-F 9-B    A AbstractFactory
  * -----  --------  -------------  ------  -------------  --------  --------  -------  -------------  ---------  ---------  ----------  ---------  ------------  ---------  ----------------
  * Duck   10,000    ABS            Black   UVInhibitor    Steel     1         Smooth   Null           Plastic    PreHeat    Bulk        Carbonize  Fetch         Raster     IJM_100
- * Car    20,000    Polypropylene  Red                              2         Rippled  Tag            Color      PSI        ShrinkWrap  SoapWater  Mill          Vector     IJM_400
+ * Car    20,000    Polypropylene  Red     AntiBacterial            2         Rippled  Tag            Color      PSI        ShrinkWrap  SoapWater  Mill          Vector     IJM_400
  * Hero   150,000   Polyethelene   Green                            4                  ModelNumber    Additives  CoolDown   HardPack    Acetone
  *        50,000    PET            Blue                                                CountryMadeIn  IJM        Eject
  *                                 White                                               DateMade       Packager
  * --------- Seams -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
- * Dino   500       Styrene        Brown   AntiBacterial  Aluminum  8         Dimpled  IncCounter     Additives  PlasticT   ZipLock     Alcohol    Purchase      LaserEtch  IJM_800
+ * Dino   500       Styrene        Brown                  Aluminum  8         Dimpled  IncCounter     Additives  PlasticT   ZipLock     Alcohol    Purchase      LaserEtch  IJM_800
  *        2,000     Nylon66        Orange  MicroFibers                        Sanded                  Conveyer   MoldTemp                          ~Mill(steel)
  *                                 Yellow
  *                                 Violet
  *                                 Gray
+ */
+namespace design_patterns_chart {}
+/* Design Patterns Chart
+ *   1 - Strategy: injection cycle (domain: plastic)
+ *   2 - Adapter: cleaning mold (domains: plastic, metal)
+ *   3 - Facade: milling mold
+ *   4 - Template Method: order processing
+ *   5 - Factory Method: packaging (domain: order)
+ *   6 - Decorator: tags, additives
+ *   7 - Observer: bins(Subject) (conveyers & IJM pause on full)
+ *   8 - ChainOfR: mold location (inventory, mill, borrow, purchase)
+ *   9 - Bridge: milling
+ *  10 - Abstract Factory: IJM_X, mold(metal, cavities), conveyer belt, bins (domain: size)
  */
 /* Dependencies:
  * Sequences depend on Metal & Plastic
@@ -129,7 +142,7 @@
  * <Abstract Factory>
  * Observer
  */
-/* Implementation:
+/* Implementation: confirmed 4/6/15.
  * To keep things simple for a classroom setting, imagine that the larger system
  * prepares the order file (input) with both the customers' orders and persistent data
  * from the injection molding shop such as mold location, run count, etc.
@@ -290,7 +303,7 @@ void process(Order& order) {
 
 }
 
-void demo() {
+void demo(int n) {
 	cout << "<< final problem >>\n";
 	assert(string("orderNum") == spec::list[0]);	// "orderNum" must be first spec.
 
@@ -298,7 +311,7 @@ void demo() {
 	vector<Order>	orders = get->orders();
 
 	vector<Order>::iterator it = orders.begin();
-	for(; it!=orders.end(); it++) {
+	for(int i=0; it!=orders.end() && i<n; it++, i++) {
 		Order& order = *it;
 		order.printParameters();
 		process(order);
@@ -349,8 +362,8 @@ class IncCounter	: public Tags {};
 
 class Additives {};	// Decorator pattern - the optional additives.
 class UVInhibitor	: public Additives {};
-// Seam.
 class AntiBacterial	: public Additives {};
+// Seam.
 class MicroFibers	: public Additives {};
 
 class Flow {};		// Strategy pattern - cycling the IJM for each injection run.
@@ -897,7 +910,7 @@ class HardPack	 : public PackagingDecorator {};
 class ZipLock	 : public PackagingDecorator {};
 }
 
-namespace observer { // When the order processing decides on a color change, the part & color bins have to be notified.
+namespace observer { // When order processing decides on a color change, part & color bins have to be notified.
 }
 
 namespace bridge { // Milling machines used to create the molds: Raster versus Vector, shape primitives.
@@ -938,7 +951,7 @@ void process(Order& order) {
 	process->run(order.specs);
 }
 
-void demo() {
+void demo(int n) {
 	cout << "<< final solution >>\n";
 	assert(string("orderNum") == spec::list[0]);	// "orderNum" must be first spec.
 
@@ -946,7 +959,7 @@ void demo() {
 	vector<Order> orders = get->orders();
 
 	vector<Order>::iterator it = orders.begin();
-	for(; it!=orders.end(); it++) {
+	for(int i=0; it!=orders.end() && i<n; it++, i++) {
 		Order& order = *it;
 		order.printParameters();
 		process(order);

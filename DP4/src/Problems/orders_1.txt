@@ -1,0 +1,19 @@
+1:
+	orderNum	= 1
+	size		= 10000;
+	mold		= car
+	moldLoc		= mill
+	plastic		= ABS
+	endOfOrder
+2:
+	orderNum	= 2
+	size		= 44000;
+	endOfOrder
+3:
+	orderNum	= 3
+	size		= 100000;
+	endOfOrder
+4:
+	orderNum	= 4
+	size		= 200000;
+	endOfOrder

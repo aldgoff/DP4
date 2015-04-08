@@ -61,6 +61,7 @@ using namespace std;
 #include "Problems/lab4_problem_observer.h"
 #include "Problems/lab5_problem_bridge.h"
 #include "Problems/lab5_problem_abstractFactory.h"
+#include "Problems/final.h"
 
 #include "Solutions/lab1_solution_strategy.h"
 #include "Solutions/lab1_solution_adapter.h"
@@ -72,6 +73,7 @@ using namespace std;
 #include "Solutions/lab4_solution_observer.h"
 #include "Solutions/lab5_solution_bridge.h"
 #include "Solutions/lab5_solution_abstractFactory.h"
+#include "Solutions/final.h"
 
 #include "meta.h"
 #include "whatVaries.h"
@@ -172,9 +174,10 @@ void runCommand() {
 
 // Seam point; can be eliminated by use of design patterns.
 
-void runFinal() {
-	final_problem::demo();
-	final_solution::demo();
+void runFinal(string orderFile) {
+//	final_problem_file::demo(orderFile);
+	final_solution_file::demo(orderFile);
+//	final_solution::demo(1);
 }
 
 void runPrinciples() {
@@ -307,7 +310,7 @@ int main(int argc, char* args[]) {
 //
 		// Seam point; can be eliminated by use of design patterns.
 
-		else if(!strcmp(args[i], "final"))			runFinal();
+		else if(!strcmp(args[i], "final"))			runFinal(string(args[++i]));
 		else if(!strcmp(args[i], "principles"))		principles::demo();
 		else if(!strcmp(args[i], "varies"))			runVaries();
 		else if(!strcmp(args[i], "midterm"))		runMidterm();
