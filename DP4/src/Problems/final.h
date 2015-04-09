@@ -28,7 +28,7 @@ pair<string, string> parse(string line) {
 }
 
 void process(map<string, string> order) {
-	map<string, string>::iterator it = order.begin();
+//	map<string, string>::iterator it = order.begin();
 
 	cout << "Order processing [TemplateMethod]";
 	cout << "  Setup\n";

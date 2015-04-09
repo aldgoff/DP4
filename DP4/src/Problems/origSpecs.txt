@@ -1,0 +1,12 @@
+Shapes:
+	duck
+	car
+	hero
+Plastics:
+	ABS
+	Polypropylene
+	Polyethelene
+	PET
+Metals:
+	aluminum
+	steel

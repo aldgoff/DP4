@@ -48,6 +48,7 @@
 /* List of files: confirmed 4/6/15.
  * Stage 1:
  *   Provided by instructor:
+ *     origSpecs.txt		 - Original specs.
  *     processOrdersAP.cpp	 - Original C++ code, filled with anti-patterns.
  *     orders_1.txt			 - Original order file (input).
  *     runBase_1.txt		 - Baseline run file of original code (output).
@@ -688,6 +689,20 @@ public:
 	void from(const string& place) {
 		if(place == "mill")
 			cout << "  Create mold from mill.\n";
+		else if(successor != 0)
+			successor->from(place);
+		else
+			GetMold::from(place);	// Oops.
+	}
+};
+// Seam points - add another mold source.
+class SisterCompany : public GetMold {
+public:
+	SisterCompany(GetMold* successor=0) : GetMold(successor) {};
+public:
+	void from(const string& place) {
+		if(place == "sisterCompany")
+			cout << "  Borrow mold from sister company.\n";
 		else if(successor != 0)
 			successor->from(place);
 		else

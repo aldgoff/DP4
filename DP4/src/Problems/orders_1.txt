@@ -1,19 +1,32 @@
 1:
 	orderNum	= 1
 	size		= 10000;
-	mold		= car
-	moldLoc		= mill
 	plastic		= ABS
+	moldLoc		= inventory
+	mold		= duck
+	finish		= smooth
 	endOfOrder
 2:
 	orderNum	= 2
 	size		= 44000;
+	plastic		= Polypropylene
+	moldLoc		= mill
+	mold		= car
+	finish		= rippled
 	endOfOrder
 3:
 	orderNum	= 3
 	size		= 100000;
+	plastic		= Polyethelene
+	moldLoc		= sisterCompany
+	mold		= hero
+	finish		= dimpled
 	endOfOrder
 4:
 	orderNum	= 4
 	size		= 200000;
+	plastic		= PET
+	moldLoc		= mill
+	mold		= dino
+	finish		= sanded
 	endOfOrder

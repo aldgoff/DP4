@@ -1,0 +1,5 @@
+Shapes:
+	dino
+
+Metals:
+	brass
