@@ -1,5 +1,37 @@
+Size:
+	100,000
+	200,000
+Cavities:
+	2
+	4
+Packagers:
+	ZipLock
+	
+	
+Injection Line:
+	<=100,000: IJM_400, Steel(2), Y-Split conveyer belt, Crate
+	<=200,000: IJM_400, Steel(4), V-Level conveyer belt, Crate
+Metals:
+	brass
+
 Shapes:
 	dino
 
-Metals:
-	brass
+	
+Milling:
+	Carbide
+
+Plastics:
+	Styrene
+	Nylon66
+	
+	
+Color:
+	Brown
+	Orange
+	Yellow
+	Violet
+	Gray
+Additives:
+	MicroFibers
+	

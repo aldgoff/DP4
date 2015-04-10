@@ -1,12 +1,38 @@
+Size:
+	 10,000
+	 50,000
+Cavities:
+	1
+	?
+Packagers:
+	Bulk
+	ShrinkWrap
+	HardPack
+Injection Line:
+	<=10,000: IJM_100, Aluminum(1), Linear conveyer belt, Cardboard box
+	<=50,000: IJM_200, Steel(1), Linear conveyer belt, Pallot box
+Metals:
+	aluminum
+	steel
 Shapes:
 	duck
 	car
 	hero
+Milling:
+	HighCarbon
+	DiamondTipped
 Plastics:
 	ABS
 	Polypropylene
 	Polyethelene
 	PET
-Metals:
-	aluminum
-	steel
+Color:
+	Black
+	Red
+	Green
+	Blue
+	White
+Additives:
+	UVInhibitor
+	AntiBacterial
+	

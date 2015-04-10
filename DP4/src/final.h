@@ -97,20 +97,29 @@
  * 3) Write summary of run to output file
  */
 /* Variations:
- * Mold   RunSize   Plastic        Color   Additives      Metal     Cavities  Finish   Tags           Bins       Sequences  Packaging   Cleaning   GetMold       Milling    InjectionMachine
- * Class  Variable  Class          Enum    6 Decorator    Class     Variable  Enum     6 Decorator    7 Observer 1 Strategy 5 FactoryM  2 Adapter  8 ChainOfR    3-F 9-B    A AbstractFactory
- * -----  --------  -------------  ------  -------------  --------  --------  -------  -------------  ---------  ---------  ----------  ---------  ------------  ---------  ----------------
- * Duck   10,000    ABS            Black   UVInhibitor    Steel     1         Smooth   Null           Plastic    PreHeat    Bulk        Carbonize  Fetch         Raster     IJM_100
- * Car    20,000    Polypropylene  Red     AntiBacterial            2         Rippled  Tag            Color      PSI        ShrinkWrap  SoapWater  Mill          Vector     IJM_400
- * Hero   150,000   Polyethelene   Green                            4                  ModelNumber    Additives  CoolDown   HardPack    Acetone
- *        50,000    PET            Blue                                                CountryMadeIn  IJM        Eject
- *                                 White                                               DateMade       Packager
+ * Mold    RunSize   Plastic        Color   Additives      Metal     Cavities  Finish   Tags           Bins       Sequences  Packaging   Cleaning   GetMold       Milling    InjectionMachine
+ * Bridge  Variable  Class          Enum    6 Decorator    Class     Variable  Enum     6 Decorator    7 Observer 1 Strategy 5 FactoryM  2 Adapter  8 ChainOfR    3-F 9-B    A AbstractFactory
+ * ------  --------  -------------  ------  -------------  --------  --------  -------  -------------  ---------  ---------  ----------  ---------  ------------  ---------  ----------------
+ * Duck    10,000    ABS            Black   UVInhibitor    Aluminum  1         Smooth   Null           Plastic    PreHeat    Bulk        Carbonize  Fetch         Raster     IJM_100
+ * Car     20,000    Polypropylene  Red     AntiBacterial  Steel     2         Rippled  Tag            Color      PSI        ShrinkWrap  SoapWater  Mill          Vector     IJM_400
+ * Hero    150,000   Polyethelene   Green                            4                  ModelNumber    Additives  CoolDown   HardPack    Acetone
+ *         50,000    PET            Blue                                                CountryMadeIn  IJM        Eject
+ *                                  White                                               DateMade       Packager
  * --------- Seams -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
- * Dino   500       Styrene        Brown                  Aluminum  8         Dimpled  IncCounter     Additives  PlasticT   ZipLock     Alcohol    Purchase      LaserEtch  IJM_800
- *        2,000     Nylon66        Orange  MicroFibers                        Sanded                  Conveyer   MoldTemp                          ~Mill(steel)
- *                                 Yellow
- *                                 Violet
- *                                 Gray
+ * Dino    500       Styrene        Brown   MicroFibers    Brass?    8         Dimpled  IncCounter     Additives  PlasticT   ZipLock     Alcohol    Purchase      LaserEtch  IJM_800
+ *         2,000     Nylon66        Orange                                     Sanded                  Conveyer   MoldTemp                          SisterCompany
+ *                                  Yellow
+ *                                  Violet
+ *                                  Gray
+ *
+ * 10 AbstractFactory
+ * Factory      Machine  Conveyer  Bin
+ * -----------  -------  --------  -----
+ * SmallOrder   IJM_100  Linear    CardboardBox
+ * MediumOrder  IJM_200  Y-Split   PallotBox
+ * -----------------------------------------------------------------------------
+ * LargeOrder   IJM_400  V-Level   Crate
+ * HugeOrder
  */
 namespace design_patterns_chart {}
 /* Design Patterns Chart

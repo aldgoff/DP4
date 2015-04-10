@@ -1,32 +1,48 @@
 1:
 	orderNum	= 1
-	size		= 10000;
+	size		= 10000
+	packager	= Bulk
 	plastic		= ABS
 	moldLoc		= inventory
 	mold		= duck
 	finish		= smooth
+	volume		= 35
+	color		= blue
 	endOfOrder
 2:
 	orderNum	= 2
-	size		= 44000;
+	size		= 44000
+	packager	= ShrinkWrap
 	plastic		= Polypropylene
 	moldLoc		= mill
 	mold		= car
 	finish		= rippled
+	tag1		= date
+	volume		= 40
+	color		= red
+	UVInhibiter	= 6
+	AntiBacterial	= 1
+	MicroFibers	= 3
 	endOfOrder
 3:
 	orderNum	= 3
-	size		= 100000;
+	size		= 100000
+	packager	= HardPack
 	plastic		= Polyethelene
 	moldLoc		= sisterCompany
 	mold		= hero
 	finish		= dimpled
+	volume		= 50
+	color		= green
 	endOfOrder
 4:
 	orderNum	= 4
-	size		= 200000;
+	size		= 200000
+	packager	= ZipLock
 	plastic		= PET
 	moldLoc		= mill
 	mold		= dino
 	finish		= sanded
+	volume		= 30
+	color		= black
 	endOfOrder
