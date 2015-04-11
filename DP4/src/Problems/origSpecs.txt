@@ -1,19 +1,18 @@
 Size:
 	 10,000
+	 20,000
 	 50,000
 Cavities:
 	1
-	?
+	2
 Packagers:
 	Bulk
 	ShrinkWrap
 	HardPack
 Injection Line:
-	<=10,000: IJM_100, Aluminum(1), Linear conveyer belt, Cardboard box
-	<=50,000: IJM_200, Steel(1), Linear conveyer belt, Pallot box
-Metals:
-	aluminum
-	steel
+	<=10,000: IJM_110, Aluminum(1), Linear conveyer belt, Cardboard box
+	<=20,000: IJM_120, Aluminum(2), Y-Split conveyer belt, Cardboard box
+	<=50,000: IJM_210, Steel(1), Linear conveyer belt, Pallot box
 Shapes:
 	duck
 	car
@@ -26,6 +25,11 @@ Plastics:
 	Polypropylene
 	Polyethelene
 	PET
+Tags:
+	Blank
+	ModelNumber
+	Country
+	Date
 Color:
 	Black
 	Red

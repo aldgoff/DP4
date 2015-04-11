@@ -1,4 +1,5 @@
 Size:
+	40,000
 	100,000
 	200,000
 Cavities:
@@ -9,11 +10,9 @@ Packagers:
 	
 	
 Injection Line:
-	<=100,000: IJM_400, Steel(2), Y-Split conveyer belt, Crate
-	<=200,000: IJM_400, Steel(4), V-Level conveyer belt, Crate
-Metals:
-	brass
-
+	<=40,000: IJM_140, Aluminum(4), V-Level conveyer belt, Pallot box
+	<=100,000: IJM_220, Steel(2), Y-Split conveyer belt, Crate
+	<=200,000: IJM_240, Steel(4), V-Level conveyer belt, Crate
 Shapes:
 	dino
 
@@ -25,6 +24,11 @@ Plastics:
 	Styrene
 	Nylon66
 	
+	
+Tags:
+	IncCounter
+	PartNumber
+	RecycleCode
 	
 Color:
 	Brown

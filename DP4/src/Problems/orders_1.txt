@@ -46,3 +46,32 @@
 	volume		= 30
 	color		= black
 	endOfOrder
+5:
+	orderNum	= 5
+	size		= 10000
+	endOfOrder
+6:
+	orderNum	= 6
+	size		= 20000
+	endOfOrder
+5:
+	orderNum	= 5
+	size		= 40000
+	endOfOrder
+5:
+	orderNum	= 5
+	size		= 50000
+	endOfOrder
+5:
+	orderNum	= 5
+	size		= 100000
+	mold		= car
+	tags		= ModelNumber PartNumber IncCounter RecycleCode
+	endOfOrder
+5:
+	orderNum	= 5
+	size		= 200000
+	moldLoc		= mill
+	finish		= satin
+	tags		= RecycleCode PartNumber
+	endOfOrder
