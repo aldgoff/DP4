@@ -17,6 +17,9 @@ Shapes:
 	duck
 	car
 	hero
+Mold Location:
+	inventory
+	mill
 Milling:
 	HighCarbon
 	DiamondTipped
@@ -31,12 +34,14 @@ Tags:
 	Country
 	Date
 Color:
-	Black
-	Red
-	Green
-	Blue
-	White
+	brown
+	red
+	orange
+	yellow
+	green
 Additives:
 	UVInhibitor
 	AntiBacterial
-	
+Finishes
+	smooth
+	rippled

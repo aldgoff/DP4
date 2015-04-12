@@ -17,6 +17,9 @@ Shapes:
 	dino
 
 	
+Mold Location:
+	sisterCompany
+	purchase
 Milling:
 	Carbide
 
@@ -31,11 +34,15 @@ Tags:
 	RecycleCode
 	
 Color:
-	Brown
-	Orange
-	Yellow
-	Violet
-	Gray
+	blue
+	violet
+	gray
+	white
+	
 Additives:
 	MicroFibers
 	
+Finishes
+	dimpled
+	sanded
+	satin

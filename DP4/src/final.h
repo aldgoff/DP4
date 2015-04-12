@@ -100,17 +100,16 @@
  * Mold    RunSize   Plastic        Color   Additives      Metal     Cavities  Finish   Tags           Bins       Sequences  Packaging   Cleaning   GetMold       Milling    InjectionMachine
  * Bridge  Variable  Class          Enum    6 Decorator    Class     Variable  Enum     6 Decorator    7 Observer 1 Strategy 5 FactoryM  2 Adapter  8 ChainOfR    3-F 9-B    A AbstractFactory
  * ------  --------  -------------  ------  -------------  --------  --------  -------  -------------  ---------  ---------  ----------  ---------  ------------  ---------  ----------------
- * Duck    10,000    ABS            Black   UVInhibitor    Aluminum  1         Smooth   Blank          Plastic    PreHeat    Bulk        Carbonize  Fetch         Raster     IJM_100
- * Car     20,000    Polypropylene  Red     AntiBacterial  Steel     2         Rippled  ModelNumber    Color      PSI        ShrinkWrap  SoapWater  Mill          Vector     IJM_400
- * Hero    150,000   Polyethelene   Green                            4                  Country        Additives  CoolDown   HardPack    Acetone
- *         50,000    PET            Blue                                                Date           IJM        Eject
- *                                  White                                                              Packager
+ * Duck    10,000    ABS            brown   UVInhibitor    Aluminum  1         Smooth   Blank          Plastic    PreHeat    Bulk        Carbonize  Fetch         Raster     IJM_100
+ * Car     20,000    Polypropylene  red     AntiBacterial  Steel     2         Rippled  ModelNumber    Color      PSI        ShrinkWrap  SoapWater  Mill          Vector     IJM_400
+ * Hero    150,000   Polyethelene   orange                           4                  Country        Additives  CoolDown   HardPack    Acetone
+ *         50,000    PET            yellow                                              Date           IJM        Eject
+ *                                  green                                                               Packager
  * --------- Seams -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
- * Dino    500       Styrene        Brown   MicroFibers              8         Dimpled  IncCounter     Additives  PlasticT   ZipLock     Alcohol    Purchase      LaserEtch  IJM_800
- *         2,000     Nylon66        Orange                                     Sanded   PartNumber     Conveyer   MoldTemp                          SisterCompany
- *                                  Yellow                                     Satin    RecycleCode
- *                                  Violet
- *                                  Gray
+ * Dino    500       Styrene        blue    MicroFibers              8         Dimpled  IncCounter     Additives  PlasticT   ZipLock     Alcohol    Purchase      LaserEtch  IJM_800
+ *         2,000     Nylon66        violate                                    Sanded   PartNumber     Conveyer   MoldTemp                          SisterCompany
+ *                                  gray                                       Satin    RecycleCode
+ *                                  white
  *
  * 10 AbstractFactory
  * Factory      Machine  Conveyer  Bin

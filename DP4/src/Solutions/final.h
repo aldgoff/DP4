@@ -34,8 +34,13 @@ class Observer;
 class Subject;
 
 class Subject {
+public:
+	const string	name;
+private:
 	list<Observer*> observers;
-public: ~Subject();
+public:
+	Subject(string name="Named") : name(name) {}
+	~Subject();
 public:
 	void attach(Observer* obs) { observers.push_back(obs); }
 	void detach(Observer* obs) { observers.remove(obs); }
@@ -50,45 +55,17 @@ public:
 	}
 	virtual ~Observer() {
 		subject->detach(this);
-		cout << "~Observer ";
+		cout << "~Observer\n";
 	}
 public:
 	virtual void update(Subject* subject=0) {}
 };
-class IJM : public Observer {
-public:
-	IJM(Subject* subject) : Observer(subject) {}
-	~IJM() { cout << "~IJMObserver "; }
-public:
-	void update(Subject* subject) {
-		cout << "        IJM pausing while Package bin is swapped.\n";
-	}
-};
-class Conveyer : public Observer {
-public:
-	Conveyer(Subject* subject) : Observer(subject) {}
-	~Conveyer() { cout << "~ConveyerObserver "; }
-public:
-	void update(Subject* subject) {
-		cout << "        Conveyer belt pausing while Package bin is swapped.\n";
-	}
-};
-// Seam point - add another Observer.
-class Packager : public Observer {
-public:
-	Packager(Subject* subject) : Observer(subject) {}
-	~Packager() { cout << "~PackagerObserver "; }
-public:
-	void update(Subject* subject) {
-		cout << "        Packager pausing while Package bin is swapped.\n";
-	}
-};
 
 void Subject::pause() {
-	cout << "      Package bin full...\n";
+	cout << "      " << name << " package bin full...\n";
 	list<Observer*>::iterator it;
 	for(it=observers.begin(); it!=observers.end(); it++) {
-		(*it)->update();
+		(*it)->update(this);
 	}
 }
 Subject::~Subject() {
@@ -101,63 +78,61 @@ Subject::~Subject() {
 
 namespace abstract_factory {	// Done - depends on order size.
 
-class IJM_AF {
+using namespace observer;
+
+class IJM_AF : public Observer {
 public:
-	observer::Observer* observer;
+	IJM_AF(Subject* subject) : Observer(subject) {}
+	virtual ~IJM_AF() { cout << "~IJM_AF "; }
 public:
-	IJM_AF() : observer(0) {}
-	virtual ~IJM_AF() {
-		delete observer;
-		cout << "~IJM_AF\n";
+	void update(Subject* subject) {
+		cout << "        IJM pausing while " << subject->name;
+		cout << " package bin is swapped.\n";
 	}
-public:
-	virtual string setup(observer::Observer* observer) {
-		this->observer = observer;
-		return "IJM_AF base";
-	}
+	virtual string setup() { return "IJM_AF base"; }
 };
 class IJM_110 : public IJM_AF {					// PilotOrder.
-public: ~IJM_110() { cout << "~IJM_110 "; }
-	string setup(observer::Observer* observer) {
-		this->observer = observer;
-		return "IJM_110";
-	}
+public:
+	IJM_110(Subject* subject) : IJM_AF(subject) {}
+	~IJM_110() { cout << "~IJM_110 "; }
+public:
+	string setup() { return "IJM_110"; }
 };
 class IJM_120 : public IJM_AF {					// SmallOrder.
-public: ~IJM_120() { cout << "~IJM_120 "; }
-	string setup(observer::Observer* observer) {
-		this->observer = observer;
-		return "IJM_120";
-	}
+public:
+	IJM_120(Subject* subject) : IJM_AF(subject) {}
+	~IJM_120() { cout << "~IJM_120 "; }
+public:
+	string setup() { return "IJM_120"; }
 };
 class IJM_210 : public IJM_AF {					// MediumOrder.
-public: ~IJM_210() { cout << "~IJM_210 "; }
-	string setup(observer::Observer* observer) {
-		this->observer = observer;
-		return "IJM_210";
-	}
+public:
+	IJM_210(Subject* subject) : IJM_AF(subject) {}
+	~IJM_210() { cout << "~IJM_210 "; }
+public:
+	string setup() { return "IJM_210"; }
 };
 // Seam point - add another InJection Molding machine.
 class IJM_140 : public IJM_AF {					// FastOrder.
-public: ~IJM_140() { cout << "~IJM_140 "; }
-	string setup(observer::Observer* observer) {
-		this->observer = observer;
-		return "IJM_140";
-	}
+public:
+	IJM_140(Subject* subject) : IJM_AF(subject) {}
+	~IJM_140() { cout << "~IJM_140 "; }
+public:
+	string setup() { return "IJM_140"; }
 };
 class IJM_220 : public IJM_AF {					// LargeOrder.
-public: ~IJM_220() { cout << "~IJM_220 "; }
-	string setup(observer::Observer* observer) {
-		this->observer = observer;
-		return "IJM_220";
-	}
+public:
+	IJM_220(Subject* subject) : IJM_AF(subject) {}
+	~IJM_220() { cout << "~IJM_220 "; }
+public:
+	string setup() { return "IJM_220"; }
 };
 class IJM_240 : public IJM_AF {					// HugeOrder.
-public: ~IJM_240() { cout << "~IJM_240 "; }
-	string setup(observer::Observer* observer) {
-		this->observer = observer;
-		return "IJM_240";
-	}
+public:
+	IJM_240(Subject* subject) : IJM_AF(subject) {}
+	~IJM_240() { cout << "~IJM_240 "; }
+public:
+	string setup() { return "IJM_240"; }
 };
 
 class Mold_AF {
@@ -189,82 +164,69 @@ public:
 	string setup() { return "Steel" + cavitiesAsString(); }
 	string metal() { return "steel"; }
 };
-// Seam point?
 
-class ConveyerBelt_AF {
+class ConveyerBelt_AF : public Observer  {
 public:
-	observer::Observer* observer;
+	ConveyerBelt_AF(Subject* subject) : Observer(subject) {}
+	virtual ~ConveyerBelt_AF() { cout << "~ConveyerBelt_AF "; }
 public:
-	ConveyerBelt_AF() : observer(0) {}
-	virtual ~ConveyerBelt_AF() {
-		delete observer;
-		cout << "~ConveyerBelt_AF\n";
+	void update(Subject* subject) {
+		cout << "        Conveyer belt pausing while " << subject->name;
+		cout << " package bin is swapped.\n";
 	}
-public:
-	virtual string setup(observer::Observer* observer) {
-		this->observer = observer;
-		return "ConveyerBelt_AF base";
-	}
+	virtual string setup() { return "ConveyerBelt_AF base"; }
 };
 class LinearBelt : public ConveyerBelt_AF {
-public: ~LinearBelt() { cout << "~LinearBelt "; }
-	string setup(observer::Observer* observer) {
-		this->observer = observer;
-		return "Linear conveyer belt";
-	}
+public:
+	LinearBelt(Subject* subject) : ConveyerBelt_AF(subject) {}
+	~LinearBelt() { cout << "~LinearBelt "; }
+public:
+	string setup() {return "Linear conveyer belt"; }
 };
 class YSplitBelt : public ConveyerBelt_AF {
-public: ~YSplitBelt() { cout << "~YSplitBelt "; }
-	string setup(observer::Observer* observer) {
-		this->observer = observer;
-		return "Y-Split conveyer belt";
-	}
+public:
+	YSplitBelt(Subject* subject) : ConveyerBelt_AF(subject) {}
+	~YSplitBelt() { cout << "~YSplitBelt "; }
+public:
+	string setup() { return "Y-Split conveyer belt"; }
 };
 // Seam point - add another conveyer belt.
 class VLevelBelt : public ConveyerBelt_AF {
-public: ~VLevelBelt() { cout << "~VLevelBelt "; }
-	string setup(observer::Observer* observer) {
-		this->observer = observer;
-		return "V-Level conveyer belt";
-	}
+public:
+	VLevelBelt(Subject* subject) : ConveyerBelt_AF(subject) {}
+	~VLevelBelt() { cout << "~VLevelBelt "; }
+public:
+	string setup() { return "V-Level conveyer belt"; }
 };
 
-class PackageBin_AF {
+class PackageBin_AF : public Subject {
 public:
-	observer::Subject* subject;
+	PackageBin_AF(string name) : Subject(name) {}
+	virtual ~PackageBin_AF() { cout << "~PackageBin_AF "; }
 public:
-	PackageBin_AF() : subject(0) {}
-	virtual ~PackageBin_AF() {
-		cout << "~PackageBin_AF ";
-		delete subject;
-	}
-public:
-	virtual string setup(observer::Subject* subject) {
-		this->subject = subject;
-		return "PackageBin_AF base";
-	}
+	virtual string setup() { return "PackageBin_AF base"; }
 };
 class CardboardBox : public PackageBin_AF {
-public: ~CardboardBox() { cout << "~CardboardBox "; }
-	string setup(observer::Subject* subject) {
-		this->subject = subject;
-		return "CardboardBox";
-	}
+public:
+	CardboardBox() : PackageBin_AF("CardboardBox") {}
+	~CardboardBox() { cout << "~CardboardBox "; }
+public:
+	string setup() { return "CardboardBox"; }
 };
 class PallotBox : public PackageBin_AF {
-public: ~PallotBox() { cout << "~PallotBox "; }
-	string setup(observer::Subject* subject) {
-		this->subject = subject;
-		return "PallotBox";
-	}
+public:
+	PallotBox() : PackageBin_AF("PallotBox") {}
+	~PallotBox() { cout << "~PallotBox "; }
+public:
+	string setup() { return "PallotBox"; }
 };
 // Seam point - add another conveyer belt.
 class Crate : public PackageBin_AF {
-public: ~Crate() { cout << "~Crate "; }
-	string setup(observer::Subject* subject) {
-		this->subject = subject;
-		return "Crate";
-	}
+public:
+	Crate() : PackageBin_AF("Crate") {}
+	~Crate() { cout << "~Crate "; }
+public:
+	string setup() { return "Crate"; }
 };
 
 class Setup_AF_10 {	// New specs (size).
@@ -272,33 +234,24 @@ public:
 	virtual ~Setup_AF_10() { cout << "~Setup_AF_10\n"; }
 	static Setup_AF_10* createInjectionLine(map<string, string> order);
 public:
-	virtual IJM_AF* createIJM(const map<string, string>& order) {
-		cout << "    create IJM base\n";
-		return new IJM_AF;
-	}
+	virtual IJM_AF* createIJM(const map<string, string>& order, Subject* subject)=0;
 	virtual Mold_AF* createMold(const map<string, string>& order) {
 		cout << "    create Mold base\n";
 		return new Mold_AF;
 	}
-	virtual ConveyerBelt_AF* createBelt(const map<string, string>& order) {
-		cout << "    create Belt base\n";
-		return new ConveyerBelt_AF;
-	}
-	virtual PackageBin_AF* createBin(const map<string, string>& order) {
-		cout << "    create Bin base\n";
-		return new PackageBin_AF;
-	}
+	virtual ConveyerBelt_AF* createBelt(const map<string, string>& order, Subject* subject)=0;
+	virtual PackageBin_AF* createBin(const map<string, string>& order)=0;
 };
 class PilotOrder : public Setup_AF_10 {
 public: ~PilotOrder() { cout << "~PilotOrder "; }
-	IJM_AF* createIJM(const map<string, string>& order) {
-		return new IJM_110;
+	IJM_AF* createIJM(const map<string, string>& order, Subject* subject) {
+		return new IJM_110(subject);
 	}
 	Mold_AF* createMold(const map<string, string>& order) {
 		return new Aluminum(1);
 	}
-	ConveyerBelt_AF* createBelt(const map<string, string>& order) {
-		return new LinearBelt;
+	ConveyerBelt_AF* createBelt(const map<string, string>& order, Subject* subject) {
+		return new LinearBelt(subject);
 	}
 	PackageBin_AF* createBin(const map<string, string>& order) {
 		return new CardboardBox;
@@ -306,14 +259,14 @@ public: ~PilotOrder() { cout << "~PilotOrder "; }
 };
 class SmallOrder : public Setup_AF_10 {
 public: ~SmallOrder() { cout << "~SmallOrder "; }
-	IJM_AF* createIJM(const map<string, string>& order) {
-		return new IJM_120;
+	IJM_AF* createIJM(const map<string, string>& order, Subject* subject) {
+		return new IJM_120(subject);
 	}
 	Mold_AF* createMold(const map<string, string>& order) {
 		return new Aluminum(2);
 	}
-	ConveyerBelt_AF* createBelt(const map<string, string>& order) {
-		return new YSplitBelt;
+	ConveyerBelt_AF* createBelt(const map<string, string>& order, Subject* subject) {
+		return new YSplitBelt(subject);
 	}
 	PackageBin_AF* createBin(const map<string, string>& order) {
 		return new CardboardBox;
@@ -321,14 +274,14 @@ public: ~SmallOrder() { cout << "~SmallOrder "; }
 };
 class MediumOrder : public Setup_AF_10 {
 public: ~MediumOrder() { cout << "~MediumOrder "; }
-	IJM_AF* createIJM(const map<string, string>& order) {
-		return new IJM_210;
+	IJM_AF* createIJM(const map<string, string>& order, Subject* subject) {
+		return new IJM_210(subject);
 	}
 	Mold_AF* createMold(const map<string, string>& order) {
 		return new Steel(1);
 	}
-	ConveyerBelt_AF* createBelt(const map<string, string>& order) {
-		return new LinearBelt;
+	ConveyerBelt_AF* createBelt(const map<string, string>& order, Subject* subject) {
+		return new LinearBelt(subject);
 	}
 	PackageBin_AF* createBin(const map<string, string>& order) {
 		return new PallotBox;
@@ -337,14 +290,14 @@ public: ~MediumOrder() { cout << "~MediumOrder "; }
 // Seam point - add larger orders.
 class FastOrder : public Setup_AF_10 {
 public: ~FastOrder() { cout << "~FastOrder "; }
-	IJM_AF* createIJM(const map<string, string>& order) {
-		return new IJM_140;
+	IJM_AF* createIJM(const map<string, string>& order, Subject* subject) {
+		return new IJM_140(subject);
 	}
 	Mold_AF* createMold(const map<string, string>& order) {
 		return new Aluminum(4);
 	}
-	ConveyerBelt_AF* createBelt(const map<string, string>& order) {
-		return new VLevelBelt;
+	ConveyerBelt_AF* createBelt(const map<string, string>& order, Subject* subject) {
+		return new VLevelBelt(subject);
 	}
 	PackageBin_AF* createBin(const map<string, string>& order) {
 		return new PallotBox;
@@ -352,14 +305,14 @@ public: ~FastOrder() { cout << "~FastOrder "; }
 };
 class LargeOrder : public Setup_AF_10 {
 public: ~LargeOrder() { cout << "~LargeOrder "; }
-	IJM_AF* createIJM(const map<string, string>& order) {
-		return new IJM_220;
+	IJM_AF* createIJM(const map<string, string>& order, Subject* subject) {
+		return new IJM_220(subject);
 	}
 	Mold_AF* createMold(const map<string, string>& order) {
 		return new Steel(2);
 	}
-	ConveyerBelt_AF* createBelt(const map<string, string>& order) {
-		return new YSplitBelt;
+	ConveyerBelt_AF* createBelt(const map<string, string>& order, Subject* subject) {
+		return new YSplitBelt(subject);
 	}
 	PackageBin_AF* createBin(const map<string, string>& order) {
 		return new Crate;
@@ -367,14 +320,14 @@ public: ~LargeOrder() { cout << "~LargeOrder "; }
 };
 class HugeOrder : public Setup_AF_10 {
 public: ~HugeOrder() { cout << "~HugeOrder "; }
-	IJM_AF* createIJM(const map<string, string>& order) {
-		return new IJM_240;
+	IJM_AF* createIJM(const map<string, string>& order, Subject* subject) {
+		return new IJM_240(subject);
 	}
 	Mold_AF* createMold(const map<string, string>& order) {
 		return new Steel(4);
 	}
-	ConveyerBelt_AF* createBelt(const map<string, string>& order) {
-		return new VLevelBelt;
+	ConveyerBelt_AF* createBelt(const map<string, string>& order, Subject* subject) {
+		return new VLevelBelt(subject);
 	}
 	PackageBin_AF* createBin(const map<string, string>& order) {
 		return new Crate;
@@ -393,7 +346,9 @@ Setup_AF_10* Setup_AF_10::createInjectionLine(map<string, string> order) {
 	else if(size <= 100000)	return new LargeOrder;
 	else if(size <= 200000)	return new HugeOrder;
 
-	return new Setup_AF_10;
+	else {	// Default to PilotOrder.
+		return new PilotOrder;
+	}
 }
 
 }
@@ -453,7 +408,10 @@ class Shape {
 protected:
 	Platform* platform;
 public:
-	Shape(Platform* platform) : platform(platform) {}
+	const unsigned volume_m3;
+public:
+	Shape(Platform* platform, unsigned volume_cc=0)
+	  : platform(platform), volume_m3(volume_cc) {}
 	virtual ~Shape() { cout << "~Shape_B_9 "; delete platform; }
 public:
 	static Shape* getShape(map<string,string>& order);
@@ -465,7 +423,7 @@ public:
 class Duck : public Shape {
 	string	name;
 public: ~Duck() { cout << "~Duck "; }
-	Duck(Platform* platform) : Shape(platform), name("duck") {};
+	Duck(Platform* platform) : Shape(platform, 35), name("duck") {};
 	void mill(map<string,string>& order) {	// Simulated specific steps to mill shape.
 		cout << "      using " << platform->name() << " tools (";
 		cout << platform->drill() << ", ";
@@ -479,7 +437,7 @@ public: ~Duck() { cout << "~Duck "; }
 class Car : public Shape {
 	string	name;
 public: ~Car() { cout << "~Car "; }
-	Car(Platform* platform) : Shape(platform), name("car") {};
+	Car(Platform* platform) : Shape(platform, 40), name("car") {};
 	void mill(map<string,string>& order) {	// Simulated specific steps to mill shape.
 		cout << "      using " << platform->name() << " tools (";
 		cout << platform->drill() << ", ";
@@ -493,7 +451,7 @@ public: ~Car() { cout << "~Car "; }
 class Hero : public Shape {
 	string	name;
 public: ~Hero() { cout << "~Hero "; }
-	Hero(Platform* platform) : Shape(platform), name("hero") {};
+	Hero(Platform* platform) : Shape(platform, 50), name("hero") {};
 	void mill(map<string,string>& order) {	// Simulated specific steps to mill shape.
 		cout << "      using " << platform->name() << " tools (";
 		cout << platform->drill() << ", ";
@@ -508,7 +466,7 @@ public: ~Hero() { cout << "~Hero "; }
 class Dino : public Shape {
 	string	name;
 public: ~Dino() { cout << "~Dino "; }
-	Dino(Platform* platform) : Shape(platform), name("dino") {};
+	Dino(Platform* platform) : Shape(platform, 30), name("dino") {};
 	void mill(map<string,string>& order) {	// Simulated specific steps to mill shape.
 		cout << "      using " << platform->name() << " tools (";
 		cout << platform->drill() << ", ";
@@ -539,6 +497,8 @@ Shape* Shape::getShape(map<string,string>& order) {
 
 namespace chain_of_resp {	// Done - depends on mold location.
 
+using namespace bridge;
+
 class GetMold {
 protected:
 	GetMold* successor;
@@ -546,7 +506,7 @@ public:
 	GetMold(GetMold* successor=0) : successor(successor) {};
 	virtual ~GetMold() { cout << "~GetMold_CofR_8 "; }
 public:
-	virtual void from(map<string, string>& order) {
+	virtual Shape* from(map<string, string>& order) {
 		string place = order["moldLoc"];
 		string mold = order["mold"];
 		cout << "    Can't find place " << place;
@@ -554,27 +514,31 @@ public:
 		cout << "    <>Defaulting to duck from inventory.\n";
 		order["moldLoc"] = "inventory";
 		order["mold"]	 = "duck";
+
+		return Shape::getShape(order);
 	}
 };
 class Inventory : public GetMold {
 public: ~Inventory() { cout << "~Inventory "; delete successor; }
 	Inventory(GetMold* successor=0) : GetMold(successor) {};
 public:
-	void from(map<string, string>& order) {
+	Shape* from(map<string, string>& order) {
 		string place = order["moldLoc"];
-		if(place == "inventory")
+		if(place == "inventory") {
 			cout << "    Pull " << order["mold"] << " mold from inventory.\n";
+			return Shape::getShape(order);
+		}
 		else if(successor != 0)
-			successor->from(order);
+			return successor->from(order);
 		else
-			GetMold::from(order);	// Oops.
-	}
+			return GetMold::from(order);	// Oops.
+			}
 };
 class Mill : public GetMold {
 public: ~Mill() { cout << "~Mill "; delete successor; }
 	Mill(GetMold* successor=0) : GetMold(successor) {};
 public:
-	void from(map<string, string>& order) {
+	Shape* from(map<string, string>& order) {
 		using namespace bridge;
 		string place = order["moldLoc"];
 		if(place == "mill") {
@@ -582,12 +546,12 @@ public:
 			cout << "    Create " << order["mold"] << " mold from mill ";
 			cout << "with " << order["cavities"] << " cavities:\n";
 			shape->mill(order);
-			delete shape;
+			return shape;
 			}
 		else if(successor != 0)
-			successor->from(order);
+			return successor->from(order);
 		else
-			GetMold::from(order);	// Oops.
+			return GetMold::from(order);	// Oops.
 	}
 };
 // Seam points - add another mold source.
@@ -595,34 +559,38 @@ class SisterCompany : public GetMold {
 public: ~SisterCompany() { cout << "~SisterCompany "; delete successor; }
 	SisterCompany(GetMold* successor=0) : GetMold(successor) {};
 public:
-	void from(map<string, string>& order) {
+	Shape* from(map<string, string>& order) {
 		string place = order["moldLoc"];
-		if(place == "sisterCompany")
+		if(place == "sisterCompany") {
 			cout << "    Borrow " << order["mold"] << " mold from sister company.\n";
+			return Shape::getShape(order);
+		}
 		else if(successor != 0)
-			successor->from(order);
+			return successor->from(order);
 		else
-			GetMold::from(order);	// Oops.
+			return GetMold::from(order);	// Oops.
 	}
 };
 class Purchase : public GetMold {
 public: ~Purchase() { cout << "~Purchase "; delete successor; }
 	Purchase(GetMold* successor=0) : GetMold(successor) {};
 public:
-	void from(map<string, string>& order) {
+	Shape* from(map<string, string>& order) {
 		string place = order["moldLoc"];
-		if(place == "purchase")
+		if(place == "purchase") {
 			cout << "    Acquire " << order["mold"] << " mold via purchase.\n";
+			return Shape::getShape(order);
+		}
 		else if(successor != 0)
-			successor->from(order);
+			return successor->from(order);
 		else
-			GetMold::from(order);	// Oops.
+			return GetMold::from(order);	// Oops.
 	}
 };
 
 }
 
-namespace decorator {	// Additives(Done), Tags(Inwork).
+namespace decorator {	// Done - Tags and Additives.
 
 class Tags_D_6 {
 public: virtual ~Tags_D_6() { cout << "~Tags_D_6 "; };
@@ -734,34 +702,35 @@ Tags_D_6* addBlankToFit(Tags_D_6* cavity) {
 
 class Plastic_D_6 {
 public: virtual ~Plastic_D_6() { cout << "~Plastic_D_6 "; }
-	virtual unsigned mix() { return 0; }
+	virtual unsigned mix(unsigned cavities) { return 0; }
 	virtual string idNvol() { return ""; }
 };
 class Color : public Plastic_D_6 {
 	string		plastic;
 	string		color;
-	string		volstr;
 	unsigned	volume;
 	unsigned	colorVol;
 public:
-	Color(string plastic, string color="blue", string volstr="30")
-	  : plastic(plastic), color(color), volstr(volstr),
-		volume(atoi(volstr.c_str())),
-		colorVol(volume/10) {
+	Color(string plastic, string color, unsigned volume_m3=0)
+	  : plastic(plastic), color(color),
+		volume(volume_m3),
+		colorVol(volume_m3/10) {
 	}
 	~Color() { cout << "~Color "; }
 public:
-	unsigned mix() { return volume + colorVol; }
+	unsigned mix(unsigned cavities) {
+		return cavities*(volume + colorVol);
+	}
 	string idNvol() {
-		char vol[80];
-		sprintf(vol, "(%d)", colorVol);
-		return plastic + "(" + volstr + ") " + color + string(vol);
+		char volP[80]; sprintf(volP, "(%d) ", volume);
+		char volC[80]; sprintf(volC, "(%d)", colorVol);
+		return plastic + string(volP) + color + string(volC);
 	}
 };
 class Additive : public Plastic_D_6 {
 protected:
 	Plastic_D_6* 	delegate;
-	unsigned	volume_m3;
+	unsigned		volume_m3;
 public:
 	Additive(Plastic_D_6* delegate, unsigned volume_m3)
 	  : delegate(delegate), volume_m3(volume_m3) {}
@@ -779,7 +748,9 @@ public:
 	  : Additive(delegate, volume_m3) {}
 	~UVInhibiter() { cout << "~UVInhibiter "; }
 public:
-	unsigned mix() { return delegate->mix() + volume_m3; }
+	unsigned mix(unsigned cavities) {
+		return delegate->mix(cavities) + cavities*volume_m3;
+	}
 	string idNvol() { return delegate-> idNvol() + " UVInhibiter" + volAsStr(); }
 };
 class AntiBacterial : public Additive {
@@ -788,7 +759,9 @@ public:
 	  : Additive(delegate, volume_m3) {}
 	~AntiBacterial() { cout << "~AntiBacterial "; }
 public:
-	unsigned mix() { return delegate->mix() + volume_m3; }
+	unsigned mix(unsigned cavities) {
+		return delegate->mix(cavities) + cavities*volume_m3;
+	}
 	string idNvol() { return delegate-> idNvol() + " AntiBacterial" + volAsStr(); }
 };
 // Seam point - add another additive.
@@ -798,7 +771,9 @@ public:
 	  : Additive(delegate, volume_m3) {}
 	~MicroFibers() { cout << "~MicroFibers "; }
 public:
-	unsigned mix() { return delegate->mix() + volume_m3; }
+	unsigned mix(unsigned cavities) {
+		return delegate->mix(cavities) + cavities*volume_m3;
+	}
 	string idNvol() { return delegate-> idNvol() + " MicroFibers" + volAsStr(); }
 };
 
@@ -821,46 +796,60 @@ Plastic_D_6* addAdditives(Plastic_D_6* color, map<string,string>& order) {
 
 namespace factory_method {	// Done - depends on order request.
 
-class Packager_FM_5 {
+using namespace observer;
+
+class Packager_FM_5 : public Observer {
 public:
-	observer::Observer* observer;
+	Packager_FM_5(Subject* subject) : Observer(subject) {}
+	virtual ~Packager_FM_5() { cout << "~Packager_FM_5 "; }
 public:
-	Packager_FM_5() : observer(0) {}
-	virtual ~Packager_FM_5() {
-		delete observer;
-		cout << "~Packager_FM_5\n";
+	static Packager_FM_5* makeObject(const string& type, Subject* subject);
+	void update(Subject* subject) {
+		cout << "        Packager pausing while " << subject->name;
+		cout << " package bin is swapped.\n";
 	}
-public:
-	static Packager_FM_5* makeObject(const string& type);
 	virtual string wrap() { return "Bulk packager (default)"; }
 };
 class Bulk : public Packager_FM_5 {
-public: ~Bulk() { cout << "~Bulk "; }
+public:
+	Bulk(Subject* subject) : Packager_FM_5(subject) {}
+	~Bulk() { cout << "~Bulk "; }
+public:
 	string wrap() { return "Bulk packager"; }
 };
 class ShrinkWrap : public Packager_FM_5 {
-public: ~ShrinkWrap() { cout << "~ShrinkWrap "; }
+public:
+	ShrinkWrap(Subject* subject) : Packager_FM_5(subject) {}
+	~ShrinkWrap() { cout << "~ShrinkWrap "; }
+public:
 	string wrap() { return "ShrinkWrap packager"; }
 };
 class HardPack : public Packager_FM_5 {
-public: ~HardPack() { cout << "~HardPack "; }
+public:
+	HardPack(Subject* subject) : Packager_FM_5(subject) {}
+	~HardPack() { cout << "~HardPack "; }
+public:
 	string wrap() { return "HardPack packager"; }
 };
 // Seam point - insert another packager.
 class ZipLock : public Packager_FM_5 {
-public: ~ZipLock() { cout << "~ZipLock "; }
+public:
+	ZipLock(Subject* subject) : Packager_FM_5(subject) {}
+	~ZipLock() { cout << "~ZipLock "; }
+public:
 	string wrap() { return "ZipLock packager"; }
 };
 
-Packager_FM_5* Packager_FM_5::makeObject(const string& type) {
-	if(     type == "Bulk")			return new Bulk;
-	else if(type == "ShrinkWrap")	return new ShrinkWrap;
-	else if(type == "HardPack")		return new HardPack;
+Packager_FM_5* Packager_FM_5::makeObject(const string& type, Subject* subject) {
+	if(     type == "Bulk")			return new Bulk(subject);
+	else if(type == "ShrinkWrap")	return new ShrinkWrap(subject);
+	else if(type == "HardPack")		return new HardPack(subject);
 	// Seam point - insert another packager.
-	else if(type == "ZipLock")		return new ZipLock;
+	else if(type == "ZipLock")		return new ZipLock(subject);
 
-	else {
-		return new Packager_FM_5;
+	else {	// Default to bulk packager.
+		cout << "  <>Defaulting to Bulk packager.\n";
+		return new Bulk(subject);
 	}
 }
 
@@ -1011,35 +1000,38 @@ protected:
 	ConveyerBelt_AF*	belt;
 	PackageBin_AF*		bin;
 	GetMold* 			theMold;
+	Shape*				shape;
 	Tags_D_6*			cavity;
 	Plastic_D_6*		color;
 	strategy::Strategy*	algorithm;
 private:
 	void setupLine(map<string, string>& order) {	// Abstract Factory.
-		subject = new observer::Subject();
-
-		packager = Packager_FM_5::makeObject(order["packager"]);
-		packager->observer = new observer::Packager(subject);
-
 		injectionLine = Setup_AF_10::createInjectionLine(order);
 
-		ijm		= injectionLine->createIJM(order);
-		mold	= injectionLine->createMold(order);	// CofR.
-		belt	= injectionLine->createBelt(order);	// Factory Method.
-		bin		= injectionLine->createBin(order);
+		bin		= injectionLine->createBin(order);			// Observer Subject.
+
+		ijm		= injectionLine->createIJM(order, bin);		// Observer.
+		mold	= injectionLine->createMold(order);			// CofR, # of cavities.
+		belt	= injectionLine->createBelt(order, bin);	// Observer.
+
+		packager = Packager_FM_5::makeObject(order["packager"], bin);	// FM & O.
 
 		order["metal"] = mold->metal();
 		char str[80];
 		sprintf(str, "%d", mold->cavities());
 		order["cavities"] = str;
 
+		if(order.find("size") == order.end()) {
+			cout << "  <>No size specified, defaulting to 100.\n";
+			order["size"] = "100";
+		}
 		cout << "  Setup injection line for ";
 		cout << order["size"] << " run with ";
 		cout << packager->wrap() << ":\n    ";
-		cout << ijm->setup(new observer::IJM(subject)) << " - ";
+		cout << ijm->setup() << " - ";
 		cout << mold->setup() << " - ";
-		cout << belt->setup(new observer::Conveyer(subject)) << " - ";
-		cout << bin->setup(subject);
+		cout << belt->setup() << " - ";
+		cout << bin->setup();
 		cout << endl;
 	}
 	void getMold(map<string, string>& order) {		// Chain of Responsibility.
@@ -1052,7 +1044,8 @@ private:
 			// ...
 			new GetMold(
 		)))));
-		theMold->from(order);
+
+		shape = theMold->from(order);	// Volume_m3.
 	}
 	void insertTags(map<string, string>& order) {	// Decorator.
 		cavity = new Cavity();
@@ -1068,18 +1061,25 @@ private:
 		cout << widthOfTags_mm << "/" << cavity->width_mm() << " mm.\n";
 	}
 	void loadAdditiveBins(map<string, string>& order) {	// Decorator.
-		cout << "    Load additive bins.\n";
-		color = new Color(order["plastic"], order["color"], order["volume"]);
+		cout << "    Load plastic, color, and additive bins.\n";
+
+		if(order.find("color") == order.end()) {
+			cout << "      <>No color specified, defaulting to black.\n";
+			order["color"] = "black";
+		}
+		color = new Color(order["plastic"], order["color"], shape->volume_m3);
 
 		color = decorator::addAdditives(color, order);
 
 		cout << "      Recipe: " << color->idNvol();
-		cout << " Total = " << color->mix() << ".\n";
+		cout << " Total = " << color->mix(mold->cavities()) << ".\n";
 	}
+protected:
 	virtual void injectionRun(map<string, string>& order) {
-		algorithm = new strategy::ABS;	// Default if no plastic specified.
-		cout << "    Example injection run - base class.\n";
+		algorithm->cycle(atoi(order["size"].c_str()));
+		bin->pause();
 	}
+private:
 	void cleanMold(map<string, string>& order) {
 		algorithm->clean(order);
 	}
@@ -1092,6 +1092,7 @@ public:
 		delete bin;
 		delete injectionLine;
 		delete theMold;	cout << endl;
+		delete shape;
 		delete color;	cout << endl;
 		delete cavity;	cout << endl;
 		delete algorithm;
@@ -1111,32 +1112,28 @@ class ABS : public ProcessOrder_TM_4 {
 public: ~ABS() { cout << "~ABS\n"; }
 	void injectionRun(map<string, string>& order) {
 		algorithm = new strategy::ABS;
-		algorithm->cycle(atoi(order["size"].c_str()));
-		bin->subject->pause();
+		ProcessOrder_TM_4::injectionRun(order);
 	}
 };
 class Polypropylene : public ProcessOrder_TM_4 {
 public: ~Polypropylene() { cout << "~Polypropylene\n"; }
 	void injectionRun(map<string, string>& order) {
 		algorithm = new strategy::Poly;
-		algorithm->cycle(atoi(order["size"].c_str()));
-		bin->subject->pause();
+		ProcessOrder_TM_4::injectionRun(order);
 	}
 };
 class Polyethelene : public ProcessOrder_TM_4 {
 public: ~Polyethelene() { cout << "~Polyethelene\n"; }
 	void injectionRun(map<string, string>& order) {
 		algorithm = new strategy::Poly;
-		algorithm->cycle(atoi(order["size"].c_str()));
-		bin->subject->pause();
+		ProcessOrder_TM_4::injectionRun(order);
 	}
 };
 class PET : public ProcessOrder_TM_4 {
 public: ~PET() { cout << "~PET\n"; }
 	void injectionRun(map<string, string>& order) {
 		algorithm = new strategy::PET;
-		algorithm->cycle(atoi(order["size"].c_str()));
-		bin->subject->pause();
+		ProcessOrder_TM_4::injectionRun(order);
 	}
 };
 // Seam point - add another plastic.
@@ -1144,16 +1141,14 @@ class Styrene : public ProcessOrder_TM_4 {
 public: ~Styrene() { cout << "~Styrene\n"; }
 	void injectionRun(map<string, string>& order) {
 		algorithm = new strategy::Synthetics;
-		algorithm->cycle(atoi(order["size"].c_str()));
-		bin->subject->pause();
+		ProcessOrder_TM_4::injectionRun(order);
 	}
 };
 class Nylon66 : public ProcessOrder_TM_4 {
 public: ~Nylon66() { cout << "~Nylon66\n"; }
 	void injectionRun(map<string, string>& order) {
 		algorithm = new strategy::Synthetics;
-		algorithm->cycle(atoi(order["size"].c_str()));
-		bin->subject->pause();
+		ProcessOrder_TM_4::injectionRun(order);
 	}
 };
 
@@ -1162,7 +1157,6 @@ public: ~Nylon66() { cout << "~Nylon66\n"; }
 namespace patterns_todo {
 
 class Mill_F_3 {};			// New specs (laser).
-class PauseOnFull_O_7 {};
 
 }
 
@@ -1203,9 +1197,12 @@ void process(map<string, string> order) {
 	else if(order["plastic"] == "Styrene")		processOrder = new Styrene;
 	else if(order["plastic"] == "Nylon66")		processOrder = new Nylon66;
 
-	else {
-		processOrder = new ProcessOrder_TM_4;	// Default process
-		cout << "  <>Defaulting to ABS.\n";
+	else {										// Default process.
+		cout << "  <>Unknown plastic |";
+		cout << order["plastic"] << "| ";
+		cout << "defaulting to ABS.\n";
+		order["plastic"] = "ABS";
+		processOrder = new ABS;
 	}
 
 	processOrder->run(order);
@@ -1259,8 +1256,6 @@ void demo(const string& orderFile) {
 	}
 }
 
-
 }
-
 
 #endif /* DP4_SRC_SOLUTIONS_FINAL_H_ */

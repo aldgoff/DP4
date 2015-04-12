@@ -1,77 +1,103 @@
 1:
 	orderNum	= 1
+	comment		= Null order - check default behaviors.
+	endOfOrder
+2:
+	orderNum	= 2
+	comment		= Example order - one of everything.
 	size		= 10000
 	packager	= Bulk
 	plastic		= ABS
 	moldLoc		= inventory
 	mold		= duck
 	finish		= smooth
-	volume		= 35
-	color		= blue
-	endOfOrder
-2:
-	orderNum	= 2
-	size		= 44000
-	packager	= ShrinkWrap
-	plastic		= Polypropylene
-	moldLoc		= mill
-	mold		= car
-	finish		= rippled
-	tag1		= date
-	volume		= 40
+	tags		= ModelNumber
 	color		= red
 	UVInhibiter	= 6
-	AntiBacterial	= 1
-	MicroFibers	= 3
 	endOfOrder
 3:
-	orderNum	= 3
-	size		= 100000
-	packager	= HardPack
-	plastic		= Polyethelene
-	moldLoc		= sisterCompany
-	mold		= hero
-	finish		= dimpled
-	volume		= 50
-	color		= green
+	orderNum		= 3
+	comment			= Max order - next of singles, all of everything else (orig secs).
+	size			= 20000
+	packager		= ShrinkWrap
+	plastic			= Polypropylene
+	moldLoc			= mill
+	mold			= car
+	finish			= rippled
+	tags			= ModelNumber Country Date
+	color			= orange
+	UVInhibiter		= 6
+	AntiBacterial	= 1
 	endOfOrder
 4:
 	orderNum	= 4
-	size		= 200000
-	packager	= ZipLock
-	plastic		= PET
+	comment		= Next of singles or last.
+	size		= 50000
+	packager	= HardPack
+	plastic		= Polyethelene
 	moldLoc		= mill
-	mold		= dino
-	finish		= sanded
-	volume		= 30
-	color		= black
+	mold		= hero
+	finish		= rippled
+	color		= yellow
 	endOfOrder
 5:
 	orderNum	= 5
-	size		= 10000
+	comment		= Next of singles or last.
+	size		= 50000
+	packager	= HardPack
+	plastic		= PET
+	moldLoc		= mill
+	mold		= hero
+	finish		= rippled
+	color		= green
 	endOfOrder
 6:
 	orderNum	= 6
-	size		= 20000
-	endOfOrder
-5:
-	orderNum	= 5
+	comment		= New Specs: new singles, all of new groups.
 	size		= 40000
+	packager	= ZipLock
+	plastic		= Styrene
+	moldLoc		= sisterCompany
+	mold		= dino
+	finish		= dimpled
+	tags		= IncCounter PartNumber RecycleCode
+	color		= blue
+	MicroFibers	= 3
 	endOfOrder
-5:
-	orderNum	= 5
-	size		= 50000
-	endOfOrder
-5:
-	orderNum	= 5
+7:
+	orderNum	= 7
+	comment		= New Specs: next singles, or last.
 	size		= 100000
-	mold		= car
-	tags		= ModelNumber PartNumber IncCounter RecycleCode
+	packager	= ZipLock
+	plastic		= Nylon66
+	moldLoc		= purchase
+	mold		= dino
+	finish		= sanded
+	color		= violate
 	endOfOrder
-5:
-	orderNum	= 5
+8:
+	orderNum	= 8
+	comment		= New Specs: next singles, or last.
 	size		= 200000
-	moldLoc		= mill
+	packager	= ZipLock
+	plastic		= Nylon66
+	moldLoc		= purchase
+	mold		= dino
 	finish		= satin
-	tags		= RecycleCode PartNumber
+	color		= gray
+	endOfOrder
+9:
+	orderNum		= 9
+	comment			= New Specs: max out, mill or last.
+	size			= 200000
+	packager		= ZipLock
+	plastic			= Nylon66
+	moldLoc			= mill
+	mold			= dino
+	finish			= satin
+	color			= white
+	tags			= IncCounter PartNumber RecycleCode ModelNumber Country Date
+	MicroFibers		= 3
+	UVInhibiter		= 6
+	AntiBacterial	= 1
 	endOfOrder
