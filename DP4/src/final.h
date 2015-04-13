@@ -49,21 +49,21 @@
  * Stage 1:
  *   Provided by instructor:
  *     origSpecs.txt		 - Original specs.
- *     processOrdersAP.cpp	 - Original C++ code, filled with anti-patterns.
+ *     finalProblem.h		 - Original C++ code, filled with anti-patterns.
  *     orders_1.txt			 - Original order file (input).
- *     runBase_1.txt		 - Baseline run file of original code (output).
+ *     problem.out			 - Baseline run file of original code (output).
  *   Provided by student:
- *     processOrdersDP_1.cpp - Refactored C++ code, uses design patterns.
+ *     finalRefactored.h	 - Refactored C++ code, uses design patterns.
  *     runComp_1.txt		 - Comparison output file; must match runBase_1.txt.
  * Stage 2:
  *   Provided by instructor:
  *     newSpecs.txt			 - New specs.
  *     orders_2.txt			 - New order file (input).
- *     orders_x.txt			 - Output of original and refactored DP code on new orders file, incomplete.
- *     runBase_2.txt		 - Baseline run file of upgraded C++ code that implements the new specs (output).
+ *     refactored2.out		 - Output of original and refactored DP code on new orders file, incomplete.
+ *     solution.out			 - Baseline run file of upgraded C++ code that implements the new specs (output).
  *   Provided by student:
- *     ProcessOrdersDP_2.cpp - Upgraded C++ code that implements the new specs.
- *     runComp_2.txt		 - Comparison output file; must match runBase_2.txt.
+ *     final.h				 - Upgraded C++ code that implements the new specs.
+ *     runComp_2.out		 - Comparison output file; must match solution.out.
  */
 /* Specs:
  * 1) Read next order from input file

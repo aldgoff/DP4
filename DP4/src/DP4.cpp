@@ -62,6 +62,7 @@ using namespace std;
 #include "Problems/lab5_problem_bridge.h"
 #include "Problems/lab5_problem_abstractFactory.h"
 #include "Problems/final.h"
+#include "Problems/finalRefactored.h"
 
 #include "Solutions/lab1_solution_strategy.h"
 #include "Solutions/lab1_solution_adapter.h"
@@ -174,10 +175,16 @@ void runCommand() {
 
 // Seam point; can be eliminated by use of design patterns.
 
-void runFinal(string orderFile) {
+void runFinalProblem(string orderFile) {
 //	final_problem_file::demo(orderFile);
+}
+
+void runFinalRefactored(string orderFile) {
+	final_refactored_file::demo(orderFile);
+}
+
+void runFinalSolution(string orderFile) {
 	final_solution_file::demo(orderFile);
-//	final_solution::demo(1);
 }
 
 void runPrinciples() {
@@ -277,7 +284,9 @@ int main(int argc, char* args[]) {
 		cout << "  Header files to include in DP4.cpp also listed.\n";
 		cout << endl;
 		meta("");
-		cout << "final\n";
+		cout << "finalProblem\n";
+		cout << "finalRefactored\n";
+		cout << "finalSolution\n";
 		cout << "principles\n";
 		cout << "varies\n";
 		cout << "midterm\n";
@@ -310,16 +319,18 @@ int main(int argc, char* args[]) {
 //
 		// Seam point; can be eliminated by use of design patterns.
 
-		else if(!strcmp(args[i], "final"))			runFinal(string(args[++i]));
-		else if(!strcmp(args[i], "principles"))		principles::demo();
-		else if(!strcmp(args[i], "varies"))			runVaries();
-		else if(!strcmp(args[i], "midterm"))		runMidterm();
-		else if(!strcmp(args[i], "solti"))			runSolti();
-		else if(!strcmp(args[i], "pairWise"))		runPairWise();
-		else if(!strcmp(args[i], "whatVaries"))		runWhatVaries();
-		else if(!strcmp(args[i], "virtualDtorBug"))	runVirtualDtorBug();
-		else if(!strcmp(args[i], "maestro"))		runMaestroTests();
-		else if(!strcmp(args[i], "dttc"))		runDttcLecture();
+		else if(!strcmp(args[i], "finalProblem"))		runFinalProblem(string(args[++i]));
+		else if(!strcmp(args[i], "finalRefactored"))	runFinalRefactored(string(args[++i]));
+		else if(!strcmp(args[i], "finalSolution"))		runFinalSolution(string(args[++i]));
+		else if(!strcmp(args[i], "principles"))			principles::demo();
+		else if(!strcmp(args[i], "varies"))				runVaries();
+		else if(!strcmp(args[i], "midterm"))			runMidterm();
+		else if(!strcmp(args[i], "solti"))				runSolti();
+		else if(!strcmp(args[i], "pairWise"))			runPairWise();
+		else if(!strcmp(args[i], "whatVaries"))			runWhatVaries();
+		else if(!strcmp(args[i], "virtualDtorBug"))		runVirtualDtorBug();
+		else if(!strcmp(args[i], "maestro"))			runMaestroTests();
+		else if(!strcmp(args[i], "dttc"))				runDttcLecture();
 		else {
 			cout << "  <" << args[i] << "> command line arg NOT understood.\n";
 		}

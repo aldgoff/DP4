@@ -33,15 +33,15 @@ Tags:
 	ModelNumber
 	Country
 	Date
+	green
+Additives:
+	UVInhibitor
+	AntiBacterial
 Color:
 	brown
 	red
 	orange
 	yellow
-	green
-Additives:
-	UVInhibitor
-	AntiBacterial
 Finishes
 	smooth
 	rippled

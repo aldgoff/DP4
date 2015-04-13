@@ -1,12 +1,12 @@
 /*
- * Solutions/final.h
+ * finalRefactored.h
  *
- *  Created on: Apr 6, 2015
+ *  Created on: Apr 12, 2015
  *      Author: aldgoff
  */
 
-#ifndef DP4_SRC_SOLUTIONS_FINAL_H_
-#define DP4_SRC_SOLUTIONS_FINAL_H_
+#ifndef DP4_SRC_REFACTORED_FINAL_H_
+#define DP4_SRC_REFACTORED_FINAL_H_
 
 namespace design_patterns_chart {}
 /* Design Patterns Chart
@@ -22,7 +22,7 @@ namespace design_patterns_chart {}
  * x10 - Abstract Factory: IJM_X, mold(metal, cavities), conveyer belt, bins (domain: size)
  */
 
-namespace final_solution_file {
+namespace final_refactored_file {
 
 namespace observer {	// Done (7) - no new spec dependency, darn.
 
@@ -113,27 +113,6 @@ public:
 	string setup() { return "IJM_210"; }
 };
 // Seam point - add another InJection Molding machine.
-class IJM_140 : public IJM_AF {					// FastOrder.
-public:
-	IJM_140(Subject* subject) : IJM_AF(subject) {}
-	~IJM_140() { cout << "~IJM_140 "; }
-public:
-	string setup() { return "IJM_140"; }
-};
-class IJM_220 : public IJM_AF {					// LargeOrder.
-public:
-	IJM_220(Subject* subject) : IJM_AF(subject) {}
-	~IJM_220() { cout << "~IJM_220 "; }
-public:
-	string setup() { return "IJM_220"; }
-};
-class IJM_240 : public IJM_AF {					// HugeOrder.
-public:
-	IJM_240(Subject* subject) : IJM_AF(subject) {}
-	~IJM_240() { cout << "~IJM_240 "; }
-public:
-	string setup() { return "IJM_240"; }
-};
 
 class Mold_AF {
 	unsigned m_cavities;
@@ -191,13 +170,6 @@ public:
 	string setup() { return "Y-Split conveyer belt"; }
 };
 // Seam point - add another conveyer belt.
-class VLevelBelt : public ConveyerBelt_AF {
-public:
-	VLevelBelt(Subject* subject) : ConveyerBelt_AF(subject) {}
-	~VLevelBelt() { cout << "~VLevelBelt "; }
-public:
-	string setup() { return "V-Level conveyer belt"; }
-};
 
 class PackageBin_AF : public Subject {
 public:
@@ -221,13 +193,6 @@ public:
 	string setup() { return "PallotBox"; }
 };
 // Seam point - add another package bin.
-class Crate : public PackageBin_AF {
-public:
-	Crate() : PackageBin_AF("Crate") {}
-	~Crate() { cout << "~Crate "; }
-public:
-	string setup() { return "Crate"; }
-};
 
 class Setup_AF_10 {	// New specs (size).
 public:
@@ -288,68 +253,19 @@ public: ~MediumOrder() { cout << "~MediumOrder "; }
 	}
 };
 // Seam point - add larger orders.
-class FastOrder : public Setup_AF_10 {
-public: ~FastOrder() { cout << "~FastOrder "; }
-	IJM_AF* createIJM(const map<string, string>& order, Subject* subject) {
-		return new IJM_140(subject);
-	}
-	Mold_AF* createMold(const map<string, string>& order) {
-		return new Aluminum(4);
-	}
-	ConveyerBelt_AF* createBelt(const map<string, string>& order, Subject* subject) {
-		return new VLevelBelt(subject);
-	}
-	PackageBin_AF* createBin(const map<string, string>& order) {
-		return new PallotBox;
-	}
-};
-class LargeOrder : public Setup_AF_10 {
-public: ~LargeOrder() { cout << "~LargeOrder "; }
-	IJM_AF* createIJM(const map<string, string>& order, Subject* subject) {
-		return new IJM_220(subject);
-	}
-	Mold_AF* createMold(const map<string, string>& order) {
-		return new Steel(2);
-	}
-	ConveyerBelt_AF* createBelt(const map<string, string>& order, Subject* subject) {
-		return new YSplitBelt(subject);
-	}
-	PackageBin_AF* createBin(const map<string, string>& order) {
-		return new Crate;
-	}
-};
-class HugeOrder : public Setup_AF_10 {
-public: ~HugeOrder() { cout << "~HugeOrder "; }
-	IJM_AF* createIJM(const map<string, string>& order, Subject* subject) {
-		return new IJM_240(subject);
-	}
-	Mold_AF* createMold(const map<string, string>& order) {
-		return new Steel(4);
-	}
-	ConveyerBelt_AF* createBelt(const map<string, string>& order, Subject* subject) {
-		return new VLevelBelt(subject);
-	}
-	PackageBin_AF* createBin(const map<string, string>& order) {
-		return new Crate;
-	}
-};
 
 Setup_AF_10* Setup_AF_10::createInjectionLine(map<string, string> order) {
 	unsigned size = atoi(order["size"].c_str());
 
 	if(size <= 10000)			return new PilotOrder;
 	else if(size <= 20000)		return new SmallOrder;
-	// Seam point - add fast order.
-	else if(size <= 40000)		return new FastOrder;
 	else if(size <= 50000)		return new MediumOrder;
 	// Seam point - add larger orders.
-	else if(size <= 100000)		return new LargeOrder;
-	else if(size <= 200000)		return new HugeOrder;
 
-	else {						// Defaulting to HugeOrder.
+	else {						// Defaulting to MediumOrder.
 		cout << "  <>Size too large |" << size << "|";
-		cout << " defaulting to HugeOrder.\n";
-		return new HugeOrder;
+		cout << " defaulting to MediumOrder.\n";
+		return new MediumOrder;
 	}
 }
 
@@ -381,26 +297,14 @@ public: ~Carbide() { cout << "~Carbide "; }
 	string grind() { return "layer grind"; }
 };
 // Seam Point - add another platform.
-class DiamondTipped : public Platform {	// Satin finish.
-public: ~DiamondTipped() { cout << "~DiamondTipped "; }
-	string name() { return "DiamondTipped"; }
-	string drill() { return "precision drill"; }
-	string cut() { return "oil cooled cut"; }
-	string grind() { return "cartoid grind"; }
-};
 
 Platform* Platform::getPlatform(map<string,string>& order) {
 	string metal = order["metal"];
 	string finish = order["finish"];
 
-	if(finish != "satin") {
-		if(metal == "aluminum")		return new HighCarbon;
-		else if(metal == "steel")	return new Carbide;
-		}
+	if(metal == "aluminum")		return new HighCarbon;
+	else if(metal == "steel")	return new Carbide;
 	// Seam Point - add another platform.
-	else if(finish == "satin"){
-		return new DiamondTipped;
-	}
 
 	cout << "  <>Default milling platform is HighCarbon.\n";	// Should never happen.
 	return new HighCarbon;	// Default.
@@ -465,20 +369,6 @@ public: ~Hero() { cout << "~Hero "; }
 	}
 };
 // Seam Point - add another shape.
-class Dino : public Shape {
-	string	name;
-public: ~Dino() { cout << "~Dino "; }
-	Dino(Platform* platform) : Shape(platform, 30), name("dino") {};
-	void mill(map<string,string>& order) {	// Simulated specific steps to mill shape.
-		cout << "      using " << platform->name() << " tools (";
-		cout << platform->drill() << ", ";
-		cout << platform->cut() << ", and ";
-		cout << platform->grind() << ") ";
-		cout << "to mill " << order["metal"] << " block into ";
-		cout << order["cavities"] << " " << name << " shapes ";
-		cout << "with " << order["finish"] << " finish.\n";
-	}
-};
 
 Shape* Shape::getShape(map<string,string>& order) {
 	Platform* platform = Platform::getPlatform(order);
@@ -487,7 +377,6 @@ Shape* Shape::getShape(map<string,string>& order) {
 	else if(order["mold"] == "car")		return new Car(platform);
 	else if(order["mold"] == "hero")	return new Hero(platform);
 	// Seam Point - add another shape.
-	else if(order["mold"] == "dino")	return new Dino(platform);
 
 	else {								// Defaulting to duck shape.
 		cout << "    <>Unknown shape |" << order["mold"] << "|";
@@ -559,38 +448,6 @@ public:
 	}
 };
 // Seam points - add another mold source.
-class SisterCompany : public GetMold {
-public: ~SisterCompany() { cout << "~SisterCompany "; delete successor; }
-	SisterCompany(GetMold* successor=0) : GetMold(successor) {};
-public:
-	Shape* from(map<string, string>& order) {
-		string place = order["moldLoc"];
-		if(place == "sisterCompany") {
-			cout << "    Borrow " << order["mold"] << " mold from sister company.\n";
-			return Shape::getShape(order);
-		}
-		else if(successor != 0)
-			return successor->from(order);
-		else
-			return GetMold::from(order);	// Default.
-	}
-};
-class Purchase : public GetMold {
-public: ~Purchase() { cout << "~Purchase "; delete successor; }
-	Purchase(GetMold* successor=0) : GetMold(successor) {};
-public:
-	Shape* from(map<string, string>& order) {
-		string place = order["moldLoc"];
-		if(place == "purchase") {
-			cout << "    Acquire " << order["mold"] << " mold via purchase.\n";
-			return Shape::getShape(order);
-		}
-		else if(successor != 0)
-			return successor->from(order);
-		else
-			return GetMold::from(order);	// Default.
-	}
-};
 
 }
 
@@ -653,30 +510,6 @@ public:
 	string list() { return delegate->list() + "Date "; }
 };
 // Seam point - add more tags.
-class IncCounter : public Tag {
-public:
-	IncCounter(Tags_D_6* delegate) : Tag(delegate) {}
-	~IncCounter() { cout << "~IncCounter "; };
-public:
-	unsigned width_mm() { return delegate->width_mm() + 4; }
-	string list() { return delegate->list() + "IncCounter "; }
-};
-class PartNumber : public Tag {
-public:
-	PartNumber(Tags_D_6* delegate) : Tag(delegate) {}
-	~PartNumber() { cout << "~PartNumber "; };
-public:
-	unsigned width_mm() { return delegate->width_mm() + 2; }
-	string list() { return delegate->list() + "PartNumber "; }
-};
-class RecycleCode : public Tag {
-public:
-	RecycleCode(Tags_D_6* delegate) : Tag(delegate) {}
-	~RecycleCode() { cout << "~RecycleCode "; };
-public:
-	unsigned width_mm() { return delegate->width_mm() + 6; }
-	string list() { return delegate->list() + "RecycleCode "; }
-};
 
 Tags_D_6* addTags(Tags_D_6* cavity, const string& list) {
 	char val[83] = {0};
@@ -691,12 +524,6 @@ Tags_D_6* addTags(Tags_D_6* cavity, const string& list) {
 		else if(!strcmp(val, "Date"))
 			cavity = new Date(cavity);
 		// Seam point - add more tags.
-		else if(!strcmp(val, "IncCounter"))
-			cavity = new IncCounter(cavity);
-		else if(!strcmp(val, "PartNumber"))
-			cavity = new PartNumber(cavity);
-		else if(!strcmp(val, "RecycleCode"))
-			cavity = new RecycleCode(cavity);
 
 		else {
 			cout << "Ignoring unknown tag " << val << ".\n";
@@ -777,17 +604,6 @@ public:
 	string idNvol() { return delegate-> idNvol() + " AntiBacterial" + volAsStr(); }
 };
 // Seam point - add another additive.
-class MicroFibers : public Additive {
-public:
-	MicroFibers(Plastic_D_6* delegate, unsigned volume_m3)
-	  : Additive(delegate, volume_m3) {}
-	~MicroFibers() { cout << "~MicroFibers "; }
-public:
-	unsigned mix(unsigned cavities) {
-		return delegate->mix(cavities) + cavities*volume_m3;
-	}
-	string idNvol() { return delegate-> idNvol() + " MicroFibers" + volAsStr(); }
-};
 
 Plastic_D_6* addAdditives(Plastic_D_6* color, map<string,string>& order) {
 	if(order.find("UVInhibiter") != order.end()) {
@@ -797,9 +613,6 @@ Plastic_D_6* addAdditives(Plastic_D_6* color, map<string,string>& order) {
 		color = new AntiBacterial(color, atoi(order["AntiBacterial"].c_str()));
 	}
 	// Seam point - add another additive.
-	if(order.find("MicroFibers") != order.end()) {
-		color = new MicroFibers(color, atoi(order["MicroFibers"].c_str()));
-	}
 
 	return color;
 }
@@ -844,20 +657,12 @@ public:
 	string wrap() { return "HardPack packager"; }
 };
 // Seam point - add another packager.
-class ZipLock : public Packager_FM_5 {
-public:
-	ZipLock(Subject* subject) : Packager_FM_5(subject) {}
-	~ZipLock() { cout << "~ZipLock "; }
-public:
-	string wrap() { return "ZipLock packager"; }
-};
 
 Packager_FM_5* Packager_FM_5::makeObject(map<string,string>& order, Subject* subject) {
 	if(     order["packager"] == "Bulk")		return new Bulk(subject);
 	else if(order["packager"] == "ShrinkWrap")	return new ShrinkWrap(subject);
 	else if(order["packager"] == "HardPack")	return new HardPack(subject);
 	// Seam point - add another packager.
-	else if(order["packager"] == "ZipLock")		return new ZipLock(subject);
 
 	else {										// Defaulting to bulk packager.
 		cout << "  <>Unknown packager |" << order["packager"] << "|";
@@ -928,12 +733,6 @@ public: ~PET() { cout << "~adapter::PET "; }
 	}
 };
 // Seam point - add new cleaning algorithm.
-class Synthetics : public CleanPlastic_A_2 {
-public: ~Synthetics() { cout << "~adapter::Synthetics "; }
-	void clean(const string& metal) {
-		cout << "    Clean synthetic mold: ozone wash.\n";
-	}
-};
 
 }
 
@@ -984,16 +783,6 @@ public:
 	}
 };
 // Seam point - add more strategies.
-class Synthetics : public Strategy {
-public:
-	Synthetics() : Strategy(new adapter::Synthetics) {}
-	~Synthetics() { cout << "~Synthetics "; }
-public:
-	void cycle(int run) {
-		cout << "    Cycle IJM for Synthetics " << run << " times.\n";
-		cout << "      Close - heat to 480 - inject at 150 PSI - cool to 390 - separate - shock eject.\n";
-	}
-};
 
 }
 
@@ -1052,11 +841,9 @@ private:
 			new Inventory(
 			new Mill(
 			// Seam point - add more mold sources.
-			new SisterCompany(
-			new Purchase(
 			// ...
 			new GetMold(
-		)))));
+		)));
 
 		shape = theMold->from(order);	// Volume_m3.
 	}
@@ -1150,20 +937,6 @@ public: ~PET() { cout << "~PET\n"; }
 	}
 };
 // Seam point - add another plastic.
-class Styrene : public ProcessOrder_TM_4 {
-public: ~Styrene() { cout << "~Styrene\n"; }
-	void injectionRun(map<string, string>& order) {
-		algorithm = new strategy::Synthetics;
-		ProcessOrder_TM_4::injectionRun(order);
-	}
-};
-class Nylon66 : public ProcessOrder_TM_4 {
-public: ~Nylon66() { cout << "~Nylon66\n"; }
-	void injectionRun(map<string, string>& order) {
-		algorithm = new strategy::Synthetics;
-		ProcessOrder_TM_4::injectionRun(order);
-	}
-};
 
 }
 
@@ -1201,8 +974,7 @@ void process(map<string, string> order) {
 	else if(order["plastic"] == "Polyethelene")	processOrder = new Polyethelene;
 	else if(order["plastic"] == "PET")			processOrder = new PET;
 	// Seam point - add another plastic.
-	else if(order["plastic"] == "Styrene")		processOrder = new Styrene;
-	else if(order["plastic"] == "Nylon66")		processOrder = new Nylon66;
+
 
 	else {										// Default process.
 		cout << "  <>Unknown plastic |" << order["plastic"] << "|";
@@ -1250,7 +1022,7 @@ map<string, string> getCompleteOrder(FILE* orderFilePtr) {
 }
 
 void demo(const string& orderFile) {
-	cout << "<<< final solution >>>\n";
+	cout << "<<< final refactored >>>\n";
 
 	FILE* orderFilePtr = fopen(orderFile.c_str(), "r");
 
@@ -1264,4 +1036,4 @@ void demo(const string& orderFile) {
 
 }
 
-#endif /* DP4_SRC_SOLUTIONS_FINAL_H_ */
+#endif /* DP4_SRC_REFACTORED_FINAL_H_ */

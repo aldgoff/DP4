@@ -51,3 +51,53 @@
 	finish		= rippled
 	color		= green
 	endOfOrder
+6:
+	orderNum	= 6
+	comment		= New Specs: new singles, all of new groups.
+	size		= 40000
+	packager	= ZipLock
+	plastic		= Styrene
+	moldLoc		= sisterCompany
+	mold		= dino
+	finish		= dimpled
+	tags		= IncCounter PartNumber RecycleCode
+	color		= blue
+	MicroFibers	= 3
+	endOfOrder
+7:
+	orderNum	= 7
+	comment		= New Specs: next singles, or last.
+	size		= 100000
+	packager	= ZipLock
+	plastic		= Nylon66
+	moldLoc		= purchase
+	mold		= dino
+	finish		= sanded
+	color		= violate
+	endOfOrder
+8:
+	orderNum	= 8
+	comment		= New Specs: next singles, or last.
+	size		= 200000
+	packager	= ZipLock
+	plastic		= Nylon66
+	moldLoc		= purchase
+	mold		= dino
+	finish		= satin
+	color		= gray
+	endOfOrder
+9:
+	orderNum		= 9
+	comment			= New Specs: max out, mill or last.
+	size			= 400000
+	packager		= ZipLock
+	plastic			= Nylon66
+	moldLoc			= mill
+	mold			= dino
+	finish			= satin
+	color			= white
+	tags			= IncCounter PartNumber RecycleCode ModelNumber Country Date
+	MicroFibers		= 3
+	UVInhibiter		= 6
+	AntiBacterial	= 1
+	endOfOrder

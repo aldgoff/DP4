@@ -33,14 +33,14 @@ Tags:
 	PartNumber
 	RecycleCode
 	
+Additives:
+	MicroFibers
+	
 Color:
 	blue
 	violet
 	gray
 	white
-	
-Additives:
-	MicroFibers
 	
 Finishes
 	dimpled
