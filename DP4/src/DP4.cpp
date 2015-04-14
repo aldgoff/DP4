@@ -61,7 +61,8 @@ using namespace std;
 #include "Problems/lab4_problem_observer.h"
 #include "Problems/lab5_problem_bridge.h"
 #include "Problems/lab5_problem_abstractFactory.h"
-#include "Problems/final.h"
+#include "Problems/finalOutline.h"
+#include "Problems/finalProblem.h"
 #include "Problems/finalRefactored.h"
 
 #include "Solutions/lab1_solution_strategy.h"
@@ -176,7 +177,7 @@ void runCommand() {
 // Seam point; can be eliminated by use of design patterns.
 
 void runFinalProblem(string orderFile) {
-//	final_problem_file::demo(orderFile);
+	final_problem_file::demo(orderFile);
 }
 
 void runFinalRefactored(string orderFile) {

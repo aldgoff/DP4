@@ -23,6 +23,7 @@ Hello DP4.
         Conveyer belt pausing while CardboardBox package bin is swapped.
         Packager pausing while CardboardBox package bin is swapped.
     Clean ABS mold: soak in alcohol, rinse with water, dry.
+    Ship to ""
 ~ABS
 ~Bulk ~Packager_FM_5 ~Observer_7
 ~IJM_110 ~IJM_AF ~Observer_7
@@ -30,7 +31,7 @@ Hello DP4.
 ~LinearBelt ~ConveyerBelt_AF ~Observer_7
 ~CardboardBox ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
 ~PilotOrder ~Setup_AF_10
-~Inventory ~Mill ~SisterCompany ~Purchase ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
+~Inventory ~SisterCompany ~Purchase ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
 ~Duck ~Shape_B_9 ~HighCarbon ~Platform_B_9
 ~Blank ~Tag ~Cavity ~Tags_D_6 ~Tags_D_6 
 ~Color ~Plastic_D_6 
@@ -44,7 +45,6 @@ Hello DP4.
 	plastic		= ABS
 	moldLoc		= inventory
 	mold		= duck
-	finish		= smooth
 	tags		= ModelNumber
 	color		= red
 	UVInhibiter	= 6
@@ -63,6 +63,7 @@ Hello DP4.
         Conveyer belt pausing while CardboardBox package bin is swapped.
         Packager pausing while CardboardBox package bin is swapped.
     Clean ABS mold: soak in alcohol, rinse with water, dry.
+    Ship to ""
 ~ABS
 ~Bulk ~Packager_FM_5 ~Observer_7
 ~IJM_110 ~IJM_AF ~Observer_7
@@ -70,7 +71,7 @@ Hello DP4.
 ~LinearBelt ~ConveyerBelt_AF ~Observer_7
 ~CardboardBox ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
 ~PilotOrder ~Setup_AF_10
-~Inventory ~Mill ~SisterCompany ~Purchase ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
+~Inventory ~SisterCompany ~Purchase ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
 ~Duck ~Shape_B_9 ~HighCarbon ~Platform_B_9
 ~Blank ~Tag ~ModelNumber ~Tag ~Cavity ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 
 ~UVInhibiter ~Additive ~Color ~Plastic_D_6 ~Plastic_D_6 
@@ -84,7 +85,7 @@ Hello DP4.
 	plastic			= Polypropylene
 	moldLoc			= mill
 	mold			= car
-	finish			= rippled
+	finish			= smooth
 	tags			= ModelNumber Country Date
 	color			= orange
 	UVInhibiter		= 6
@@ -94,7 +95,7 @@ Hello DP4.
     IJM_120 - Aluminum(2) - Y-Split conveyer belt - CardboardBox
   Process order.
     Create car mold from mill with 2 cavities:
-      using HighCarbon tools (drill, cut, and high speed grind) to mill aluminum block into 2 car shapes with rippled finish.
+      using HighCarbon tools (drill, cut, and high speed grind) to mill aluminum block into 2 car shapes with smooth finish.
     Insert tags [ModelNumber Country Date ] of width 6/20 mm.
     Load plastic, color, and additive bins.
       Recipe: Polypropylene(40) orange(4) UVInhibiter(6) AntiBacterial(1) Total = 102.
@@ -105,6 +106,7 @@ Hello DP4.
         Conveyer belt pausing while CardboardBox package bin is swapped.
         Packager pausing while CardboardBox package bin is swapped.
     Clean Poly mold: rinse with acetone, dry.
+    Ship to ""
 ~Polypropylene
 ~ShrinkWrap ~Packager_FM_5 ~Observer_7
 ~IJM_120 ~IJM_AF ~Observer_7
@@ -112,7 +114,7 @@ Hello DP4.
 ~YSplitBelt ~ConveyerBelt_AF ~Observer_7
 ~CardboardBox ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
 ~SmallOrder ~Setup_AF_10
-~Inventory ~Mill ~SisterCompany ~Purchase ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
+~Inventory ~SisterCompany ~Purchase ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
 ~Car ~Shape_B_9 ~HighCarbon ~Platform_B_9
 ~Blank ~Tag ~Date ~Tag ~Country ~Tag ~ModelNumber ~Tag ~Cavity ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 
 ~AntiBacterial ~Additive ~UVInhibiter ~Additive ~Color ~Plastic_D_6 ~Plastic_D_6 ~Plastic_D_6 
@@ -144,6 +146,7 @@ Hello DP4.
         Conveyer belt pausing while PallotBox package bin is swapped.
         Packager pausing while PallotBox package bin is swapped.
     Clean Poly mold: rinse with acetone, dry.
+    Ship to ""
 ~Polyethelene
 ~HardPack ~Packager_FM_5 ~Observer_7
 ~IJM_210 ~IJM_AF ~Observer_7
@@ -151,7 +154,7 @@ Hello DP4.
 ~LinearBelt ~ConveyerBelt_AF ~Observer_7
 ~PallotBox ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
 ~MediumOrder ~Setup_AF_10
-~Inventory ~Mill ~SisterCompany ~Purchase ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
+~Inventory ~SisterCompany ~Purchase ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
 ~Hero ~Shape_B_9 ~Carbide ~Platform_B_9
 ~Blank ~Tag ~Cavity ~Tags_D_6 ~Tags_D_6 
 ~Color ~Plastic_D_6 
@@ -183,6 +186,7 @@ Hello DP4.
         Conveyer belt pausing while PallotBox package bin is swapped.
         Packager pausing while PallotBox package bin is swapped.
     Clean PET steel mold: heat to 895 C.
+    Ship to ""
 ~PET
 ~HardPack ~Packager_FM_5 ~Observer_7
 ~IJM_210 ~IJM_AF ~Observer_7
@@ -190,7 +194,7 @@ Hello DP4.
 ~LinearBelt ~ConveyerBelt_AF ~Observer_7
 ~PallotBox ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
 ~MediumOrder ~Setup_AF_10
-~Inventory ~Mill ~SisterCompany ~Purchase ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
+~Inventory ~SisterCompany ~Purchase ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
 ~Hero ~Shape_B_9 ~Carbide ~Platform_B_9
 ~Blank ~Tag ~Cavity ~Tags_D_6 ~Tags_D_6 
 ~Color ~Plastic_D_6 
@@ -208,6 +212,7 @@ Hello DP4.
 	tags		= IncCounter PartNumber RecycleCode
 	color		= blue
 	MicroFibers	= 3
+	address		= MegaCorp, 1 Apple, Santa Clara, CA 92200
 	endOfOrder
   Setup injection line for 40000 run with ZipLock packager:
     IJM_140 - Aluminum(4) - V-Level conveyer belt - PallotBox
@@ -223,6 +228,7 @@ Hello DP4.
         Conveyer belt pausing while PallotBox package bin is swapped.
         Packager pausing while PallotBox package bin is swapped.
     Clean synthetic mold: ozone wash.
+    Ship to "MegaCorp, 1 Apple, Santa Clara, CA 92200"
 ~Styrene
 ~ZipLock ~Packager_FM_5 ~Observer_7
 ~IJM_140 ~IJM_AF ~Observer_7
@@ -230,7 +236,7 @@ Hello DP4.
 ~VLevelBelt ~ConveyerBelt_AF ~Observer_7
 ~PallotBox ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
 ~FastOrder ~Setup_AF_10
-~Inventory ~Mill ~SisterCompany ~Purchase ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
+~Inventory ~SisterCompany ~Purchase ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
 ~Dino ~Shape_B_9 ~HighCarbon ~Platform_B_9
 ~Blank ~Tag ~RecycleCode ~Tag ~PartNumber ~Tag ~IncCounter ~Tag ~Cavity ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 
 ~MicroFibers ~Additive ~Color ~Plastic_D_6 ~Plastic_D_6 
@@ -246,6 +252,7 @@ Hello DP4.
 	mold		= dino
 	finish		= sanded
 	color		= violate
+	address		= Anytown, CA
 	endOfOrder
   Setup injection line for 100000 run with ZipLock packager:
     IJM_220 - Steel(2) - Y-Split conveyer belt - Crate
@@ -261,6 +268,7 @@ Hello DP4.
         Conveyer belt pausing while Crate package bin is swapped.
         Packager pausing while Crate package bin is swapped.
     Clean synthetic mold: ozone wash.
+    Ship to "Anytown, CA"
 ~Nylon66
 ~ZipLock ~Packager_FM_5 ~Observer_7
 ~IJM_220 ~IJM_AF ~Observer_7
@@ -268,7 +276,7 @@ Hello DP4.
 ~YSplitBelt ~ConveyerBelt_AF ~Observer_7
 ~Crate ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
 ~LargeOrder ~Setup_AF_10
-~Inventory ~Mill ~SisterCompany ~Purchase ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
+~Inventory ~SisterCompany ~Purchase ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
 ~Dino ~Shape_B_9 ~Carbide ~Platform_B_9
 ~Blank ~Tag ~Cavity ~Tags_D_6 ~Tags_D_6 
 ~Color ~Plastic_D_6 
@@ -284,6 +292,7 @@ Hello DP4.
 	mold		= dino
 	finish		= satin
 	color		= gray
+	address		= Wherever, USA
 	endOfOrder
   Setup injection line for 200000 run with ZipLock packager:
     IJM_240 - Steel(4) - V-Level conveyer belt - Crate
@@ -299,6 +308,7 @@ Hello DP4.
         Conveyer belt pausing while Crate package bin is swapped.
         Packager pausing while Crate package bin is swapped.
     Clean synthetic mold: ozone wash.
+    Ship to "Wherever, USA"
 ~Nylon66
 ~ZipLock ~Packager_FM_5 ~Observer_7
 ~IJM_240 ~IJM_AF ~Observer_7
@@ -306,7 +316,7 @@ Hello DP4.
 ~VLevelBelt ~ConveyerBelt_AF ~Observer_7
 ~Crate ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
 ~HugeOrder ~Setup_AF_10
-~Inventory ~Mill ~SisterCompany ~Purchase ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
+~Inventory ~SisterCompany ~Purchase ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
 ~Dino ~Shape_B_9 ~DiamondTipped ~Platform_B_9
 ~Blank ~Tag ~Cavity ~Tags_D_6 ~Tags_D_6 
 ~Color ~Plastic_D_6 
@@ -326,6 +336,7 @@ Hello DP4.
 	MicroFibers		= 3
 	UVInhibiter		= 6
 	AntiBacterial	= 1
+	address			= PLay Toys, 1234 5th st, Pastoria, IL 34556
 	endOfOrder
   <>Size too large |400000| defaulting to HugeOrder.
   Setup injection line for 400000 run with ZipLock packager:
@@ -343,6 +354,7 @@ Hello DP4.
         Conveyer belt pausing while Crate package bin is swapped.
         Packager pausing while Crate package bin is swapped.
     Clean synthetic mold: ozone wash.
+    Ship to "PLay Toys, 1234 5th st, Pastoria, IL 34556"
 ~Nylon66
 ~ZipLock ~Packager_FM_5 ~Observer_7
 ~IJM_240 ~IJM_AF ~Observer_7
@@ -350,7 +362,7 @@ Hello DP4.
 ~VLevelBelt ~ConveyerBelt_AF ~Observer_7
 ~Crate ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
 ~HugeOrder ~Setup_AF_10
-~Inventory ~Mill ~SisterCompany ~Purchase ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
+~Inventory ~SisterCompany ~Purchase ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
 ~Dino ~Shape_B_9 ~DiamondTipped ~Platform_B_9
 ~Blank ~Tag ~Date ~Tag ~Country ~Tag ~ModelNumber ~Tag ~RecycleCode ~Tag ~PartNumber ~Tag ~IncCounter ~Tag ~Cavity ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 
 ~MicroFibers ~Additive ~AntiBacterial ~Additive ~UVInhibiter ~Additive ~Color ~Plastic_D_6 ~Plastic_D_6 ~Plastic_D_6 ~Plastic_D_6 

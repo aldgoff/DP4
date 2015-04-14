@@ -10,7 +10,6 @@
 	plastic		= ABS
 	moldLoc		= inventory
 	mold		= duck
-	finish		= smooth
 	tags		= ModelNumber
 	color		= red
 	UVInhibiter	= 6
@@ -23,7 +22,7 @@
 	plastic			= Polypropylene
 	moldLoc			= mill
 	mold			= car
-	finish			= rippled
+	finish			= smooth
 	tags			= ModelNumber Country Date
 	color			= orange
 	UVInhibiter		= 6

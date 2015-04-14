@@ -22,7 +22,7 @@ Mold Location:
 	mill
 Milling:
 	HighCarbon
-	DiamondTipped
+	Carbide
 Plastics:
 	ABS
 	Polypropylene
@@ -33,7 +33,6 @@ Tags:
 	ModelNumber
 	Country
 	Date
-	green
 Additives:
 	UVInhibitor
 	AntiBacterial
@@ -42,6 +41,13 @@ Color:
 	red
 	orange
 	yellow
+	green
 Finishes
 	smooth
 	rippled
+
+Output Bin:
+	Cardboard box
+	Pallot box
+Ejection Technique:
+	

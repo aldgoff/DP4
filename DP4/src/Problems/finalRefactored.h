@@ -883,6 +883,7 @@ private:
 	void cleanMold(map<string, string>& order) {
 		algorithm->clean(order);
 	}
+	// Seam point - add another step to the order processing.
 public:
 	virtual ~ProcessOrder_TM_4() {
 		delete packager;
@@ -906,6 +907,7 @@ public:
 		loadAdditiveBins(order);
 		injectionRun(order);	// Polymorphic step.
 		cleanMold(order);
+		// Seam point - add another step to the order processing.
 	}
 };
 class ABS : public ProcessOrder_TM_4 {
@@ -941,30 +943,7 @@ public: ~PET() { cout << "~PET\n"; }
 }
 
 using namespace abstract_factory;
-using namespace chain_of_resp;
 using namespace template_method;
-
-pair<string, string> parse(string line) {
-	char key[83];
-	char val[83] = {0};
-
-	sscanf(line.c_str(), "%s", key);
-
-	char* equalSign = strchr(line.c_str(), '=');
-	string value = "";
-	if(equalSign) {	// tags = sam i am
-		char*	nextToken = equalSign += 2;
-		while(nextToken) {
-			sscanf(nextToken, "%s", val);
-			value += val;
-			nextToken = strchr(nextToken+1, ' ');
-			value += " ";
-		}
-		value.erase(value.length()-1, 1);
-	}
-
-	return make_pair(key, value);
-}
 
 void process(map<string, string> order) {
 	ProcessOrder_TM_4* processOrder = 0;
@@ -988,14 +967,26 @@ void process(map<string, string> order) {
 	delete processOrder;
 }
 
-void reveal(map<string, string>& order) {	// Diagnostic.
-	map<string, string>::iterator it = order.begin();
-	for(; it!=order.end(); it++) {
-		cout << "[" << it->first << "] = " << it->second << "\n";
+pair<string, string> parse(string line) {
+	char key[83];
+	char val[83] = {0};
+
+	sscanf(line.c_str(), "%s", key);
+
+	char* equalSign = strchr(line.c_str(), '=');
+	string value = "";
+	if(equalSign) {	// tags = sam i am
+		char*	nextToken = equalSign += 2;
+		while(nextToken) {
+			sscanf(nextToken, "%s", val);
+			value += val;
+			nextToken = strchr(nextToken+1, ' ');
+			value += " ";
+		}
+		value.erase(value.length()-1, 1);
 	}
-	cout << "order[orderNum] = " << order["orderNum"] << "\n";
-	cout << "order[mold] = " << order["mold"] << "\n";
-	cout << "order[moldLoc] = " << order["moldLoc"] << "\n";
+
+	return make_pair(key, value);
 }
 
 map<string, string> getCompleteOrder(FILE* orderFilePtr) {

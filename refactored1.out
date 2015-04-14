@@ -1,6 +1,6 @@
 Hello DP4.
 
-<<< final solution >>>
+<<< final refactored >>>
 1:
 	orderNum	= 1
 	comment		= Null order - check default behaviors.
@@ -30,7 +30,7 @@ Hello DP4.
 ~LinearBelt ~ConveyerBelt_AF ~Observer_7
 ~CardboardBox ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
 ~PilotOrder ~Setup_AF_10
-~Inventory ~Mill ~SisterCompany ~Purchase ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
+~Inventory ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
 ~Duck ~Shape_B_9 ~HighCarbon ~Platform_B_9
 ~Blank ~Tag ~Cavity ~Tags_D_6 ~Tags_D_6 
 ~Color ~Plastic_D_6 
@@ -44,7 +44,6 @@ Hello DP4.
 	plastic		= ABS
 	moldLoc		= inventory
 	mold		= duck
-	finish		= smooth
 	tags		= ModelNumber
 	color		= red
 	UVInhibiter	= 6
@@ -70,7 +69,7 @@ Hello DP4.
 ~LinearBelt ~ConveyerBelt_AF ~Observer_7
 ~CardboardBox ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
 ~PilotOrder ~Setup_AF_10
-~Inventory ~Mill ~SisterCompany ~Purchase ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
+~Inventory ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
 ~Duck ~Shape_B_9 ~HighCarbon ~Platform_B_9
 ~Blank ~Tag ~ModelNumber ~Tag ~Cavity ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 
 ~UVInhibiter ~Additive ~Color ~Plastic_D_6 ~Plastic_D_6 
@@ -84,7 +83,7 @@ Hello DP4.
 	plastic			= Polypropylene
 	moldLoc			= mill
 	mold			= car
-	finish			= rippled
+	finish			= smooth
 	tags			= ModelNumber Country Date
 	color			= orange
 	UVInhibiter		= 6
@@ -94,7 +93,7 @@ Hello DP4.
     IJM_120 - Aluminum(2) - Y-Split conveyer belt - CardboardBox
   Process order.
     Create car mold from mill with 2 cavities:
-      using HighCarbon tools (drill, cut, and high speed grind) to mill aluminum block into 2 car shapes with rippled finish.
+      using HighCarbon tools (drill, cut, and high speed grind) to mill aluminum block into 2 car shapes with smooth finish.
     Insert tags [ModelNumber Country Date ] of width 6/20 mm.
     Load plastic, color, and additive bins.
       Recipe: Polypropylene(40) orange(4) UVInhibiter(6) AntiBacterial(1) Total = 102.
@@ -112,7 +111,7 @@ Hello DP4.
 ~YSplitBelt ~ConveyerBelt_AF ~Observer_7
 ~CardboardBox ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
 ~SmallOrder ~Setup_AF_10
-~Inventory ~Mill ~SisterCompany ~Purchase ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
+~Inventory ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
 ~Car ~Shape_B_9 ~HighCarbon ~Platform_B_9
 ~Blank ~Tag ~Date ~Tag ~Country ~Tag ~ModelNumber ~Tag ~Cavity ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 
 ~AntiBacterial ~Additive ~UVInhibiter ~Additive ~Color ~Plastic_D_6 ~Plastic_D_6 ~Plastic_D_6 
@@ -151,7 +150,7 @@ Hello DP4.
 ~LinearBelt ~ConveyerBelt_AF ~Observer_7
 ~PallotBox ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
 ~MediumOrder ~Setup_AF_10
-~Inventory ~Mill ~SisterCompany ~Purchase ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
+~Inventory ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
 ~Hero ~Shape_B_9 ~Carbide ~Platform_B_9
 ~Blank ~Tag ~Cavity ~Tags_D_6 ~Tags_D_6 
 ~Color ~Plastic_D_6 
@@ -190,7 +189,7 @@ Hello DP4.
 ~LinearBelt ~ConveyerBelt_AF ~Observer_7
 ~PallotBox ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
 ~MediumOrder ~Setup_AF_10
-~Inventory ~Mill ~SisterCompany ~Purchase ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
+~Inventory ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
 ~Hero ~Shape_B_9 ~Carbide ~Platform_B_9
 ~Blank ~Tag ~Cavity ~Tags_D_6 ~Tags_D_6 
 ~Color ~Plastic_D_6 

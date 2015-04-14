@@ -1,6 +1,6 @@
 Hello DP4.
 
-<<< final refactored >>>
+<<< final solution >>>
 1:
 	orderNum	= 1
 	comment		= Null order - check default behaviors.
@@ -23,6 +23,7 @@ Hello DP4.
         Conveyer belt pausing while CardboardBox package bin is swapped.
         Packager pausing while CardboardBox package bin is swapped.
     Clean ABS mold: soak in alcohol, rinse with water, dry.
+    Ship to ""
 ~ABS
 ~Bulk ~Packager_FM_5 ~Observer_7
 ~IJM_110 ~IJM_AF ~Observer_7
@@ -30,7 +31,7 @@ Hello DP4.
 ~LinearBelt ~ConveyerBelt_AF ~Observer_7
 ~CardboardBox ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
 ~PilotOrder ~Setup_AF_10
-~Inventory ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
+~Inventory ~SisterCompany ~Purchase ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
 ~Duck ~Shape_B_9 ~HighCarbon ~Platform_B_9
 ~Blank ~Tag ~Cavity ~Tags_D_6 ~Tags_D_6 
 ~Color ~Plastic_D_6 
@@ -62,6 +63,7 @@ Hello DP4.
         Conveyer belt pausing while CardboardBox package bin is swapped.
         Packager pausing while CardboardBox package bin is swapped.
     Clean ABS mold: soak in alcohol, rinse with water, dry.
+    Ship to ""
 ~ABS
 ~Bulk ~Packager_FM_5 ~Observer_7
 ~IJM_110 ~IJM_AF ~Observer_7
@@ -69,7 +71,7 @@ Hello DP4.
 ~LinearBelt ~ConveyerBelt_AF ~Observer_7
 ~CardboardBox ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
 ~PilotOrder ~Setup_AF_10
-~Inventory ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
+~Inventory ~SisterCompany ~Purchase ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
 ~Duck ~Shape_B_9 ~HighCarbon ~Platform_B_9
 ~Blank ~Tag ~ModelNumber ~Tag ~Cavity ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 
 ~UVInhibiter ~Additive ~Color ~Plastic_D_6 ~Plastic_D_6 
@@ -104,6 +106,7 @@ Hello DP4.
         Conveyer belt pausing while CardboardBox package bin is swapped.
         Packager pausing while CardboardBox package bin is swapped.
     Clean Poly mold: rinse with acetone, dry.
+    Ship to ""
 ~Polypropylene
 ~ShrinkWrap ~Packager_FM_5 ~Observer_7
 ~IJM_120 ~IJM_AF ~Observer_7
@@ -111,7 +114,7 @@ Hello DP4.
 ~YSplitBelt ~ConveyerBelt_AF ~Observer_7
 ~CardboardBox ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
 ~SmallOrder ~Setup_AF_10
-~Inventory ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
+~Inventory ~SisterCompany ~Purchase ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
 ~Car ~Shape_B_9 ~HighCarbon ~Platform_B_9
 ~Blank ~Tag ~Date ~Tag ~Country ~Tag ~ModelNumber ~Tag ~Cavity ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 
 ~AntiBacterial ~Additive ~UVInhibiter ~Additive ~Color ~Plastic_D_6 ~Plastic_D_6 ~Plastic_D_6 
@@ -143,6 +146,7 @@ Hello DP4.
         Conveyer belt pausing while PallotBox package bin is swapped.
         Packager pausing while PallotBox package bin is swapped.
     Clean Poly mold: rinse with acetone, dry.
+    Ship to ""
 ~Polyethelene
 ~HardPack ~Packager_FM_5 ~Observer_7
 ~IJM_210 ~IJM_AF ~Observer_7
@@ -150,7 +154,7 @@ Hello DP4.
 ~LinearBelt ~ConveyerBelt_AF ~Observer_7
 ~PallotBox ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
 ~MediumOrder ~Setup_AF_10
-~Inventory ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
+~Inventory ~SisterCompany ~Purchase ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
 ~Hero ~Shape_B_9 ~Carbide ~Platform_B_9
 ~Blank ~Tag ~Cavity ~Tags_D_6 ~Tags_D_6 
 ~Color ~Plastic_D_6 
@@ -182,6 +186,7 @@ Hello DP4.
         Conveyer belt pausing while PallotBox package bin is swapped.
         Packager pausing while PallotBox package bin is swapped.
     Clean PET steel mold: heat to 895 C.
+    Ship to ""
 ~PET
 ~HardPack ~Packager_FM_5 ~Observer_7
 ~IJM_210 ~IJM_AF ~Observer_7
@@ -189,7 +194,7 @@ Hello DP4.
 ~LinearBelt ~ConveyerBelt_AF ~Observer_7
 ~PallotBox ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
 ~MediumOrder ~Setup_AF_10
-~Inventory ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
+~Inventory ~SisterCompany ~Purchase ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
 ~Hero ~Shape_B_9 ~Carbide ~Platform_B_9
 ~Blank ~Tag ~Cavity ~Tags_D_6 ~Tags_D_6 
 ~Color ~Plastic_D_6 
@@ -209,37 +214,33 @@ Hello DP4.
 	MicroFibers	= 3
 	address		= MegaCorp, 1 Apple, Santa Clara, CA 92200
 	endOfOrder
-  <>Unknown plastic |Styrene| defaulting to ABS.
-  <>Unknown packager |ZipLock| defaulting to Bulk packager.
-  Setup injection line for 40000 run with Bulk packager:
-    IJM_210 - Steel(1) - Linear conveyer belt - PallotBox
+  Setup injection line for 40000 run with ZipLock packager:
+    IJM_140 - Aluminum(4) - V-Level conveyer belt - PallotBox
   Process order.
-    <>Can't find place |sisterCompany| to get |dino| mold from, defaulting to duck from inventory.
-Ignoring unknown tag IncCounter.
-Ignoring unknown tag PartNumber.
-Ignoring unknown tag RecycleCode.
-    Insert tags [] of width 0/20 mm.
+    Borrow dino mold from sister company.
+    Insert tags [IncCounter PartNumber RecycleCode ] of width 12/20 mm.
     Load plastic, color, and additive bins.
-      Recipe: ABS(35) blue(3) Total = 38.
-    Cycle IJM for ABS 40000 times.
-      Close - heat to 440 - inject at 125 PSI - cool to 360 - separate - progressive eject.
+      Recipe: Styrene(30) blue(3) MicroFibers(3) Total = 144.
+    Cycle IJM for Synthetics 40000 times.
+      Close - heat to 480 - inject at 150 PSI - cool to 390 - separate - shock eject.
       PallotBox package bin full...
         IJM pausing while PallotBox package bin is swapped.
         Conveyer belt pausing while PallotBox package bin is swapped.
         Packager pausing while PallotBox package bin is swapped.
-    Clean ABS mold: soak in alcohol, rinse with water, dry.
-~ABS
-~Bulk ~Packager_FM_5 ~Observer_7
-~IJM_210 ~IJM_AF ~Observer_7
-~Steel ~Mold_AF
-~LinearBelt ~ConveyerBelt_AF ~Observer_7
+    Clean synthetic mold: ozone wash.
+    Ship to "MegaCorp, 1 Apple, Santa Clara, CA 92200"
+~Styrene
+~ZipLock ~Packager_FM_5 ~Observer_7
+~IJM_140 ~IJM_AF ~Observer_7
+~Aluminum ~Mold_AF
+~VLevelBelt ~ConveyerBelt_AF ~Observer_7
 ~PallotBox ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
-~MediumOrder ~Setup_AF_10
-~Inventory ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
-~Duck ~Shape_B_9 ~Carbide ~Platform_B_9
-~Blank ~Tag ~Cavity ~Tags_D_6 ~Tags_D_6 
-~Color ~Plastic_D_6 
-~ABS ~adapter::ABS ~CleanABS ~CleanPlastic_A_2 ~Strategy_1
+~FastOrder ~Setup_AF_10
+~Inventory ~SisterCompany ~Purchase ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
+~Dino ~Shape_B_9 ~HighCarbon ~Platform_B_9
+~Blank ~Tag ~RecycleCode ~Tag ~PartNumber ~Tag ~IncCounter ~Tag ~Cavity ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 
+~MicroFibers ~Additive ~Color ~Plastic_D_6 ~Plastic_D_6 
+~Synthetics ~adapter::Synthetics ~CleanPlastic_A_2 ~Strategy_1
 ~ProcessOrder_TM_4
 7:
 	orderNum	= 7
@@ -253,35 +254,33 @@ Ignoring unknown tag RecycleCode.
 	color		= violate
 	address		= Anytown, CA
 	endOfOrder
-  <>Unknown plastic |Nylon66| defaulting to ABS.
-  <>Size too large |100000| defaulting to MediumOrder.
-  <>Unknown packager |ZipLock| defaulting to Bulk packager.
-  Setup injection line for 100000 run with Bulk packager:
-    IJM_210 - Steel(1) - Linear conveyer belt - PallotBox
+  Setup injection line for 100000 run with ZipLock packager:
+    IJM_220 - Steel(2) - Y-Split conveyer belt - Crate
   Process order.
-    <>Can't find place |purchase| to get |dino| mold from, defaulting to duck from inventory.
+    Acquire dino mold via purchase.
     Insert tags [] of width 0/20 mm.
     Load plastic, color, and additive bins.
-      Recipe: ABS(35) violate(3) Total = 38.
-    Cycle IJM for ABS 100000 times.
-      Close - heat to 440 - inject at 125 PSI - cool to 360 - separate - progressive eject.
-      PallotBox package bin full...
-        IJM pausing while PallotBox package bin is swapped.
-        Conveyer belt pausing while PallotBox package bin is swapped.
-        Packager pausing while PallotBox package bin is swapped.
-    Clean ABS mold: soak in alcohol, rinse with water, dry.
-~ABS
-~Bulk ~Packager_FM_5 ~Observer_7
-~IJM_210 ~IJM_AF ~Observer_7
+      Recipe: Nylon66(30) violate(3) Total = 66.
+    Cycle IJM for Synthetics 100000 times.
+      Close - heat to 480 - inject at 150 PSI - cool to 390 - separate - shock eject.
+      Crate package bin full...
+        IJM pausing while Crate package bin is swapped.
+        Conveyer belt pausing while Crate package bin is swapped.
+        Packager pausing while Crate package bin is swapped.
+    Clean synthetic mold: ozone wash.
+    Ship to "Anytown, CA"
+~Nylon66
+~ZipLock ~Packager_FM_5 ~Observer_7
+~IJM_220 ~IJM_AF ~Observer_7
 ~Steel ~Mold_AF
-~LinearBelt ~ConveyerBelt_AF ~Observer_7
-~PallotBox ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
-~MediumOrder ~Setup_AF_10
-~Inventory ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
-~Duck ~Shape_B_9 ~Carbide ~Platform_B_9
+~YSplitBelt ~ConveyerBelt_AF ~Observer_7
+~Crate ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
+~LargeOrder ~Setup_AF_10
+~Inventory ~SisterCompany ~Purchase ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
+~Dino ~Shape_B_9 ~Carbide ~Platform_B_9
 ~Blank ~Tag ~Cavity ~Tags_D_6 ~Tags_D_6 
 ~Color ~Plastic_D_6 
-~ABS ~adapter::ABS ~CleanABS ~CleanPlastic_A_2 ~Strategy_1
+~Synthetics ~adapter::Synthetics ~CleanPlastic_A_2 ~Strategy_1
 ~ProcessOrder_TM_4
 8:
 	orderNum	= 8
@@ -295,35 +294,33 @@ Ignoring unknown tag RecycleCode.
 	color		= gray
 	address		= Wherever, USA
 	endOfOrder
-  <>Unknown plastic |Nylon66| defaulting to ABS.
-  <>Size too large |200000| defaulting to MediumOrder.
-  <>Unknown packager |ZipLock| defaulting to Bulk packager.
-  Setup injection line for 200000 run with Bulk packager:
-    IJM_210 - Steel(1) - Linear conveyer belt - PallotBox
+  Setup injection line for 200000 run with ZipLock packager:
+    IJM_240 - Steel(4) - V-Level conveyer belt - Crate
   Process order.
-    <>Can't find place |purchase| to get |dino| mold from, defaulting to duck from inventory.
+    Acquire dino mold via purchase.
     Insert tags [] of width 0/20 mm.
     Load plastic, color, and additive bins.
-      Recipe: ABS(35) gray(3) Total = 38.
-    Cycle IJM for ABS 200000 times.
-      Close - heat to 440 - inject at 125 PSI - cool to 360 - separate - progressive eject.
-      PallotBox package bin full...
-        IJM pausing while PallotBox package bin is swapped.
-        Conveyer belt pausing while PallotBox package bin is swapped.
-        Packager pausing while PallotBox package bin is swapped.
-    Clean ABS mold: soak in alcohol, rinse with water, dry.
-~ABS
-~Bulk ~Packager_FM_5 ~Observer_7
-~IJM_210 ~IJM_AF ~Observer_7
+      Recipe: Nylon66(30) gray(3) Total = 132.
+    Cycle IJM for Synthetics 200000 times.
+      Close - heat to 480 - inject at 150 PSI - cool to 390 - separate - shock eject.
+      Crate package bin full...
+        IJM pausing while Crate package bin is swapped.
+        Conveyer belt pausing while Crate package bin is swapped.
+        Packager pausing while Crate package bin is swapped.
+    Clean synthetic mold: ozone wash.
+    Ship to "Wherever, USA"
+~Nylon66
+~ZipLock ~Packager_FM_5 ~Observer_7
+~IJM_240 ~IJM_AF ~Observer_7
 ~Steel ~Mold_AF
-~LinearBelt ~ConveyerBelt_AF ~Observer_7
-~PallotBox ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
-~MediumOrder ~Setup_AF_10
-~Inventory ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
-~Duck ~Shape_B_9 ~Carbide ~Platform_B_9
+~VLevelBelt ~ConveyerBelt_AF ~Observer_7
+~Crate ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
+~HugeOrder ~Setup_AF_10
+~Inventory ~SisterCompany ~Purchase ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
+~Dino ~Shape_B_9 ~DiamondTipped ~Platform_B_9
 ~Blank ~Tag ~Cavity ~Tags_D_6 ~Tags_D_6 
 ~Color ~Plastic_D_6 
-~ABS ~adapter::ABS ~CleanABS ~CleanPlastic_A_2 ~Strategy_1
+~Synthetics ~adapter::Synthetics ~CleanPlastic_A_2 ~Strategy_1
 ~ProcessOrder_TM_4
 9:
 	orderNum		= 9
@@ -341,39 +338,34 @@ Ignoring unknown tag RecycleCode.
 	AntiBacterial	= 1
 	address			= PLay Toys, 1234 5th st, Pastoria, IL 34556
 	endOfOrder
-  <>Unknown plastic |Nylon66| defaulting to ABS.
-  <>Size too large |400000| defaulting to MediumOrder.
-  <>Unknown packager |ZipLock| defaulting to Bulk packager.
-  Setup injection line for 400000 run with Bulk packager:
-    IJM_210 - Steel(1) - Linear conveyer belt - PallotBox
+  <>Size too large |400000| defaulting to HugeOrder.
+  Setup injection line for 400000 run with ZipLock packager:
+    IJM_240 - Steel(4) - V-Level conveyer belt - Crate
   Process order.
-    <>Unknown shape |dino| defaulting to duck.
-    Create duck mold from mill with 1 cavities:
-      using Carbide tools (high speed drill, cross cut, and layer grind) to mill steel block into 1 duck shapes with satin finish.
-Ignoring unknown tag IncCounter.
-Ignoring unknown tag PartNumber.
-Ignoring unknown tag RecycleCode.
-    Insert tags [ModelNumber Country Date ] of width 6/20 mm.
+    Create dino mold from mill with 4 cavities:
+      using DiamondTipped tools (precision drill, oil cooled cut, and cartoid grind) to mill steel block into 4 dino shapes with satin finish.
+    Insert tags [IncCounter PartNumber RecycleCode ModelNumber Country Date ] of width 18/20 mm.
     Load plastic, color, and additive bins.
-      Recipe: ABS(35) white(3) UVInhibiter(6) AntiBacterial(1) Total = 45.
-    Cycle IJM for ABS 400000 times.
-      Close - heat to 440 - inject at 125 PSI - cool to 360 - separate - progressive eject.
-      PallotBox package bin full...
-        IJM pausing while PallotBox package bin is swapped.
-        Conveyer belt pausing while PallotBox package bin is swapped.
-        Packager pausing while PallotBox package bin is swapped.
-    Clean ABS mold: soak in alcohol, rinse with water, dry.
-~ABS
-~Bulk ~Packager_FM_5 ~Observer_7
-~IJM_210 ~IJM_AF ~Observer_7
+      Recipe: Nylon66(30) white(3) UVInhibiter(6) AntiBacterial(1) MicroFibers(3) Total = 172.
+    Cycle IJM for Synthetics 400000 times.
+      Close - heat to 480 - inject at 150 PSI - cool to 390 - separate - shock eject.
+      Crate package bin full...
+        IJM pausing while Crate package bin is swapped.
+        Conveyer belt pausing while Crate package bin is swapped.
+        Packager pausing while Crate package bin is swapped.
+    Clean synthetic mold: ozone wash.
+    Ship to "PLay Toys, 1234 5th st, Pastoria, IL 34556"
+~Nylon66
+~ZipLock ~Packager_FM_5 ~Observer_7
+~IJM_240 ~IJM_AF ~Observer_7
 ~Steel ~Mold_AF
-~LinearBelt ~ConveyerBelt_AF ~Observer_7
-~PallotBox ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
-~MediumOrder ~Setup_AF_10
-~Inventory ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
-~Duck ~Shape_B_9 ~Carbide ~Platform_B_9
-~Blank ~Tag ~Date ~Tag ~Country ~Tag ~ModelNumber ~Tag ~Cavity ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 
-~AntiBacterial ~Additive ~UVInhibiter ~Additive ~Color ~Plastic_D_6 ~Plastic_D_6 ~Plastic_D_6 
-~ABS ~adapter::ABS ~CleanABS ~CleanPlastic_A_2 ~Strategy_1
+~VLevelBelt ~ConveyerBelt_AF ~Observer_7
+~Crate ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
+~HugeOrder ~Setup_AF_10
+~Inventory ~SisterCompany ~Purchase ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
+~Dino ~Shape_B_9 ~DiamondTipped ~Platform_B_9
+~Blank ~Tag ~Date ~Tag ~Country ~Tag ~ModelNumber ~Tag ~RecycleCode ~Tag ~PartNumber ~Tag ~IncCounter ~Tag ~Cavity ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 
+~MicroFibers ~Additive ~AntiBacterial ~Additive ~UVInhibiter ~Additive ~Color ~Plastic_D_6 ~Plastic_D_6 ~Plastic_D_6 ~Plastic_D_6 
+~Synthetics ~adapter::Synthetics ~CleanPlastic_A_2 ~Strategy_1
 ~ProcessOrder_TM_4
 Aloha DP4.

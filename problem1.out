@@ -1,6 +1,6 @@
 Hello DP4.
 
-<<< final refactored >>>
+<<< final problem >>>
 1:
 	orderNum	= 1
 	comment		= Null order - check default behaviors.
@@ -44,7 +44,6 @@ Hello DP4.
 	plastic		= ABS
 	moldLoc		= inventory
 	mold		= duck
-	finish		= smooth
 	tags		= ModelNumber
 	color		= red
 	UVInhibiter	= 6
@@ -84,7 +83,7 @@ Hello DP4.
 	plastic			= Polypropylene
 	moldLoc			= mill
 	mold			= car
-	finish			= rippled
+	finish			= smooth
 	tags			= ModelNumber Country Date
 	color			= orange
 	UVInhibiter		= 6
@@ -94,7 +93,7 @@ Hello DP4.
     IJM_120 - Aluminum(2) - Y-Split conveyer belt - CardboardBox
   Process order.
     Create car mold from mill with 2 cavities:
-      using HighCarbon tools (drill, cut, and high speed grind) to mill aluminum block into 2 car shapes with rippled finish.
+      using HighCarbon tools (drill, cut, and high speed grind) to mill aluminum block into 2 car shapes with smooth finish.
     Insert tags [ModelNumber Country Date ] of width 6/20 mm.
     Load plastic, color, and additive bins.
       Recipe: Polypropylene(40) orange(4) UVInhibiter(6) AntiBacterial(1) Total = 102.

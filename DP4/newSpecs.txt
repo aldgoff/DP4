@@ -1,0 +1,172 @@
+<< Old and New Specs >>
+
+Run sizes:
+  10,000
+  20,000
+  50,000
+  ...
+  40,000
+  100,000
+  200,000
+
+Colors:
+  brown
+  read
+  orange
+  yellow
+  green
+  ...
+  blue
+  gray
+  violet
+  white
+
+Plastics:
+  ABS
+  Polypropylene
+  Polyethelene
+  PET
+  ...
+  Stryene
+  Nilon66
+
+Injection cycle:
+  ABS - Close - heat to 440 - inject at 125 PSI - cool to 360 - separate - progressive eject
+  Poly - Close - heat to 350 - inject at 90 PSI - cool to 290 - separate - smooth eject
+  PET - Close - heat to 404 - inject at 110 PSI - cool to 340 - separate - smooth eject
+  ...
+  Synthetics - Close - heat to 480 - inject at 150 PSI - cool to 390 - separate - shock eject
+
+Mold location:
+  Inventory
+  ...
+  Sister company
+  Purchase
+  ...
+  Mill - must be last
+
+Finishes:
+  smooth
+  rippled
+  ...
+  dimpled
+  sanded
+  satin
+  
+Shapes:
+  duck
+  car
+  hero
+  ...
+  dino
+  
+Milling Ops:
+  Aluminum - High carbon
+  	drill
+  	cut
+  	high speed grind
+  Steel - Carbide
+  	high speed drill
+  	cross cut
+  	layer grind
+  ...
+  Steel (non satin finish) - Carbide
+  Steel (satin finish) - Diamond tipped
+  	precision drill
+  	oiled cooled cut
+  	cartoid grind
+
+Tags:
+  Blank (width determined by cavity space & sum of other tags' widths).
+  Model number (2 mm)
+  Country (2 mm)
+  Date (2 mm)
+  ...
+  Increment counter (serial number) (4 mm)
+  Part number (2 mm)
+  Recycle code (6 mm)
+
+Additives:
+  UV inhibiters
+  Anti-bacterial
+  ...
+  Micro fibers
+
+IJM:
+  10,000 - IJM-110
+  20,000 - IJM-120
+  50,000 - IJM-210
+  ...
+  40,000 - IJM-140
+  100,000 - IJM-220
+  200,000 - IJM-240
+
+Mold metal & cavites:
+  10,000 - Aluminum(1)
+  20,000 - Aluminum(2)
+  50,000 - Steel(1)
+  ...
+  40,000 - Aluminum(4)
+  100,000 - Steel(2)
+  200,000 - Steel(4)
+
+Conveyer belts:
+  10,000 - Linear
+  20,000 - Y-split
+  50,000 - Linear
+  ...
+  40,000 - V-level
+  100,000 - Y-split
+  200,000 - V-level
+
+Package bins:
+  10,000 - Cardboard box
+  20,000 - Cardboard box
+  50,000 - Pallot box
+  ...
+  40,000 - Pallot box
+  100,000 - Crate
+  200,000 - Crate
+
+Packagers:
+  bulk
+  shrink wrap
+  hard pack
+  ...
+  ziploc
+
+Full bins:
+  Pause injection line when full
+  Simulate just once during the injection run
+  	IJM should pause
+  	Belt should pause
+  	Packager should pause
+
+Cleaning the molds:
+  ABS - soak in alcohol, rinse with water, dry
+  	use legacy method clean()
+  Poly - rinse with acetone, dry
+  	use legacy method prepForReuse()
+  PET
+  	Aluminum - rinse with soap and water, dry
+  	  use legacy method purify()
+  	Steel - carbonize (heat to 895 C)
+  	  use legacy method carbonize()
+  ...
+  Synthetics (Styrene, Nilon66)
+  	Ozone wash
+
+Setup the injection run:
+  Setup the injection line
+  	IJM
+  	Mold
+  	Conveyer belt
+  	Packager
+  	Output bin
+  Get and install the mold
+  Insert tags into mold
+  Load additive bins
+  Run the injection cycle till done
+  Clean the mold
+  ...
+  Ship to address

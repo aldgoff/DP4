@@ -1,0 +1,113 @@
+<< Original Specs >>
+
+Run sizes:
+  10,000
+  20,000
+  50,000
+
+Colors:
+  brown
+  read
+  orange
+  yellow
+  green
+
+Plastics:
+  ABS
+  Polypropylene
+  Polyethelene
+  PET
+
+Injection cycle:
+  ABS - Close - heat to 440 - inject at 125 PSI - cool to 360 - separate - progressive eject
+  Poly - Close - heat to 350 - inject at 90 PSI - cool to 290 - separate - smooth eject
+  PET - Close - heat to 404 - inject at 110 PSI - cool to 340 - separate - smooth eject
+
+Mold location:
+  Inventory
+  Mill
+
+Finishes:
+  smooth
+  rippled
+  
+Shapes:
+  duck
+  car
+  hero
+  
+Milling Ops:
+  Aluminum - High carbon
+  	drill
+  	cut
+  	high speed grind
+  Steel - Carbide
+  	high speed drill
+  	cross cut
+  	layer grind
+
+Tags:
+  Blank (width determined by cavity space & sum of other tags' widths).
+  Model number (2 mm)
+  Country (2 mm)
+  Date (2 mm)
+
+Additives:
+  UV inhibiters
+  Anti-bacterial
+
+IJM:
+  10,000 - IJM-110
+  20,000 - IJM-120
+  50,000 - IJM-210
+
+Mold metal & cavites:
+  10,000 - Aluminum(1)
+  20,000 - Aluminum(2)
+  50,000 - Steel(1)
+
+Conveyer belts:
+  10,000 - Linear
+  20,000 - Y-split
+  50,000 - Linear
+
+Package bins:
+  10,000 - Cardboard box
+  20,000 - Cardboard box
+  50,000 - Pallot box
+
+Packagers:
+  bulk
+  shrink wrap
+  hard pack
+
+Full bins:
+  Pause injection line when full
+  Simulate just once during the injection run
+  	IJM should pause
+  	Belt should pause
+  	Packager should pause
+
+Cleaning the molds:
+  ABS - soak in alcohol, rinse with water, dry
+  	use legacy method clean()
+  Poly - rinse with acetone, dry
+  	use legacy method prepForReuse()
+  PET
+  	Aluminum - rinse with soap and water, dry
+  	  use legacy method purify()
+  	Steel - carbonize (heat to 895 C)
+  	  use legacy method carbonize()
+
+Setup the injection run:
+  Setup the injection line
+  	IJM
+  	Mold
+  	Conveyer belt
+  	Packager
+  	Output bin
+  Get and install the mold
+  Insert tags into mold
+  Load additive bins
+  Run the injection cycle till done
+  Clean the mold

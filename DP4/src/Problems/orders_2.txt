@@ -10,7 +10,6 @@
 	plastic		= ABS
 	moldLoc		= inventory
 	mold		= duck
-	finish		= smooth
 	tags		= ModelNumber
 	color		= red
 	UVInhibiter	= 6
@@ -23,7 +22,7 @@
 	plastic			= Polypropylene
 	moldLoc			= mill
 	mold			= car
-	finish			= rippled
+	finish			= smooth
 	tags			= ModelNumber Country Date
 	color			= orange
 	UVInhibiter		= 6
@@ -63,6 +62,7 @@
 	tags		= IncCounter PartNumber RecycleCode
 	color		= blue
 	MicroFibers	= 3
+	address		= MegaCorp, 1 Apple, Santa Clara, CA 92200
 	endOfOrder
 7:
 	orderNum	= 7
@@ -74,6 +74,7 @@
 	mold		= dino
 	finish		= sanded
 	color		= violate
+	address		= Anytown, CA
 	endOfOrder
 8:
 	orderNum	= 8
@@ -85,6 +86,7 @@
 	mold		= dino
 	finish		= satin
 	color		= gray
+	address		= Wherever, USA
 	endOfOrder
 9:
 	orderNum		= 9
@@ -100,4 +102,5 @@
 	MicroFibers		= 3
 	UVInhibiter		= 6
 	AntiBacterial	= 1
+	address			= PLay Toys, 1234 5th st, Pastoria, IL 34556
 	endOfOrder

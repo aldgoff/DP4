@@ -21,7 +21,7 @@ Mold Location:
 	sisterCompany
 	purchase
 Milling:
-	Carbide
+	DiamondTipped
 
 Plastics:
 	Styrene
@@ -46,3 +46,5 @@ Finishes
 	dimpled
 	sanded
 	satin
+Output Bin:
+	Crate

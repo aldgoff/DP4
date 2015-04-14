@@ -5,12 +5,12 @@
  *      Author: aldgoff
  */
 
-#ifndef DP4_SRC_PROBLEMS_FINAL_H_
-#define DP4_SRC_PROBLEMS_FINAL_H_
+#ifndef DP4_SRC_PROBLEMS_FINALOUTLINE_H_
+#define DP4_SRC_PROBLEMS_FINALOUTLINE_H_
 
 #include <stdio.h>
 
-namespace final_problem_file {
+namespace final_problem_outline_file {
 
 class Order {};
 
@@ -98,4 +98,4 @@ void demo(const string& orderFile) {
 }
 
 
-#endif /* DP4_SRC_PROBLEMS_FINAL_H_ */
+#endif /* DP4_SRC_PROBLEMS_FINALOUTLINE_H_ */
