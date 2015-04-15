@@ -6,8 +6,8 @@ Hello DP4.
 	comment		= Null order - check default behaviors.
 	endOfOrder
   <>Unknown plastic || defaulting to ABS.
-  <>Unknown packager || defaulting to Bulk packager.
   <>No size specified, defaulting to 100.
+  <>Unknown packager || defaulting to Bulk packager.
   Setup injection line for 100 run with Bulk packager:
     IJM_110 - Aluminum(1) - Linear conveyer belt - CardboardBox
   Process order.
@@ -250,20 +250,20 @@ Ignoring unknown tag RecycleCode.
 	moldLoc		= purchase
 	mold		= dino
 	finish		= sanded
-	color		= violate
+	color		= violet
 	address		= Anytown, CA
 	endOfOrder
   <>Unknown plastic |Nylon66| defaulting to ABS.
   <>Size too large |100000| defaulting to MediumOrder.
   <>Unknown packager |ZipLock| defaulting to Bulk packager.
-  Setup injection line for 100000 run with Bulk packager:
+  Setup injection line for 50000 run with Bulk packager:
     IJM_210 - Steel(1) - Linear conveyer belt - PallotBox
   Process order.
     <>Can't find place |purchase| to get |dino| mold from, defaulting to duck from inventory.
     Insert tags [] of width 0/20 mm.
     Load plastic, color, and additive bins.
-      Recipe: ABS(35) violate(3) Total = 38.
-    Cycle IJM for ABS 100000 times.
+      Recipe: ABS(35) violet(3) Total = 38.
+    Cycle IJM for ABS 50000 times.
       Close - heat to 440 - inject at 125 PSI - cool to 360 - separate - progressive eject.
       PallotBox package bin full...
         IJM pausing while PallotBox package bin is swapped.
@@ -289,7 +289,7 @@ Ignoring unknown tag RecycleCode.
 	size		= 200000
 	packager	= ZipLock
 	plastic		= Nylon66
-	moldLoc		= purchase
+	moldLoc		= mill
 	mold		= dino
 	finish		= satin
 	color		= gray
@@ -298,14 +298,16 @@ Ignoring unknown tag RecycleCode.
   <>Unknown plastic |Nylon66| defaulting to ABS.
   <>Size too large |200000| defaulting to MediumOrder.
   <>Unknown packager |ZipLock| defaulting to Bulk packager.
-  Setup injection line for 200000 run with Bulk packager:
+  Setup injection line for 50000 run with Bulk packager:
     IJM_210 - Steel(1) - Linear conveyer belt - PallotBox
   Process order.
-    <>Can't find place |purchase| to get |dino| mold from, defaulting to duck from inventory.
+    <>Unknown shape |dino| defaulting to duck.
+    Create duck mold from mill with 1 cavities:
+      using Carbide tools (high speed drill, cross cut, and layer grind) to mill steel block into 1 duck shapes with satin finish.
     Insert tags [] of width 0/20 mm.
     Load plastic, color, and additive bins.
       Recipe: ABS(35) gray(3) Total = 38.
-    Cycle IJM for ABS 200000 times.
+    Cycle IJM for ABS 50000 times.
       Close - heat to 440 - inject at 125 PSI - cool to 360 - separate - progressive eject.
       PallotBox package bin full...
         IJM pausing while PallotBox package bin is swapped.
@@ -344,7 +346,7 @@ Ignoring unknown tag RecycleCode.
   <>Unknown plastic |Nylon66| defaulting to ABS.
   <>Size too large |400000| defaulting to MediumOrder.
   <>Unknown packager |ZipLock| defaulting to Bulk packager.
-  Setup injection line for 400000 run with Bulk packager:
+  Setup injection line for 50000 run with Bulk packager:
     IJM_210 - Steel(1) - Linear conveyer belt - PallotBox
   Process order.
     <>Unknown shape |dino| defaulting to duck.
@@ -356,7 +358,7 @@ Ignoring unknown tag RecycleCode.
     Insert tags [ModelNumber Country Date ] of width 6/20 mm.
     Load plastic, color, and additive bins.
       Recipe: ABS(35) white(3) UVInhibiter(6) AntiBacterial(1) Total = 45.
-    Cycle IJM for ABS 400000 times.
+    Cycle IJM for ABS 50000 times.
       Close - heat to 440 - inject at 125 PSI - cool to 360 - separate - progressive eject.
       PallotBox package bin full...
         IJM pausing while PallotBox package bin is swapped.

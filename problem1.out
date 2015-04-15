@@ -6,8 +6,8 @@ Hello DP4.
 	comment		= Null order - check default behaviors.
 	endOfOrder
   <>Unknown plastic || defaulting to ABS.
-  <>Unknown packager || defaulting to Bulk packager.
   <>No size specified, defaulting to 100.
+  <>Unknown packager || defaulting to Bulk packager.
   Setup injection line for 100 run with Bulk packager:
     IJM_110 - Aluminum(1) - Linear conveyer belt - CardboardBox
   Process order.

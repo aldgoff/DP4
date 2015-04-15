@@ -11,14 +11,14 @@ Run sizes:
 
 Colors:
   brown
-  read
+  red
   orange
   yellow
   green
   ...
   blue
-  gray
   violet
+  gray
   white
 
 Plastics:
@@ -54,11 +54,11 @@ Finishes:
   satin
   
 Shapes:
-  duck
-  car
-  hero
+  duck (35 cc)
+  car (40 cc)
+  hero (50 cc)
   ...
-  dino
+  dino (35cc)
   
 Milling Ops:
   Aluminum - High carbon
@@ -93,13 +93,13 @@ Additives:
   Micro fibers
 
 IJM:
-  10,000 - IJM-110
-  20,000 - IJM-120
-  50,000 - IJM-210
+  10,000 - IJM_110
+  20,000 - IJM_120
+  50,000 - IJM_210
   ...
-  40,000 - IJM-140
-  100,000 - IJM-220
-  200,000 - IJM-240
+  40,000 - IJM_140
+  100,000 - IJM_220
+  200,000 - IJM_240
 
 Mold metal & cavites:
   10,000 - Aluminum(1)
@@ -127,6 +127,8 @@ Package bins:
   40,000 - Pallot box
   100,000 - Crate
   200,000 - Crate
+
+Default to largest if size > max.
 
 Packagers:
   bulk

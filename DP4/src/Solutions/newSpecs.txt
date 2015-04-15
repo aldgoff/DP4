@@ -1,10 +1,12 @@
+<< Deprecated >>
+
 Size:
 	40,000
 	100,000
 	200,000
 Cavities:
-	2
 	4
+
 Packagers:
 	ZipLock
 	

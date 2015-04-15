@@ -1,0 +1,40 @@
+1. Add ability to handle run size of 40,000 (FastOrder):
+	1.1 IJM_140.
+	1.2 Aluminum molds with 4 cavities.
+	1.3 V-Level conveyer belt.
+2. Add ZipLock packager.
+3. Add Styrene as a new synthetic plastic:
+	3.1 Injection: heat to 480 - inject at 150 PSI - cool to 390 - shock eject.
+	3.2 Cleaning: ozone wash.
+4. Add sisterCompany as a new mold location, prior to mill.
+5. Add a new mold shape, dino 30 cc.
+6. Add new tags:
+	6.1 IncCounter 4mm (serial number), this tags increments with each injection.
+	6.2 PartNumber 2mm.
+	6.3 RecycleCode 6mm (2D bar code to automate sorting of discarded parts).
+7. Add new additive, MicroFibers.
+8. Add shipping step to injection run process:
+	8.1 order["address"] = shipping address as one line comma separated fields.
+
+9. Add ability to handle run size of 100,000 (LargeOrder):
+	9.1 IJM_220.
+	9.2 Steel molds with 2 cavities.
+	9.3 Y-split conveyer belt.
+	9.4 New package (output) bin, Crate.
+10. Add Nylon66 as a new synthetic plastic:
+	10.1 Injection: heat to 480 - inject at 150 PSI - cool to 390 - shock eject.
+	10.1 Cleaning: ozone wash.
+11. Add purchase as new mold location, between sister company and mill.
+
+12. Add ability to handle run size of 200,000 (HugeOrder):
+	13.1 IJM_240.
+	13.2 Steel molds with 4 cavities.
+	13.3 V-Level converyer belt.
+13. Add a new finish, satin:
+	17.1 Requires DiamondTipped milling tools:
+		17.1.1 precision drill.
+		17.1.2 oil cooled cut.
+		17.1.3 cartoid grind.
+
+14. Resize too large orders to largest available:
+	19.1 400,000 reduced to 200,000.

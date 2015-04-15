@@ -73,7 +73,7 @@
 	moldLoc		= purchase
 	mold		= dino
 	finish		= sanded
-	color		= violate
+	color		= violet
 	address		= Anytown, CA
 	endOfOrder
 8:
@@ -82,7 +82,7 @@
 	size		= 200000
 	packager	= ZipLock
 	plastic		= Nylon66
-	moldLoc		= purchase
+	moldLoc		= mill
 	mold		= dino
 	finish		= satin
 	color		= gray

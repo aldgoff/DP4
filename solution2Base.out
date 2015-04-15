@@ -6,8 +6,8 @@ Hello DP4.
 	comment		= Null order - check default behaviors.
 	endOfOrder
   <>Unknown plastic || defaulting to ABS.
-  <>Unknown packager || defaulting to Bulk packager.
   <>No size specified, defaulting to 100.
+  <>Unknown packager || defaulting to Bulk packager.
   Setup injection line for 100 run with Bulk packager:
     IJM_110 - Aluminum(1) - Linear conveyer belt - CardboardBox
   Process order.
@@ -251,7 +251,7 @@ Hello DP4.
 	moldLoc		= purchase
 	mold		= dino
 	finish		= sanded
-	color		= violate
+	color		= violet
 	address		= Anytown, CA
 	endOfOrder
   Setup injection line for 100000 run with ZipLock packager:
@@ -260,7 +260,7 @@ Hello DP4.
     Acquire dino mold via purchase.
     Insert tags [] of width 0/20 mm.
     Load plastic, color, and additive bins.
-      Recipe: Nylon66(30) violate(3) Total = 66.
+      Recipe: Nylon66(30) violet(3) Total = 66.
     Cycle IJM for Synthetics 100000 times.
       Close - heat to 480 - inject at 150 PSI - cool to 390 - separate - shock eject.
       Crate package bin full...
@@ -288,7 +288,7 @@ Hello DP4.
 	size		= 200000
 	packager	= ZipLock
 	plastic		= Nylon66
-	moldLoc		= purchase
+	moldLoc		= mill
 	mold		= dino
 	finish		= satin
 	color		= gray
@@ -297,7 +297,8 @@ Hello DP4.
   Setup injection line for 200000 run with ZipLock packager:
     IJM_240 - Steel(4) - V-Level conveyer belt - Crate
   Process order.
-    Acquire dino mold via purchase.
+    Create dino mold from mill with 4 cavities:
+      using DiamondTipped tools (precision drill, oil cooled cut, and cartoid grind) to mill steel block into 4 dino shapes with satin finish.
     Insert tags [] of width 0/20 mm.
     Load plastic, color, and additive bins.
       Recipe: Nylon66(30) gray(3) Total = 132.
@@ -339,7 +340,7 @@ Hello DP4.
 	address			= PLay Toys, 1234 5th st, Pastoria, IL 34556
 	endOfOrder
   <>Size too large |400000| defaulting to HugeOrder.
-  Setup injection line for 400000 run with ZipLock packager:
+  Setup injection line for 200000 run with ZipLock packager:
     IJM_240 - Steel(4) - V-Level conveyer belt - Crate
   Process order.
     Create dino mold from mill with 4 cavities:
@@ -347,7 +348,7 @@ Hello DP4.
     Insert tags [IncCounter PartNumber RecycleCode ModelNumber Country Date ] of width 18/20 mm.
     Load plastic, color, and additive bins.
       Recipe: Nylon66(30) white(3) UVInhibiter(6) AntiBacterial(1) MicroFibers(3) Total = 172.
-    Cycle IJM for Synthetics 400000 times.
+    Cycle IJM for Synthetics 200000 times.
       Close - heat to 480 - inject at 150 PSI - cool to 390 - separate - shock eject.
       Crate package bin full...
         IJM pausing while Crate package bin is swapped.

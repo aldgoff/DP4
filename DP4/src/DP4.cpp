@@ -64,6 +64,7 @@ using namespace std;
 #include "Problems/finalOutline.h"
 #include "Problems/finalProblem.h"
 #include "Problems/finalRefactored.h"
+#include "Problems/finalMorph.h"
 
 #include "Solutions/lab1_solution_strategy.h"
 #include "Solutions/lab1_solution_adapter.h"
@@ -182,6 +183,10 @@ void runFinalProblem(string orderFile) {
 
 void runFinalRefactored(string orderFile) {
 	final_refactored_file::demo(orderFile);
+}
+
+void runFinalMorph(string orderFile) {
+	final_morph_file::demo(orderFile);
 }
 
 void runFinalSolution(string orderFile) {
@@ -322,6 +327,7 @@ int main(int argc, char* args[]) {
 
 		else if(!strcmp(args[i], "finalProblem"))		runFinalProblem(string(args[++i]));
 		else if(!strcmp(args[i], "finalRefactored"))	runFinalRefactored(string(args[++i]));
+		else if(!strcmp(args[i], "finalMorph"))			runFinalMorph(string(args[++i]));
 		else if(!strcmp(args[i], "finalSolution"))		runFinalSolution(string(args[++i]));
 		else if(!strcmp(args[i], "principles"))			principles::demo();
 		else if(!strcmp(args[i], "varies"))				runVaries();

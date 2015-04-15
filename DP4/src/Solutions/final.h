@@ -232,7 +232,7 @@ public:
 class Setup_AF_10 {	// New specs (size).
 public:
 	virtual ~Setup_AF_10() { cout << "~Setup_AF_10\n"; }
-	static Setup_AF_10* createInjectionLine(map<string, string> order);
+	static Setup_AF_10* createInjectionLine(map<string, string>& order);
 public:
 	virtual IJM_AF* createIJM(const map<string, string>& order, Subject* subject)=0;
 	virtual Mold_AF* createMold(const map<string, string>& order) {
@@ -334,7 +334,7 @@ public: ~HugeOrder() { cout << "~HugeOrder "; }
 	}
 };
 
-Setup_AF_10* Setup_AF_10::createInjectionLine(map<string, string> order) {
+Setup_AF_10* Setup_AF_10::createInjectionLine(map<string, string>& order) {
 	unsigned size = atoi(order["size"].c_str());
 
 	if(size <= 10000)			return new PilotOrder;
@@ -349,6 +349,7 @@ Setup_AF_10* Setup_AF_10::createInjectionLine(map<string, string> order) {
 	else {						// Defaulting to HugeOrder.
 		cout << "  <>Size too large |" << size << "|";
 		cout << " defaulting to HugeOrder.\n";
+		order["size"] = "200000";
 		return new HugeOrder;
 	}
 }
@@ -1019,6 +1020,11 @@ protected:
 	strategy::Strategy*	algorithm;
 private:
 	void setupLine(map<string, string>& order) {	// Abstract Factory.
+		if(order.find("size") == order.end()) {
+			cout << "  <>No size specified, defaulting to 100.\n";
+			order["size"] = "100";
+		}
+
 		injectionLine = Setup_AF_10::createInjectionLine(order);
 
 		bin		= injectionLine->createBin(order);			// Observer Subject.
@@ -1034,10 +1040,6 @@ private:
 		sprintf(str, "%d", mold->cavities());
 		order["cavities"] = str;
 
-		if(order.find("size") == order.end()) {
-			cout << "  <>No size specified, defaulting to 100.\n";
-			order["size"] = "100";
-		}
 		cout << "  Setup injection line for ";
 		cout << order["size"] << " run with ";
 		cout << packager->wrap() << ":\n    ";
