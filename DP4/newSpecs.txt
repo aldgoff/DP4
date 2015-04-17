@@ -10,6 +10,7 @@ Run sizes:
   200,000
 
 Colors:
+  black
   brown
   red
   orange

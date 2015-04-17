@@ -62,6 +62,7 @@ using namespace std;
 #include "Problems/lab5_problem_bridge.h"
 #include "Problems/lab5_problem_abstractFactory.h"
 #include "Problems/finalOutline.h"
+#include "Problems/finalDesign.h"
 #include "Problems/finalProblem.h"
 #include "Problems/finalRefactored.h"
 #include "Problems/finalMorph.h"
@@ -177,6 +178,10 @@ void runCommand() {
 
 // Seam point; can be eliminated by use of design patterns.
 
+void runFinalDesign(string orderFile) {
+	final_design_file::demo(orderFile);
+}
+
 void runFinalProblem(string orderFile) {
 	final_problem_file::demo(orderFile);
 }
@@ -290,8 +295,10 @@ int main(int argc, char* args[]) {
 		cout << "  Header files to include in DP4.cpp also listed.\n";
 		cout << endl;
 		meta("");
+		cout << "finalDesign\n";
 		cout << "finalProblem\n";
 		cout << "finalRefactored\n";
+		cout << "finalMorph\n";
 		cout << "finalSolution\n";
 		cout << "principles\n";
 		cout << "varies\n";
@@ -325,6 +332,7 @@ int main(int argc, char* args[]) {
 //
 		// Seam point; can be eliminated by use of design patterns.
 
+		else if(!strcmp(args[i], "finalDesign"))		runFinalDesign(string(args[++i]));
 		else if(!strcmp(args[i], "finalProblem"))		runFinalProblem(string(args[++i]));
 		else if(!strcmp(args[i], "finalRefactored"))	runFinalRefactored(string(args[++i]));
 		else if(!strcmp(args[i], "finalMorph"))			runFinalMorph(string(args[++i]));

@@ -6,6 +6,7 @@ Run sizes:
   50,000
 
 Colors:
+  black
   brown
   red
   orange
@@ -19,9 +20,9 @@ Plastics:
   PET
 
 Injection cycle:
-  ABS - Close - heat to 440 - inject at 125 PSI - cool to 360 - separate - progressive eject
-  Poly - Close - heat to 350 - inject at 90 PSI - cool to 290 - separate - smooth eject
-  PET - Close - heat to 404 - inject at 110 PSI - cool to 340 - separate - smooth eject
+  ABS  - Close - heat to 440 - inject at 125 PSI - cool to 360 - separate - progressive eject
+  Poly - Close - heat to 350 - inject at  90 PSI - cool to 290 - separate - smooth eject
+  PET  - Close - heat to 404 - inject at 110 PSI - cool to 340 - separate - smooth eject
 
 Mold location:
   Inventory

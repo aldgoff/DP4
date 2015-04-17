@@ -21,8 +21,173 @@ namespace design_patterns_chart {}
  * x 9 - Bridge: milling
  * x10 - Abstract Factory: IJM_X, mold(metal, cavities), conveyer belt, bins (domain: size)
  */
+/* Removal order to degrade back to null implementation for finalDesign.h.
+ * 1054
+ * Packagers from bottom up, had to modify interface class slightly, never crashed.
+ * Removing init crashed, added ctor to initialize all TM pointers, moved dtor to be next.
+ * Pull Packager from being an Observer.
+ * Remove MediumOrder - need to improve default behavior to be less manually intensive.
+ * Pull steel from Abstract Factory.
+ * Pull Carbide tools from Bridge.
+ * 942
+ * Pull steel cleaning from PET cleanup.
+ * Pull AntiBacterial.
+ * Pull Date, Country, ModelNumber.
+ * Pull UVInhibiter.
+ * Pull addAdditives method.
+ * Pull Additive class.
+ * 854
+ * Pull PET plastic (Adapter, Strategy, & TemplateMethod).
+ * Pull Polyethelene plastic (TemplateMethod).
+ * Pull Polypropylene plastic (TemplateMethod).
+ * Pull Polys plastic (Adapter, Strategy).
+ * 795
+ * Pull car and hero shapes.
+ * Pull SmallOrder.
+ * 728
+ * Pull Mill class.
+ * Pull mill method out of Shape.
+ * Pull Platform out of Shape which pulls HighCarbon class.
+ * 664
+ * Pull step cleanMold.
+ * Pull adapter from Strategy.
+ * Pull CleanPlasticA_2 and adapter::ABS classes.
+ * Remove color.
+ * Remove Duck shape, default to 0 vol sphere.
+ * Remove loadAdditiveBins method from TemplateMethod, pulls Color Decorator.
+ * 594
+ * Pull insertTags method from TemplateMethod, pulls Tags Decorator.
+ * 529
+ * Pull shape->from method, which pulls Inventory.
+ * Pull getMold method from TemplateMethod, which pulls rest of Bridge, & CofR.
+ * 464
+ * Pull ConveyerBelt_AF class from Abstract Factory.
+ * Pull injectionRun method from Template Method, which pulls Strategy.
+ * 410
+ * Pull ABS class out of Template Method.
+ * Pull createIJM method out of Abstract Factory, which Pulls Observer & trims Subject.
+ * 339
+ * Pull PackageBin_AF, which pulls Subject.
+ * Pull createMold method from Template Method, which pulls Mold_AF.
+ * 264
+ * Pull createInjectionLine method from Abstract Factory which pulls PilotOrder.
+ * Pull setupLine method from Template Method which pulls Template Method.
+ * 169
+ */
 
 namespace final_problem_file {	// Have not yet de-refactored to procedural & OOP code.
+
+namespace legacy_classes {	// Can't change these.
+
+class CleanABS {
+public: ~CleanABS() { cout << "~CleanABS "; }
+	void clean() {
+		cout << "    Clean ABS mold: soak in alcohol, rinse with water, dry.\n";
+	}
+};
+
+class CleanPolys {
+public: ~CleanPolys() { cout << "~CleanPolys "; }
+	void prepForReuse() {
+		cout << "    Clean Poly mold: rinse with acetone, dry.\n";
+	}
+};
+
+class PETCleanup {
+public: ~PETCleanup() { cout << "~PETCleanup "; }
+	void carbonize() { // Use only on stainless steel.
+		cout << "    Clean PET steel mold: heat to 895 C.\n";
+	}
+	void purify() {	// Use only on aluminum.
+		cout << "    Clean PET aluminum mold: rinse with soap and water, dry.\n";
+	}
+};
+
+}
+
+namespace adapter {	// Done (2) - depends on plastic and metal.
+
+class CleanPlastic_A_2 {
+public: virtual ~CleanPlastic_A_2() { cout << "~CleanPlastic_A_2 "; }
+	virtual void clean(const string& metal) { cout << "  CleanPlastic base.\n"; }
+};
+class ABS : public CleanPlastic_A_2 {
+	legacy_classes::CleanABS	plastic;
+public: ~ABS() { cout << "~adapter::ABS "; }
+	void clean(const string& metal) {
+		plastic.clean();
+	}
+};
+class Poly : public CleanPlastic_A_2 {
+	legacy_classes::CleanPolys	plastic;
+public: ~Poly() { cout << "~adapter::Poly "; }
+	void clean(const string& metal) {
+		plastic.prepForReuse();
+	}
+};
+class PET : public CleanPlastic_A_2 {
+	legacy_classes::PETCleanup	plastic;
+public: ~PET() { cout << "~adapter::PET "; }
+	void clean(const string& metal) {
+		if(metal == "steel")
+			plastic.carbonize();
+		else
+			plastic.purify();
+	}
+};
+// Seam point - add new cleaning algorithm.
+
+}
+
+namespace strategy {	// Done (1) - depends on plastic.
+
+class Strategy {
+protected:
+	adapter::CleanPlastic_A_2* plastic;
+public:
+	Strategy(adapter::CleanPlastic_A_2* plastic) : plastic(plastic) {}
+	virtual ~Strategy() { delete plastic; cout << "~Strategy_1\n"; }
+public:
+	virtual void cycle(int run) {
+		cout << "    Cycle IJM via Strategy base.\n";
+	}
+	void clean(map<string, string>& order) {
+		plastic->clean(order["metal"]);
+	}
+};
+class ABS : public Strategy {
+public:
+	ABS() : Strategy(new adapter::ABS) {}
+	~ABS() { cout << "~ABS "; }
+public:
+	void cycle(int run) {
+		cout << "    Cycle IJM for ABS " << run << " times.\n";
+		cout << "      Close - heat to 440 - inject at 125 PSI - cool to 360 - separate - progressive eject.\n";
+	}
+};
+class Poly : public Strategy {
+public:
+	Poly() : Strategy(new adapter::Poly) {}
+	~Poly() { cout << "~Poly "; }
+public:
+	void cycle(int run) {
+		cout << "    Cycle IJM for Poly " << run << " times.\n";
+		cout << "      Close - heat to 350 - inject at 90 PSI - cool to 290 - separate - smooth eject.\n";
+	}
+};
+class PET : public Strategy {
+public:
+	PET() : Strategy(new adapter::PET) {}
+	~PET() { cout << "~PET "; }
+public:
+	void cycle(int run) {
+		cout << "    Cycle IJM for PET " << run << " times.\n";
+		cout << "      Close - heat to 404 - inject at 110 PSI - cool to 340 - separate - smooth eject.\n";
+	}
+};
+// Seam point - add more strategies.
+
+}
 
 namespace observer {	// Done (7) - no new spec dependency, darn.
 
@@ -262,8 +427,8 @@ Setup_AF_10* Setup_AF_10::createInjectionLine(map<string, string>& order) {
 	else if(size <= 50000)		return new MediumOrder;
 	// Seam point - add larger orders.
 
-	else {						// Defaulting to MediumOrder.
-		cout << "  <>Size too large |" << size << "|";
+	else {						// Defaulting to largest order.
+		cout << "  <>Size too large |" << size << "|";	// todo: automate.
 		cout << " defaulting to MediumOrder.\n";
 		order["size"] = "50000";
 		return new MediumOrder;
@@ -301,7 +466,6 @@ public: ~Carbide() { cout << "~Carbide "; }
 
 Platform* Platform::getPlatform(map<string,string>& order) {
 	string metal = order["metal"];
-	string finish = order["finish"];
 
 	if(metal == "aluminum")		return new HighCarbon;
 	else if(metal == "steel")	return new Carbide;
@@ -675,118 +839,6 @@ Packager_FM_5* Packager_FM_5::makeObject(map<string,string>& order, Subject* sub
 
 }
 
-namespace legacy_classes {	// Can't change these.
-
-class CleanABS {
-public: ~CleanABS() { cout << "~CleanABS "; }
-	void clean() {
-		cout << "    Clean ABS mold: soak in alcohol, rinse with water, dry.\n";
-	}
-};
-
-class CleanPolys {
-public: ~CleanPolys() { cout << "~CleanPolys "; }
-	void prepForReuse() {
-		cout << "    Clean Poly mold: rinse with acetone, dry.\n";
-	}
-};
-
-class PETCleanup {
-public: ~PETCleanup() { cout << "~PETCleanup "; }
-	void carbonize() { // Use only on stainless steel.
-		cout << "    Clean PET steel mold: heat to 895 C.\n";
-	}
-	void purify() {	// Use only on aluminum.
-		cout << "    Clean PET aluminum mold: rinse with soap and water, dry.\n";
-	}
-};
-
-}
-
-namespace adapter {	// Done (2) - depends on plastic and metal.
-
-class CleanPlastic_A_2 {
-public: virtual ~CleanPlastic_A_2() { cout << "~CleanPlastic_A_2 "; }
-	virtual void clean(const string& metal) { cout << "  CleanPlastic base.\n"; }
-};
-class ABS : public CleanPlastic_A_2 {
-	legacy_classes::CleanABS	plastic;
-public: ~ABS() { cout << "~adapter::ABS "; }
-	void clean(const string& metal) {
-		plastic.clean();
-	}
-};
-class Poly : public CleanPlastic_A_2 {
-	legacy_classes::CleanPolys	plastic;
-public: ~Poly() { cout << "~adapter::Poly "; }
-	void clean(const string& metal) {
-		plastic.prepForReuse();
-	}
-};
-class PET : public CleanPlastic_A_2 {
-	legacy_classes::PETCleanup	plastic;
-public: ~PET() { cout << "~adapter::PET "; }
-	void clean(const string& metal) {
-		if(metal == "steel")
-			plastic.carbonize();
-		else
-			plastic.purify();
-	}
-};
-// Seam point - add new cleaning algorithm.
-
-}
-
-namespace strategy {	// Done (1) - depends on plastic.
-
-class Strategy {
-protected:
-	adapter::CleanPlastic_A_2* plastic;
-public:
-	Strategy(adapter::CleanPlastic_A_2* plastic) : plastic(plastic) {}
-	virtual ~Strategy() { delete plastic; cout << "~Strategy_1\n"; }
-public:
-	virtual void cycle(int run) {
-		cout << "    Cycle IJM via Strategy base.\n";
-	}
-	void clean(map<string, string>& order) {
-		plastic->clean(order["metal"]);
-	}
-};
-class ABS : public Strategy {
-public:
-	ABS() : Strategy(new adapter::ABS) {}
-	~ABS() { cout << "~ABS "; }
-public:
-	void cycle(int run) {
-		cout << "    Cycle IJM for ABS " << run << " times.\n";
-		cout << "      Close - heat to 440 - inject at 125 PSI - cool to 360 - separate - progressive eject.\n";
-	}
-};
-class Poly : public Strategy {
-public:
-	Poly() : Strategy(new adapter::Poly) {}
-	~Poly() { cout << "~Poly "; }
-public:
-	void cycle(int run) {
-		cout << "    Cycle IJM for Poly " << run << " times.\n";
-		cout << "      Close - heat to 350 - inject at 90 PSI - cool to 290 - separate - smooth eject.\n";
-	}
-};
-class PET : public Strategy {
-public:
-	PET() : Strategy(new adapter::PET) {}
-	~PET() { cout << "~PET "; }
-public:
-	void cycle(int run) {
-		cout << "    Cycle IJM for PET " << run << " times.\n";
-		cout << "      Close - heat to 404 - inject at 110 PSI - cool to 340 - separate - smooth eject.\n";
-	}
-};
-// Seam point - add more strategies.
-
-}
-
 namespace template_method {	// Done (4) - depends on plastic.
 
 using namespace abstract_factory;
@@ -807,6 +859,34 @@ protected:
 	Tags_D_6*			cavity;
 	Plastic_D_6*		color;
 	strategy::Strategy*	algorithm;
+public:
+	ProcessOrder_TM_4() :
+		packager(0),
+		injectionLine(0),
+		ijm(0),
+		mold(0),
+		belt(0),
+		bin(0),
+		theMold(0),
+		shape(0),
+		cavity(0),
+		color(0),
+		algorithm(0)
+	{}
+	virtual ~ProcessOrder_TM_4() {
+		delete packager;
+		delete ijm;
+		delete mold;
+		delete belt;
+		delete bin;
+		delete injectionLine;
+		delete theMold;	cout << endl;
+		delete shape;
+		delete cavity;	cout << endl;
+		delete color;	cout << endl;
+		delete algorithm;
+		cout << "~ProcessOrder_TM_4\n";
+	}
 private:
 	void setupLine(map<string, string>& order) {	// Abstract Factory.
 		if(order.find("size") == order.end()) {
@@ -830,8 +910,9 @@ private:
 		order["cavities"] = str;
 
 		cout << "  Setup injection line for ";
-		cout << order["size"] << " run with ";
-		cout << packager->wrap() << ":\n    ";
+		cout << order["size"] << " run";
+		cout << " with " << packager->wrap();
+		cout << ":\n    ";
 		cout << ijm->setup() << " - ";
 		cout << mold->setup() << " - ";
 		cout << belt->setup() << " - ";
@@ -887,20 +968,6 @@ private:
 	}
 	// Seam point - add another step to the order processing.
 public:
-	virtual ~ProcessOrder_TM_4() {
-		delete packager;
-		delete ijm;
-		delete mold;
-		delete belt;
-		delete bin;
-		delete injectionLine;
-		delete theMold;	cout << endl;
-		delete shape;
-		delete cavity;	cout << endl;
-		delete color;	cout << endl;
-		delete algorithm;
-		cout << "~ProcessOrder_TM_4\n";
-	}
 	void run(map<string, string>& order) {
 		setupLine(order);
 		cout << "  Process order.\n";
@@ -944,10 +1011,9 @@ public: ~PET() { cout << "~PET\n"; }
 
 }
 
-using namespace abstract_factory;
-using namespace template_method;
-
 void process(map<string, string> order) {
+	using namespace template_method;
+
 	ProcessOrder_TM_4* processOrder = 0;
 
 	if(		order["plastic"] == "ABS")			processOrder = new ABS;

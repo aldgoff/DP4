@@ -27,14 +27,14 @@
 11. Add purchase as new mold location, between sister company and mill.
 
 12. Add ability to handle run size of 200,000 (HugeOrder):
-	13.1 IJM_240.
-	13.2 Steel molds with 4 cavities.
-	13.3 V-Level converyer belt.
+	12.1 IJM_240.
+	12.2 Steel molds with 4 cavities.
+	12.3 V-Level converyer belt.
 13. Add a new finish, satin:
-	17.1 Requires DiamondTipped milling tools:
-		17.1.1 precision drill.
-		17.1.2 oil cooled cut.
-		17.1.3 cartoid grind.
+	13.1 Requires DiamondTipped milling tools:
+		13.1.1 precision drill.
+		13.1.2 oil cooled cut.
+		13.1.3 cartoid grind.
 
 14. Resize too large orders to largest available:
-	19.1 400,000 reduced to 200,000.
+	14.1 400,000 reduced to 200,000.
