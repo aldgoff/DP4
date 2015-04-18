@@ -79,6 +79,10 @@ using namespace std;
 #include "Solutions/lab5_solution_abstractFactory.h"
 #include "Solutions/final.h"
 
+#include "Final/finalDesign.h"
+#include "Final/finalDtoO.h"
+#include "Final/finalOriginal.h"
+
 #include "meta.h"
 #include "whatVaries.h"
 
@@ -180,6 +184,14 @@ void runCommand() {
 
 void runFinalDesign(string orderFile) {
 	final_design_file::demo(orderFile);
+}
+
+void runFinalDtoO(string orderFile) {
+	final_d_to_o_file::demo(orderFile);
+}
+
+void runFinalOriginal(string orderFile) {
+	final_original_file::demo(orderFile);
 }
 
 void runFinalProblem(string orderFile) {
@@ -296,6 +308,8 @@ int main(int argc, char* args[]) {
 		cout << endl;
 		meta("");
 		cout << "finalDesign\n";
+		cout << "finalDtoO\n";
+		cout << "finalOriginal\n";
 		cout << "finalProblem\n";
 		cout << "finalRefactored\n";
 		cout << "finalMorph\n";
@@ -333,6 +347,8 @@ int main(int argc, char* args[]) {
 		// Seam point; can be eliminated by use of design patterns.
 
 		else if(!strcmp(args[i], "finalDesign"))		runFinalDesign(string(args[++i]));
+		else if(!strcmp(args[i], "finalDtoO"))			runFinalDtoO(string(args[++i]));
+		else if(!strcmp(args[i], "finalOriginal"))		runFinalOriginal(string(args[++i]));
 		else if(!strcmp(args[i], "finalProblem"))		runFinalProblem(string(args[++i]));
 		else if(!strcmp(args[i], "finalRefactored"))	runFinalRefactored(string(args[++i]));
 		else if(!strcmp(args[i], "finalMorph"))			runFinalMorph(string(args[++i]));

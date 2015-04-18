@@ -1,0 +1,102 @@
+Hello DP4.
+
+<<< final design to original >>>
+1:
+	orderNum	= 1
+	comment		= Null order - check default behaviors.
+	endOfOrder
+  <>Unknown plastic || defaulting to ABS.
+  Setup injection line:
+  Process order.
+    Get mold:
+    Insert tags:
+    Load additives:
+    Injection cycle - no plastic specified:
+    Clean mold:
+~ProcessOrder_TM_4
+2:
+	orderNum	= 2
+	comment		= Example order - one of everything.
+	size		= 10000
+	packager	= Bulk
+	plastic		= ABS
+	moldLoc		= inventory
+	mold		= duck
+	tags		= ModelNumber
+	color		= red
+	UVInhibiter	= 6
+	endOfOrder
+  Setup injection line:
+  Process order.
+    Get mold:
+    Insert tags:
+    Load additives:
+    Cycle IJM for ABS <size> times.
+    Clean mold:
+~ABS
+~ProcessOrder_TM_4
+3:
+	orderNum		= 3
+	comment			= Max order - next of singles, all of everything else (orig secs).
+	size			= 20000
+	packager		= ShrinkWrap
+	plastic			= Polypropylene
+	moldLoc			= mill
+	mold			= car
+	finish			= smooth
+	tags			= ModelNumber Country Date
+	color			= orange
+	UVInhibiter		= 6
+	AntiBacterial	= 1
+	endOfOrder
+  Setup injection line:
+  Process order.
+    Get mold:
+    Insert tags:
+    Load additives:
+    Cycle IJM for Polypropylene <size> times.
+    Clean mold:
+~Polypropylene
+~ProcessOrder_TM_4
+4:
+	orderNum	= 4
+	comment		= Next of singles or last.
+	size		= 50000
+	packager	= HardPack
+	plastic		= Polyethelene
+	moldLoc		= mill
+	mold		= hero
+	finish		= rippled
+	color		= yellow
+	endOfOrder
+  Setup injection line:
+  Process order.
+    Get mold:
+    Insert tags:
+    Load additives:
+    Cycle IJM for Polyethelene <size> times.
+    Clean mold:
+~Polyethelene
+~ProcessOrder_TM_4
+5:
+	orderNum	= 5
+	comment		= Next of singles or last.
+	size		= 50000
+	packager	= HardPack
+	plastic		= PET
+	moldLoc		= mill
+	mold		= hero
+	finish		= rippled
+	color		= green
+	endOfOrder
+  Setup injection line:
+  Process order.
+    Get mold:
+    Insert tags:
+    Load additives:
+    Cycle IJM for PET <size> times.
+      Close - heat to 404 - inject at 110 PSI - cool to 340 - separate - smooth eject.
+    Clean mold:
+~PET
+~ProcessOrder_TM_4
+Aloha DP4.

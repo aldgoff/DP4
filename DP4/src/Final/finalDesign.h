@@ -7,10 +7,10 @@
  *  Project: Intro to Design Patterns Pilot class.
  */
 
-#ifndef DP4_SRC_OBSOLETE_FINAL_H_
-#define DP4_SRC_OBSOLETE_FINAL_H_
+#ifndef DP4_SRC_DESIGN_FINAL_H_
+#define DP4_SRC_DESIGN_FINAL_H_
 
-namespace final_obsolete_file {
+namespace final_design_file {
 
 namespace legacy_classes {	// Can't change these.
 
@@ -101,7 +101,7 @@ namespace template_method {	// DP 4.
 
 }
 
-void process(map<string, string> order) {
+void process(map<string, string>& order) {
 
 }
 
@@ -165,4 +165,4 @@ void demo(const string& orderFile) {
 
 }
 
-#endif /* DP4_SRC_OBSOLETE_FINAL_H_ */
+#endif /* DP4_SRC_DESIGN_FINAL_H_ */
