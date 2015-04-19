@@ -653,6 +653,16 @@ void demo() {
 
 }
 
+namespace abstract_factory_solti_solution {
+
+void demo() {
+	cout << "<< abstract_factory_solti_solution >>\n";
+
+	cout << endl;
+}
+
+}
+
 }
 
 namespace complicated_relationships {	// Not used.

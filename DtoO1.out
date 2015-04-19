@@ -6,13 +6,20 @@ Hello DP4.
 	comment		= Null order - check default behaviors.
 	endOfOrder
   <>Unknown plastic || defaulting to ABS.
-  Setup injection line:
+  <>No size specified, defaulting to 100.
+  <>Unknown packager || defaulting to Bulk packager.
+  Setup <AF_IL> injection line for 100 run with Bulk packager:
   Process order.
     Get mold:
-    Insert tags:
-    Load additives:
-    Injection cycle - no plastic specified:
-    Clean mold:
+    Insert tags [] of width 0/20 mm.
+    Load plastic, color, and additive bins.
+    Cycle IJM for ABS 100 times.
+      Close - heat to 440 - inject at 125 PSI - cool to 360 - separate - progressive eject.
+    Clean ABS mold: soak in alcohol, rinse with water, dry.
+~ABS
+~InjectionLine_AF
+~Bulk ~Packager_FM_5 ~Observer_7
+~ABS ~adapter::ABS ~CleanABS ~CleanPlastic_A_2 ~Strategy_1
 ~ProcessOrder_TM_4
 2:
 	orderNum	= 2
@@ -26,14 +33,18 @@ Hello DP4.
 	color		= red
 	UVInhibiter	= 6
 	endOfOrder
-  Setup injection line:
+  Setup <AF_IL> injection line for 10000 run with Bulk packager:
   Process order.
     Get mold:
-    Insert tags:
-    Load additives:
-    Cycle IJM for ABS <size> times.
-    Clean mold:
+    Insert tags [] of width 0/20 mm.
+    Load plastic, color, and additive bins.
+    Cycle IJM for ABS 10000 times.
+      Close - heat to 440 - inject at 125 PSI - cool to 360 - separate - progressive eject.
+    Clean ABS mold: soak in alcohol, rinse with water, dry.
 ~ABS
+~InjectionLine_AF
+~Bulk ~Packager_FM_5 ~Observer_7
+~ABS ~adapter::ABS ~CleanABS ~CleanPlastic_A_2 ~Strategy_1
 ~ProcessOrder_TM_4
 3:
 	orderNum		= 3
@@ -49,14 +60,18 @@ Hello DP4.
 	UVInhibiter		= 6
 	AntiBacterial	= 1
 	endOfOrder
-  Setup injection line:
+  Setup <AF_IL> injection line for 20000 run with ShrinkWrap packager:
   Process order.
     Get mold:
-    Insert tags:
-    Load additives:
-    Cycle IJM for Polypropylene <size> times.
-    Clean mold:
+    Insert tags [] of width 0/20 mm.
+    Load plastic, color, and additive bins.
+    Cycle IJM for Poly 20000 times.
+      Close - heat to 350 - inject at  90 PSI - cool to 290 - separate - smooth eject.
+    Clean Poly mold: rinse with acetone, dry.
 ~Polypropylene
+~InjectionLine_AF
+~ShrinkWrap ~Packager_FM_5 ~Observer_7
+~Poly ~adapter::Poly ~CleanPolys ~CleanPlastic_A_2 ~Strategy_1
 ~ProcessOrder_TM_4
 4:
 	orderNum	= 4
@@ -69,14 +84,18 @@ Hello DP4.
 	finish		= rippled
 	color		= yellow
 	endOfOrder
-  Setup injection line:
+  Setup <AF_IL> injection line for 50000 run with HardPack packager:
   Process order.
     Get mold:
-    Insert tags:
-    Load additives:
-    Cycle IJM for Polyethelene <size> times.
-    Clean mold:
+    Insert tags [] of width 0/20 mm.
+    Load plastic, color, and additive bins.
+    Cycle IJM for Poly 50000 times.
+      Close - heat to 350 - inject at  90 PSI - cool to 290 - separate - smooth eject.
+    Clean Poly mold: rinse with acetone, dry.
 ~Polyethelene
+~InjectionLine_AF
+~HardPack ~Packager_FM_5 ~Observer_7
+~Poly ~adapter::Poly ~CleanPolys ~CleanPlastic_A_2 ~Strategy_1
 ~ProcessOrder_TM_4
 5:
 	orderNum	= 5
@@ -89,14 +108,17 @@ Hello DP4.
 	finish		= rippled
 	color		= green
 	endOfOrder
-  Setup injection line:
+  Setup <AF_IL> injection line for 50000 run with HardPack packager:
   Process order.
     Get mold:
-    Insert tags:
-    Load additives:
-    Cycle IJM for PET <size> times.
+    Insert tags [] of width 0/20 mm.
+    Load plastic, color, and additive bins.
+    Cycle IJM for PET 50000 times.
       Close - heat to 404 - inject at 110 PSI - cool to 340 - separate - smooth eject.
-    Clean mold:
+    Clean PET steel mold: heat to 895 C.
 ~PET
+~InjectionLine_AF
+~HardPack ~Packager_FM_5 ~Observer_7
+~PET ~adapter::PET ~PETCleanup ~CleanPlastic_A_2 ~Strategy_1
 ~ProcessOrder_TM_4
 Aloha DP4.

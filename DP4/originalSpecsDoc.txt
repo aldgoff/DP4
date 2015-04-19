@@ -107,10 +107,10 @@
 22. Simulate cycling the IJM for the specified plastic times
 	22.1 cout << "    Cycle IJM for <plastic> <size> times.\n";
 	22.2 cout << "      Close - heat to <temp> - inject at <psi> PSI - cool to <temp> - separate - <technique> eject.\n";
-	22.3 cout << "      <Packager> package bin full...\n";
-	22.3.1 cout << "        IJM pausing while CardboardBox package bin is swapped.\n";
-	22.3.2 cout << "        Conveyer belt pausing while CardboardBox package bin is swapped.\n";
-	22.3.3 cout << "        Packager pausing while CardboardBox package bin is swapped.\n";
+	22.3 cout << "      <PackageBin> package bin full...\n";
+	22.3.1 cout << "        IJM pausing while <PackageBin> package bin is swapped.\n";
+	22.3.2 cout << "        Conveyer belt pausing while <PackageBin> package bin is swapped.\n";
+	22.3.3 cout << "        Packager pausing while <PackageBin> package bin is swapped.\n";
 
 23. Clean the molds, depends on plastic and metal:
 	23.1 Use existing cleaning methods (see namespace legacy)

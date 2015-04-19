@@ -12,24 +12,27 @@
 
 namespace final_design_file {
 
+const bool on = true;	// Useful macro to turn dtor instrumentation on/off.
+#define DTOR(x) if(on) { cout << x; }
+
 namespace legacy_classes {	// Can't change these.
 
 class CleanABS {
-public: ~CleanABS() { cout << "~CleanABS "; }
+public: ~CleanABS() { DTOR("~CleanABS "); }
 	void clean() {
 		cout << "    Clean ABS mold: soak in alcohol, rinse with water, dry.\n";
 	}
 };
 
 class CleanPolys {
-public: ~CleanPolys() { cout << "~CleanPolys "; }
+public: ~CleanPolys() { DTOR("~CleanPolys "); }
 	void prepForReuse() {
 		cout << "    Clean Poly mold: rinse with acetone, dry.\n";
 	}
 };
 
 class PETCleanup {
-public: ~PETCleanup() { cout << "~PETCleanup "; }
+public: ~PETCleanup() { DTOR("~PETCleanup "); }
 	void carbonize() { // Use only on stainless steel.
 		cout << "    Clean PET steel mold: heat to 895 C.\n";
 	}
@@ -66,6 +69,41 @@ namespace abstract_factory {// DP 10.
 // ...
 
 // Seam point - add another family.
+
+}
+// ----- Alternatively (may make it hard to match the dtor instrumentation) -----
+namespace abstract_factory_solti {	// DP 10 - more like GoF.
+
+class AbstractA{};
+class AbstractB{};
+class AbstractC{};
+// ...
+
+class AbstractFactory {};
+class InjectionLine {};
+
+// 10,000
+class ConcreteA_1 : public AbstractA {};
+class ConcreteB_1 : public AbstractB {};
+class ConcreteC_1 : public AbstractC {};
+class AF_1 : public AbstractFactory {};
+class IL_1 : public InjectionLine {};
+
+// 20,000
+class ConcreteA_2 : public AbstractA {};
+class ConcreteB_2 : public AbstractB {};
+class ConcreteC_2 : public AbstractC {};
+class AF_2 : public AbstractFactory {};
+class IL_2 : public InjectionLine {};
+
+// 50,000
+class ConcreteA_3 : public AbstractA {};
+class ConcreteB_3 : public AbstractB {};
+class ConcreteC_3 : public AbstractC {};
+class AF_3 : public AbstractFactory {};
+class IL_3 : public InjectionLine {};
+
+// Seam line - add another family.
 
 }
 

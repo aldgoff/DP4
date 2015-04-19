@@ -552,7 +552,7 @@ public:
 	void run(int i) {
 //		DesignPattern::legacy(i);	homework::abstract_factory_legacy::demo();
 		DesignPattern::problem(i);	homework::abstract_factory_problem::demo();
-		DesignPattern::solution(i);	homework::abstract_factory_solution::demo();
+		solution(i);
 	}
 	void lecture(int i) {
 		DesignPattern::lecture(i);
@@ -567,6 +567,7 @@ public:
 	void solution(int i) {
 		DesignPattern::solution(i);
 		homework::abstract_factory_solution::demo();
+		homework::abstract_factory_solti_solution::demo();
 	}
 	void skeleton(int i) {
 		DesignPattern::skeleton(i);
