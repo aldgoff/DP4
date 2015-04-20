@@ -156,7 +156,7 @@ class Subject_7 {
 public:
 	const string name;
 public:
-	Subject_7(const string& name) : name(name) {}
+	Subject_7(string name="SubjectName") : name(name) {}
 	~Subject_7();
 public:
 	void attach(Observer_7* observer) {
@@ -180,13 +180,13 @@ public:
 		DTOR("~Observer_7\n");
 	}
 public:
-	virtual void update() {
-		cout << "        <machine> pausing while <Packager> package is swapped.\n";
+	virtual void update(Subject_7* subject=0) {
+		cout << "        <machine> pausing while <Packager> package bin is swapped.\n";
 	}
 };
 
 Subject_7::~Subject_7() {
-	DTOR("~Subject_7");
+	DTOR("~Subject_7 ");
 	DTOR("~Observers left to process (should be zero) = ");
 	char str[80];
 	sprintf(str, "%d.\n", observers.size());
@@ -194,10 +194,10 @@ Subject_7::~Subject_7() {
 }
 
 void Subject_7::pause() {
-	cout << "      " << name << " package bin is full...\n";
+	cout << "      " << name << " package bin full...\n";
 	list<Observer_7*>::iterator it=observers.begin();
 	for(; it!=observers.end(); it++)
-		(*it)->update();
+		(*it)->update(this);
 }
 
 }
@@ -215,12 +215,12 @@ class Aluminum : public Mold_AF {};
 class Steel : public Mold_AF {};
 
 class ConveyerBelt_AF {};
-class Linear : public ConveyerBelt_AF {};
-class YSplit : public ConveyerBelt_AF {};
+class LinearBelt : public ConveyerBelt_AF {};
+class YSplitBelt : public ConveyerBelt_AF {};
 // Seam point - add another conveyer belt.
 
 class PackageBin_AF {};
-class CardboarBox : public PackageBin_AF {};
+class CardboadrBox : public PackageBin_AF {};
 class PallotBox : public PackageBin_AF {};
 // Seam point - add another package bin.
 
@@ -242,33 +242,50 @@ public:
 	IJM_AF(Subject_7* subject) : Observer_7(subject) {}
 	virtual ~IJM_AF() { DTOR("~IJM_AF "); }
 public:
+	virtual void update(Subject_7* bin) {
+		cout << "        <machine> pausing while ";
+		cout << bin->name << " package bin is swapped.\n";
+	}
+	virtual string setup() { return "IJM_AF base"; }
 };
-class Mold_AF {};
+class Mold_AF {
+public:
+	Mold_AF() {}
+	virtual ~Mold_AF() { DTOR("~Mold_AF\n"); }
+public:
+	virtual string setup() { return "Mold_AF base"; }
+};
 class ConveyerBelt_AF : public Observer_7 {
 public:
 	ConveyerBelt_AF(Subject_7* subject) : Observer_7(subject) {}
 	virtual ~ConveyerBelt_AF() { DTOR("~ConveyerBelt_AF "); }
 public:
+	virtual void update(Subject_7* bin) {
+		cout << "        <machine> pausing while ";
+		cout << bin->name << " package bin is swapped.\n";
+	}
+	virtual string setup() { return "ConveyerBelt_AF base"; }
 };
 class PackageBin_AF : public Subject_7 {
 public:
-	PackageBin_AF(const string& name="bin") : Subject_7(name) {}
-	virtual ~PackageBin_AF() { DTOR("~PackageBin_AF "); }
+	PackageBin_AF(string name="bin") : Subject_7(name) {}
+	virtual ~PackageBin_AF() { DTOR("~PackageBin_AF ");	}
 public:
+	virtual string setup() { return "PackageBin_AF base"; }
 };
 
 class AbstractFactory_10 {
 public:
 	virtual ~AbstractFactory_10() { DTOR("AbstractFactory_10 "); }
 public:
-	virtual IJM_AF* createIJM() {
-		return new IJM_AF(new Subject_7("base"));
+	virtual IJM_AF* createIJM(PackageBin_AF* bin) {
+		return new IJM_AF(bin);
 	}
 	virtual Mold_AF* createMold() {
 		return new Mold_AF;
 	}
-	virtual ConveyerBelt_AF* createConveyerBelt() {
-		return new ConveyerBelt_AF(new Subject_7("base"));
+	virtual ConveyerBelt_AF* createConveyerBelt(PackageBin_AF* bin) {
+		return new ConveyerBelt_AF(bin);
 	}
 	virtual PackageBin_AF* createPackageBin() {
 		return new PackageBin_AF("base");
@@ -282,72 +299,196 @@ protected:
 	ConveyerBelt_AF*	belt;
 	PackageBin_AF*		bin;
 public:
-	virtual ~InjectionLine_AF() { DTOR("~InjectionLine_AF\n"); }
-public:
-	void init() {
-		ijm  = factory->createIJM();
-		mold = factory->createMold();
-		belt = factory->createConveyerBelt();
-		bin  = factory->createPackageBin();
+	InjectionLine_AF()
+	  :	factory(0),
+		ijm(0),
+		mold(0),
+		belt(0),
+		bin(0)
+	{}
+	virtual ~InjectionLine_AF() {
+		delete ijm;
+		delete mold;
+		delete belt;
+		delete bin;
+		delete factory;
+		DTOR("~InjectionLine_AF\n");
 	}
+public:
 	virtual AbstractFactory_10* buildFactory() { return new AbstractFactory_10; }
+public:
+	void createLine(map<string, string>& order) {
+		factory = buildFactory();
+
+		bin  = factory->createPackageBin();
+
+		ijm  = factory->createIJM(bin);
+		mold = factory->createMold();
+		belt = factory->createConveyerBelt(bin);
+	}
+	void setup() {
+		cout << "    ";
+		cout << ijm->setup() << " - ";
+		cout << mold->setup() << " - ";
+		cout << belt->setup() << " - ";
+		cout << bin->setup();
+		cout << endl;
+	}
+	PackageBin_AF* getBin() { return bin; }
+public:
+	static InjectionLine_AF* determineInjectionLine(map<string, string>& order);
 };
 
 // 10,000
-class IJM_110 : public IJM_AF {};
-class Aluminum : public Mold_AF {};
-class Linear : public ConveyerBelt_AF {};
-class CardboarBox : public PackageBin_AF {
+class IJM_110 : public IJM_AF {
 public:
-	CardboarBox() : PackageBin_AF("CardboarBox") {}
-	~CardboarBox() { DTOR("~CardboarBox "); }
+	IJM_110(Subject_7* bin) : IJM_AF(bin) {}
+	~IJM_110() { DTOR("~IJM_110 "); }
+public:
+	virtual void update(Subject_7* bin) {
+		cout << "        IJM_110 pausing while ";
+		cout << bin->name << " package bin is swapped.\n";
+	}
+};
+class Aluminum : public Mold_AF {};
+class LinearBelt : public ConveyerBelt_AF {
+public:
+	LinearBelt(Subject_7* bin) : ConveyerBelt_AF(bin) {}
+	~LinearBelt() { DTOR("~LinearBelt "); }
+public:
+	virtual void update(Subject_7* bin) {
+		cout << "        Linear conveyer belt pausing while ";
+		cout << bin->name << " package bin is swapped.\n";
+	}
+};
+class CardboardBox : public PackageBin_AF {
+public:
+	CardboardBox() : PackageBin_AF("CardboardBox") {}
+	~CardboardBox() { DTOR("~CardboardBox "); }
 };
 class PilotOrder_AF : public AbstractFactory_10 {
 public:
 	~PilotOrder_AF() { DTOR("~PilotOrder_AF "); }
+public:
+	IJM_AF* createIJM(PackageBin_AF* bin) {
+		return new IJM_110(bin);
+	}
+	Mold_AF* createMold() {
+		return new Aluminum;
+	}
+	ConveyerBelt_AF* createConveyerBelt(PackageBin_AF* bin) {
+		return new LinearBelt(bin);
+	}
+	PackageBin_AF* createPackageBin() {
+		return new CardboardBox;
+	}
 };
-class PilotOrder_IL : public InjectionLine_AF {};
+class PilotOrder_IL : public InjectionLine_AF {
+public:
+	AbstractFactory_10* buildFactory() { return new PilotOrder_AF; }
+};
 
 // 20,000
-class IJM_120 : public IJM_AF {};
+class IJM_120 : public IJM_AF {
+public:
+	IJM_120(Subject_7* bin) : IJM_AF(bin) {}
+	~IJM_120() { DTOR("~IJM_120 "); }
+public:
+	virtual void update(Subject_7* bin) {
+		cout << "        IJM_120 pausing while ";
+		cout << bin->name << " package bin is swapped.\n";
+	}
+};
 //class Aluminum : public Mold_AF {};
-class YSplit : public ConveyerBelt_AF {};
+class YSplitBelt : public ConveyerBelt_AF {
+public:
+	YSplitBelt(Subject_7* bin) : ConveyerBelt_AF(bin) {}
+	~YSplitBelt() { DTOR("~YSplitBelt "); }
+public:
+	virtual void update(Subject_7* bin) {
+		cout << "        Y-Split conveyer belt pausing while ";
+		cout << bin->name << " package bin is swapped.\n";
+	}
+};
+//class CardboardBox : public PackageBin_AF {};
+class SmallOrder_AF : public AbstractFactory_10 {
+public:
+	~SmallOrder_AF() { DTOR("~SmallOrder_AF "); }
+public:
+	IJM_AF* createIJM(PackageBin_AF* bin) {
+		return new IJM_120(bin);
+	}
+	Mold_AF* createMold() {
+		return new Aluminum;
+	}
+	ConveyerBelt_AF* createConveyerBelt(PackageBin_AF* bin) {
+		return new YSplitBelt(bin);
+	}
+	PackageBin_AF* createPackageBin() {
+		return new CardboardBox;
+	}
+};
+class SmallOrder_IL : public InjectionLine_AF {
+public:
+	AbstractFactory_10* buildFactory() { return new SmallOrder_AF; }
+};
+
+// 50,000
+class IJM_210 : public IJM_AF {
+public:
+	IJM_210(Subject_7* bin) : IJM_AF(bin) {}
+	~IJM_210() { DTOR("~IJM_210 "); }
+public:
+	virtual void update(Subject_7* bin) {
+		cout << "        IJM_210 pausing while ";
+		cout << bin->name << " package bin is swapped.\n";
+	}
+};
+class Steel : public Mold_AF {};
+//class LinearBelt : public ConveyerBelt_AF {};
 class PallotBox : public PackageBin_AF {
 public:
 	PallotBox() : PackageBin_AF("PallotBox") {}
 	 ~PallotBox() { DTOR("~PallotBox "); }
 };
-class SmallOrder_AF : public AbstractFactory_10 {
-public:
-	~SmallOrder_AF() { DTOR("~SmallOrder_AF "); }
-};
-class SmallOrder_IL : public InjectionLine_AF {};
-
-// 50,000
-class IJM_210 : public IJM_AF {};
-class Steel : public Mold_AF {};
-//class Linear : public ConveyerBelt_AF {};
-//class CardboarBox : public PackageBin_AF {};
 class MediumOrder_AF : public AbstractFactory_10 {
 public:
 	~MediumOrder_AF() { DTOR("~MediumOrder_AF "); }
 public:
-	IJM_AF* createIJM() {
-		return new IJM_AF(new Subject_7("base"));
+	IJM_AF* createIJM(PackageBin_AF* bin) {
+		return new IJM_210(bin);
 	}
 	Mold_AF* createMold() {
-		return new Mold_AF;
+		return new Steel;
 	}
-	ConveyerBelt_AF* createConveyerBelt() {
-		return new ConveyerBelt_AF(new Subject_7("base"));
+	ConveyerBelt_AF* createConveyerBelt(PackageBin_AF* bin) {
+		return new LinearBelt(bin);
 	}
 	PackageBin_AF* createPackageBin() {
-		return new CardboarBox;
+		return new PallotBox;
 	}
 };
-class MediumOrder_IL : public InjectionLine_AF {};
+class MediumOrder_IL : public InjectionLine_AF {
+public:
+	AbstractFactory_10* buildFactory() { return new MediumOrder_AF; }
+};
 
 // Seam line - add another family.
+
+InjectionLine_AF* InjectionLine_AF::determineInjectionLine(map<string, string>& order) {
+	unsigned size = atoi(order["size"].c_str());
+	if(		size <= 10000) return new PilotOrder_IL;
+	else if(size <= 20000) return new SmallOrder_IL;
+	else if(size <= 50000) return new MediumOrder_IL;
+
+	else {						// Default.
+		cout << "<>Size too large |";
+		cout << order["size"] << "| defaulting to ";
+		order["size"] = "50000";
+		cout << order["size"] << ".\n";
+		return new MediumOrder_IL;
+	}
+}
 
 }
 
@@ -382,16 +523,25 @@ public:
 public:
 	static Packager_FM_5* createPackager(map<string,string>& order, Subject_7* bin);
 public:
-//	void update() {}
+	virtual void update(Subject_7* bin) {
+		cout << "        <machine> pausing while ";
+		cout << bin->name << " package bin is swapped.\n";
+	}
 public:
 	virtual string name() { return "Default packager"; }
 };
 class Bulk : public Packager_FM_5 {
 public:
-	Bulk(Subject_7* bin) : Packager_FM_5(bin) {}
+	Bulk(Subject_7* bin) : Packager_FM_5(bin) {
+		bin->detach(this);	// Bulk packager is a null machine.
+	}
 	~Bulk() { DTOR("~Bulk "); }
 public:
 	string name() { return "Bulk"; }
+	virtual void update(Subject_7* bin) {
+		cout << "        Bulk Packager pausing while ";
+		cout << bin->name << " package bin is swapped.\n";
+	}
 };
 class ShrinkWrap : public Packager_FM_5 {
 public:
@@ -399,6 +549,10 @@ public:
 	~ShrinkWrap() { DTOR("~ShrinkWrap "); }
 public:
 	string name() { return "ShrinkWrap"; }
+	virtual void update(Subject_7* bin) {
+		cout << "        ShrinkWrap Packager pausing while ";
+		cout << bin->name << " package bin is swapped.\n";
+	}
 };
 class HardPack : public Packager_FM_5 {
 public:
@@ -406,6 +560,10 @@ public:
 	~HardPack() { DTOR("~HardPack "); }
 public:
 	string name() { return "HardPack"; }
+	virtual void update(Subject_7* bin) {
+		cout << "        HardPack Packager pausing while ";
+		cout << bin->name << " package bin is swapped.\n";
+	}
 };
 // Seam point - add another class.
 
@@ -443,8 +601,8 @@ public:
 		packager(0)
 	{}
 	virtual ~ProcessOrder_TM_4() {
+		delete packager;	// Must delete before injectionLine.
 		delete injectionLine;
-		delete packager;
 		delete algorithm;
 		DTOR("~ProcessOrder_TM_4\n");
 	}
@@ -454,12 +612,16 @@ private:
 			order["size"] = "100";
 			cout << "  <>No size specified, defaulting to " << order["size"] << ".\n";
 		}
-		injectionLine = new InjectionLine_AF;
 
-		packager = Packager_FM_5::createPackager(order, new PackageBin_AF);
+		injectionLine = InjectionLine_AF::determineInjectionLine(order);
+		injectionLine->createLine(order);
+		packager = Packager_FM_5::createPackager(order, injectionLine->getBin());
 
 		cout << "  Setup <AF_IL> injection line for " << order["size"] ;
-		cout << " run with " << packager->name() << " packager:\n";
+		cout << " run with " << packager->name() << " packager:";
+		cout << "\n";
+
+		injectionLine->setup();
 	}
 	void getMold(map<string, string>& order) {
 		cout << "    Get mold:\n";
@@ -497,6 +659,7 @@ public:
 	void injectionCycle(map<string, string>& order) {
 		algorithm = new strategy::ABS;
 		algorithm->cycle(order);
+		injectionLine->getBin()->pause();
 	}
 };
 class Polypropylene : public ProcessOrder_TM_4 {
@@ -507,6 +670,7 @@ public:
 	void injectionCycle(map<string, string>& order) {
 		algorithm = new strategy::Poly;
 		algorithm->cycle(order);
+		injectionLine->getBin()->pause();
 	}
 };
 class Polyethelene : public ProcessOrder_TM_4 {
@@ -517,6 +681,7 @@ public:
 	void injectionCycle(map<string, string>& order) {
 		algorithm = new strategy::Poly;
 		algorithm->cycle(order);
+		injectionLine->getBin()->pause();
 	}
 };
 class PET : public ProcessOrder_TM_4 {
@@ -527,6 +692,7 @@ public:
 	void injectionCycle(map<string, string>& order) {
 		algorithm = new strategy::PET;
 		algorithm->cycle(order);
+		injectionLine->getBin()->pause();
 	}
 };
 // Seam point - add another plastic.

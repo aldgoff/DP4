@@ -9,16 +9,24 @@ Hello DP4.
   <>No size specified, defaulting to 100.
   <>Unknown packager || defaulting to Bulk packager.
   Setup <AF_IL> injection line for 100 run with Bulk packager:
+    IJM_AF base - Mold_AF base - ConveyerBelt_AF base - PackageBin_AF base
   Process order.
     Get mold:
     Insert tags [] of width 0/20 mm.
     Load plastic, color, and additive bins.
     Cycle IJM for ABS 100 times.
       Close - heat to 440 - inject at 125 PSI - cool to 360 - separate - progressive eject.
+      CardboardBox package bin full...
+        IJM_110 pausing while CardboardBox package bin is swapped.
+        Linear conveyer belt pausing while CardboardBox package bin is swapped.
     Clean ABS mold: soak in alcohol, rinse with water, dry.
 ~ABS
-~InjectionLine_AF
 ~Bulk ~Packager_FM_5 ~Observer_7
+~IJM_110 ~IJM_AF ~Observer_7
+~Mold_AF
+~LinearBelt ~ConveyerBelt_AF ~Observer_7
+~CardboardBox ~PackageBin_AF ~Subject_7 ~Observers left to process (should be zero) = 0.
+~PilotOrder_AF AbstractFactory_10 ~InjectionLine_AF
 ~ABS ~adapter::ABS ~CleanABS ~CleanPlastic_A_2 ~Strategy_1
 ~ProcessOrder_TM_4
 2:
@@ -34,16 +42,24 @@ Hello DP4.
 	UVInhibiter	= 6
 	endOfOrder
   Setup <AF_IL> injection line for 10000 run with Bulk packager:
+    IJM_AF base - Mold_AF base - ConveyerBelt_AF base - PackageBin_AF base
   Process order.
     Get mold:
     Insert tags [] of width 0/20 mm.
     Load plastic, color, and additive bins.
     Cycle IJM for ABS 10000 times.
       Close - heat to 440 - inject at 125 PSI - cool to 360 - separate - progressive eject.
+      CardboardBox package bin full...
+        IJM_110 pausing while CardboardBox package bin is swapped.
+        Linear conveyer belt pausing while CardboardBox package bin is swapped.
     Clean ABS mold: soak in alcohol, rinse with water, dry.
 ~ABS
-~InjectionLine_AF
 ~Bulk ~Packager_FM_5 ~Observer_7
+~IJM_110 ~IJM_AF ~Observer_7
+~Mold_AF
+~LinearBelt ~ConveyerBelt_AF ~Observer_7
+~CardboardBox ~PackageBin_AF ~Subject_7 ~Observers left to process (should be zero) = 0.
+~PilotOrder_AF AbstractFactory_10 ~InjectionLine_AF
 ~ABS ~adapter::ABS ~CleanABS ~CleanPlastic_A_2 ~Strategy_1
 ~ProcessOrder_TM_4
 3:
@@ -61,16 +77,25 @@ Hello DP4.
 	AntiBacterial	= 1
 	endOfOrder
   Setup <AF_IL> injection line for 20000 run with ShrinkWrap packager:
+    IJM_AF base - Mold_AF base - ConveyerBelt_AF base - PackageBin_AF base
   Process order.
     Get mold:
     Insert tags [] of width 0/20 mm.
     Load plastic, color, and additive bins.
     Cycle IJM for Poly 20000 times.
       Close - heat to 350 - inject at  90 PSI - cool to 290 - separate - smooth eject.
+      CardboardBox package bin full...
+        IJM_120 pausing while CardboardBox package bin is swapped.
+        Y-Split conveyer belt pausing while CardboardBox package bin is swapped.
+        ShrinkWrap Packager pausing while CardboardBox package bin is swapped.
     Clean Poly mold: rinse with acetone, dry.
 ~Polypropylene
-~InjectionLine_AF
 ~ShrinkWrap ~Packager_FM_5 ~Observer_7
+~IJM_120 ~IJM_AF ~Observer_7
+~Mold_AF
+~YSplitBelt ~ConveyerBelt_AF ~Observer_7
+~CardboardBox ~PackageBin_AF ~Subject_7 ~Observers left to process (should be zero) = 0.
+~SmallOrder_AF AbstractFactory_10 ~InjectionLine_AF
 ~Poly ~adapter::Poly ~CleanPolys ~CleanPlastic_A_2 ~Strategy_1
 ~ProcessOrder_TM_4
 4:
@@ -85,16 +110,25 @@ Hello DP4.
 	color		= yellow
 	endOfOrder
   Setup <AF_IL> injection line for 50000 run with HardPack packager:
+    IJM_AF base - Mold_AF base - ConveyerBelt_AF base - PackageBin_AF base
   Process order.
     Get mold:
     Insert tags [] of width 0/20 mm.
     Load plastic, color, and additive bins.
     Cycle IJM for Poly 50000 times.
       Close - heat to 350 - inject at  90 PSI - cool to 290 - separate - smooth eject.
+      PallotBox package bin full...
+        IJM_210 pausing while PallotBox package bin is swapped.
+        Linear conveyer belt pausing while PallotBox package bin is swapped.
+        HardPack Packager pausing while PallotBox package bin is swapped.
     Clean Poly mold: rinse with acetone, dry.
 ~Polyethelene
-~InjectionLine_AF
 ~HardPack ~Packager_FM_5 ~Observer_7
+~IJM_210 ~IJM_AF ~Observer_7
+~Mold_AF
+~LinearBelt ~ConveyerBelt_AF ~Observer_7
+~PallotBox ~PackageBin_AF ~Subject_7 ~Observers left to process (should be zero) = 0.
+~MediumOrder_AF AbstractFactory_10 ~InjectionLine_AF
 ~Poly ~adapter::Poly ~CleanPolys ~CleanPlastic_A_2 ~Strategy_1
 ~ProcessOrder_TM_4
 5:
@@ -109,16 +143,25 @@ Hello DP4.
 	color		= green
 	endOfOrder
   Setup <AF_IL> injection line for 50000 run with HardPack packager:
+    IJM_AF base - Mold_AF base - ConveyerBelt_AF base - PackageBin_AF base
   Process order.
     Get mold:
     Insert tags [] of width 0/20 mm.
     Load plastic, color, and additive bins.
     Cycle IJM for PET 50000 times.
       Close - heat to 404 - inject at 110 PSI - cool to 340 - separate - smooth eject.
+      PallotBox package bin full...
+        IJM_210 pausing while PallotBox package bin is swapped.
+        Linear conveyer belt pausing while PallotBox package bin is swapped.
+        HardPack Packager pausing while PallotBox package bin is swapped.
     Clean PET steel mold: heat to 895 C.
 ~PET
-~InjectionLine_AF
 ~HardPack ~Packager_FM_5 ~Observer_7
+~IJM_210 ~IJM_AF ~Observer_7
+~Mold_AF
+~LinearBelt ~ConveyerBelt_AF ~Observer_7
+~PallotBox ~PackageBin_AF ~Subject_7 ~Observers left to process (should be zero) = 0.
+~MediumOrder_AF AbstractFactory_10 ~InjectionLine_AF
 ~PET ~adapter::PET ~PETCleanup ~CleanPlastic_A_2 ~Strategy_1
 ~ProcessOrder_TM_4
 Aloha DP4.
