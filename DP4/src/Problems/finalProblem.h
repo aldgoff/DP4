@@ -938,8 +938,10 @@ private:
 			list = order["tags"];
 			cavity = decorator::addTags(cavity, list);
 		}
+
 		unsigned widthOfTags_mm = cavity->width_mm();
 		cavity = decorator::addBlankToFit(cavity);
+
 		cout << "    Insert tags [" << cavity->list() << "] of width ";
 		cout << widthOfTags_mm << "/" << cavity->width_mm() << " mm.\n";
 	}

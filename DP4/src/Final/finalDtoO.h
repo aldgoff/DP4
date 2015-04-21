@@ -344,6 +344,7 @@ public:
 		cout << endl;
 	}
 	PackageBin_AF* getBin() { return bin; }
+	unsigned cavities() { return mold->cavities; };
 public:
 	static InjectionLine_AF* determineInjectionLine(map<string, string>& order);
 };
@@ -740,7 +741,179 @@ public:
 
 namespace decorator {		// DP 6.
 
-// Seam point - add another option.
+class Tags_D_6 {
+public:
+	unsigned width_mm;
+public:
+	Tags_D_6(unsigned width_mm=0) : width_mm(width_mm) {}
+	virtual ~Tags_D_6() { DTOR("~Tags_D_6 "); }
+public:
+	virtual unsigned width() { return width_mm; }
+	virtual string tags() { return ""; }
+};
+class Cavity : public Tags_D_6 {
+public:
+	Cavity() {}
+	virtual ~Cavity() { DTOR("~Cavity "); }
+};
+class Tag : public Tags_D_6 {
+protected:
+	Tags_D_6* delegate;
+public:
+	Tag(Tags_D_6* delegate=0) : delegate(delegate) {}
+	virtual ~Tag() { DTOR("~Tag "); delete delegate; }
+public:
+	virtual unsigned width() {
+		return delegate->width() + width_mm;
+	}
+	virtual string tags() { return ""; }
+public:
+	static Tags_D_6* insertTags(string list, Tags_D_6* cavity);
+};
+class Blank : public Tag {
+	unsigned tagsWidth_mm;
+	const int cavityWidth_mm;
+public:
+	Blank(Tags_D_6* delegate, unsigned tagsWidth_mm)
+		: Tag(delegate), tagsWidth_mm(0), cavityWidth_mm(20) {
+		width_mm = cavityWidth_mm - tagsWidth_mm;
+	}
+	virtual ~Blank() { DTOR("~Blank "); }
+public:
+	virtual unsigned width() {
+		return delegate->width() + width_mm;
+	}
+	virtual string tags() { return delegate->tags(); }
+};
+class ModelNumber : public Tag {
+public:
+	ModelNumber(Tags_D_6* delegate) : Tag(delegate) {}
+	virtual ~ModelNumber() { DTOR("~ModelNumber "); }
+public:
+	virtual unsigned width() {
+		width_mm = 2;
+		return delegate->width() + width_mm;
+	}
+	virtual string tags() { return delegate->tags() + "ModelNumber "; }
+};
+class Country : public Tag {
+public:
+	Country(Tags_D_6* delegate) : Tag(delegate) {}
+	virtual ~Country() { DTOR("~Country "); }
+public:
+	virtual unsigned width() {
+		width_mm = 2;
+		return delegate->width() + width_mm;
+	}
+	virtual string tags() { return delegate->tags() + "Country "; }
+};
+class Date : public Tag {
+public:
+	Date(Tags_D_6* delegate) : Tag(delegate) {}
+	virtual ~Date() { DTOR("~Date "); }
+public:
+	virtual unsigned width() {
+		width_mm = 2;
+		return delegate->width() + width_mm;
+	}
+	virtual string tags() { return delegate->tags() + "Date "; }
+};
+// Seam point - add another tag option.
+
+Tags_D_6* Tag::insertTags(string list, Tags_D_6* cavity) {
+	char tag[80] = "";
+	const char* remainingTokens = list.c_str();
+
+	while(remainingTokens) {
+		if(0 == sscanf(remainingTokens, "%s", tag))
+			break;
+		if(		!strcmp(tag, "ModelNumber"))	cavity = new ModelNumber(cavity);
+		else if(!strcmp(tag, "Country"))		cavity = new Country(cavity);
+		else if(!strcmp(tag, "Date"))			cavity = new Date(cavity);
+		// Seam point - add another tag option.
+
+		else {
+			cout << "Ignoring unknown tag " << tag << ".\n";
+		}
+
+		remainingTokens = strchr(remainingTokens+1, ' ');
+	}
+
+	return cavity;
+}
+
+class Plastic_D_6 {
+public:
+	unsigned volume_cc;
+public:
+	Plastic_D_6(unsigned volume_cc=0) : volume_cc(volume_cc) {}
+	virtual ~Plastic_D_6() { DTOR("~Plastic_D_6 "); }
+public:
+	virtual string nameAndVol(map<string,string>& order) {
+		return(string("<Additive>(vol) "));
+	}
+	virtual unsigned volume() { return 0; }
+public:
+	static Plastic_D_6* collectOptions(map<string,string>& order, Plastic_D_6* color);
+};
+class Color : public Plastic_D_6 {
+public:
+	Color(unsigned volume_cc) : Plastic_D_6(volume_cc) {}
+	~Color() { DTOR("~Color "); }
+public:
+	virtual string nameAndVol(map<string,string>& order) {
+		char str[80];
+		sprintf(str, "(%d) ", volume_cc);
+		return order["color"] + str;
+	}
+	virtual unsigned volume() { return volume_cc; }
+};
+class Additive : public Plastic_D_6 {
+protected:
+	Plastic_D_6* additive;
+public:
+	Additive(Plastic_D_6* additive) : additive(additive) {}
+	virtual ~Additive() { DTOR("~Additive "); delete additive; }
+public:
+	virtual unsigned volume() { return additive->volume() + volume_cc; }
+};
+class UVInhibiter : public Additive {
+public:
+	UVInhibiter(Plastic_D_6* additive) : Additive(additive)  {}
+	virtual ~UVInhibiter() { DTOR("~UVInhibiter "); }
+public:
+	virtual string nameAndVol(map<string,string>& order) {
+		string str;
+		if(order.find("UVInhibiter") != order.end()) {
+			volume_cc = atoi(order["UVInhibiter"].c_str());
+			str = string("UVInhibiter(") + order["UVInhibiter"] + ") ";
+		}
+		return additive->nameAndVol(order) + str;
+	}
+};
+class AntiBacterial : public Additive {
+public:
+	AntiBacterial(Plastic_D_6* additive) : Additive(additive) {}
+	virtual ~AntiBacterial() { DTOR("~AntiBacterial "); }
+public:
+	virtual string nameAndVol(map<string,string>& order) {
+		string str;
+		if(order.find("AntiBacterial") != order.end()) {
+			volume_cc = atoi(order["AntiBacterial"].c_str());
+			str = string("AntiBacterial(") + order["AntiBacterial"] + ") ";
+		}
+		return additive->nameAndVol(order) + str;
+	}
+};
+// Seam point - add another additive option.
+
+Plastic_D_6* Plastic_D_6::collectOptions(map<string,string>& order, Plastic_D_6* color) {
+	if(order.find("UVInhibiter") != order.end())	color = new UVInhibiter(color);
+	if(order.find("AntiBacterial") != order.end())	color = new AntiBacterial(color);
+	// Seam point - add another additive option.
+
+	return color;
+}
 
 }
 
@@ -821,6 +994,7 @@ namespace template_method {	// DP 4.
 using namespace abstract_factory_solti;
 using namespace factory_method;
 using namespace chain_of_resp;
+using namespace decorator;
 
 class ProcessOrder_TM_4 {
 protected:
@@ -829,20 +1003,25 @@ protected:
 	Packager_FM_5*		packager;
 	GetMold*			theMold;
 	Shape_B_9*			shape;
+	Tags_D_6*			cavity;
+	Plastic_D_6*		color;
 public:
 	ProcessOrder_TM_4()
 	  : algorithm(0),	// When no derived classes (new strategy::Strategy_1).
 		injectionLine(0),
 		packager(0),
 		theMold(0),
-		shape(0)
+		shape(0),
+		cavity(0),
+		color(0)
 	{}
 	virtual ~ProcessOrder_TM_4() {
 		delete packager;	// Must delete before injectionLine.
 		delete injectionLine;
-		delete theMold;
-		DTOR("\n");
+		delete theMold;	DTOR("\n");
 		delete shape;
+		delete cavity;	DTOR("\n");
+		delete color;	DTOR("\n");
 		delete algorithm;
 		DTOR("~ProcessOrder_TM_4\n");
 	}
@@ -874,19 +1053,37 @@ private:
 		shape = theMold->from(order);
 	}
 	void insertTags(map<string, string>& order) {
-		cout << "    Insert tags [] of width 0/20 mm.\n";
+		cavity = new Cavity();
+
+		string tags = "";
+		if(order.find("tags") != order.end()) {
+			tags = order["tags"];
+			cavity = Tag::insertTags(tags, cavity);
+		}
+
+		string listOfTags = cavity->tags();
+		unsigned width_mm = cavity->width();
+		cavity = new Blank(cavity, width_mm);
+
+		cout << "    Insert tags [" << cavity->tags() << "]";
+		cout << " of width " << width_mm << "/" << cavity->width() << " mm.\n";
 	}
 	void loadAdditives(map<string, string>& order) {
 		cout << "    Load plastic, color, and additive bins.\n";
+
 		if(order.find("color") == order.end()) {
 			order["color"] = "black";
 			cout << "      <>No color specified, defaulting to " << order["color"] << ".\n";
 		}
-		unsigned volume_cc = shape->volume_cc*0.1;
-		cout << "      Recipe: <plastic>(" << shape->volume_cc << ") ";
-		cout << order["color"] << " (" << volume_cc << ")";
-		cout << " <additive1>(<vol>) <additive2>(<vol>) Total = <vol>.\n";
 
+		color = new Color(shape->volume_cc*0.1);
+		color = Plastic_D_6::collectOptions(order, color);
+		string listOfAdditives = color->nameAndVol(order);	// Side effect, computes vol.
+		unsigned total = injectionLine->cavities()*(shape->volume_cc + color->volume());
+
+		cout << "      Recipe: "<< order["plastic"] << "(" << shape->volume_cc << ") ";
+		cout << listOfAdditives;
+		cout << "Total = " << total << ".\n";
 	}
 protected:
 	virtual void injectionCycle(map<string, string>& order) {

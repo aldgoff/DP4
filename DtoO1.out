@@ -15,7 +15,7 @@ Hello DP4.
     Insert tags [] of width 0/20 mm.
     Load plastic, color, and additive bins.
       <>No color specified, defaulting to black.
-      Recipe: <plastic>(35) black (3) <additive1>(<vol>) <additive2>(<vol>) Total = <vol>.
+      Recipe: ABS(35) black(3) Total = 38.
     Cycle IJM for ABS 100 times.
       Close - heat to 440 - inject at 125 PSI - cool to 360 - separate - progressive eject.
       CardboardBox package bin full...
@@ -31,6 +31,8 @@ Hello DP4.
 ~PilotOrder_AF AbstractFactory_10 ~InjectionLine_AF
 ~Inventory ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
 ~Duck ~Shape_B_9 ~HighCarbon ~Platform_B_9
+~Blank ~Tag ~Cavity ~Tags_D_6 ~Tags_D_6 
+~Color ~Plastic_D_6 
 ~ABS ~adapter::ABS ~CleanABS ~CleanPlastic_A_2 ~Strategy_1
 ~ProcessOrder_TM_4
 2:
@@ -49,9 +51,9 @@ Hello DP4.
     IJM_110 - Aluminum(1) - Linear conveyer belt - CardboardBox
   Process order.
     Pull duck mold from inventory.
-    Insert tags [] of width 0/20 mm.
+    Insert tags [ModelNumber ] of width 2/20 mm.
     Load plastic, color, and additive bins.
-      Recipe: <plastic>(35) red (3) <additive1>(<vol>) <additive2>(<vol>) Total = <vol>.
+      Recipe: ABS(35) red(3) UVInhibiter(6) Total = 44.
     Cycle IJM for ABS 10000 times.
       Close - heat to 440 - inject at 125 PSI - cool to 360 - separate - progressive eject.
       CardboardBox package bin full...
@@ -67,6 +69,8 @@ Hello DP4.
 ~PilotOrder_AF AbstractFactory_10 ~InjectionLine_AF
 ~Inventory ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
 ~Duck ~Shape_B_9 ~HighCarbon ~Platform_B_9
+~Blank ~Tag ~ModelNumber ~Tag ~Cavity ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 
+~UVInhibiter ~Additive ~Color ~Plastic_D_6 ~Plastic_D_6 
 ~ABS ~adapter::ABS ~CleanABS ~CleanPlastic_A_2 ~Strategy_1
 ~ProcessOrder_TM_4
 3:
@@ -88,9 +92,9 @@ Hello DP4.
   Process order.
     Create car mold from mill with 2 cavities:
       using HighCarbon tools (drill, cut, and high speed grind) to mill aluminum block into 2 car shapes with smooth finish.
-    Insert tags [] of width 0/20 mm.
+    Insert tags [ModelNumber Country Date ] of width 6/20 mm.
     Load plastic, color, and additive bins.
-      Recipe: <plastic>(40) orange (4) <additive1>(<vol>) <additive2>(<vol>) Total = <vol>.
+      Recipe: Polypropylene(40) orange(4) UVInhibiter(6) AntiBacterial(1) Total = 102.
     Cycle IJM for Poly 20000 times.
       Close - heat to 350 - inject at  90 PSI - cool to 290 - separate - smooth eject.
       CardboardBox package bin full...
@@ -107,6 +111,8 @@ Hello DP4.
 ~SmallOrder_AF AbstractFactory_10 ~InjectionLine_AF
 ~Inventory ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
 ~Car ~Shape_B_9 ~HighCarbon ~Platform_B_9
+~Blank ~Tag ~Date ~Tag ~Country ~Tag ~ModelNumber ~Tag ~Cavity ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 ~Tags_D_6 
+~AntiBacterial ~Additive ~UVInhibiter ~Additive ~Color ~Plastic_D_6 ~Plastic_D_6 ~Plastic_D_6 
 ~Poly ~adapter::Poly ~CleanPolys ~CleanPlastic_A_2 ~Strategy_1
 ~ProcessOrder_TM_4
 4:
@@ -127,7 +133,7 @@ Hello DP4.
       using Carbide tools (high speed drill, cross cut, and layer grind) to mill steel block into 1 hero shapes with rippled finish.
     Insert tags [] of width 0/20 mm.
     Load plastic, color, and additive bins.
-      Recipe: <plastic>(50) yellow (5) <additive1>(<vol>) <additive2>(<vol>) Total = <vol>.
+      Recipe: Polyethelene(50) yellow(5) Total = 55.
     Cycle IJM for Poly 50000 times.
       Close - heat to 350 - inject at  90 PSI - cool to 290 - separate - smooth eject.
       PallotBox package bin full...
@@ -144,6 +150,8 @@ Hello DP4.
 ~MediumOrder_AF AbstractFactory_10 ~InjectionLine_AF
 ~Inventory ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
 ~Hero ~Shape_B_9 ~Carbide ~Platform_B_9
+~Blank ~Tag ~Cavity ~Tags_D_6 ~Tags_D_6 
+~Color ~Plastic_D_6 
 ~Poly ~adapter::Poly ~CleanPolys ~CleanPlastic_A_2 ~Strategy_1
 ~ProcessOrder_TM_4
 5:
@@ -164,7 +172,7 @@ Hello DP4.
       using Carbide tools (high speed drill, cross cut, and layer grind) to mill steel block into 1 hero shapes with rippled finish.
     Insert tags [] of width 0/20 mm.
     Load plastic, color, and additive bins.
-      Recipe: <plastic>(50) green (5) <additive1>(<vol>) <additive2>(<vol>) Total = <vol>.
+      Recipe: PET(50) green(5) Total = 55.
     Cycle IJM for PET 50000 times.
       Close - heat to 404 - inject at 110 PSI - cool to 340 - separate - smooth eject.
       PallotBox package bin full...
@@ -181,6 +189,8 @@ Hello DP4.
 ~MediumOrder_AF AbstractFactory_10 ~InjectionLine_AF
 ~Inventory ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
 ~Hero ~Shape_B_9 ~Carbide ~Platform_B_9
+~Blank ~Tag ~Cavity ~Tags_D_6 ~Tags_D_6 
+~Color ~Plastic_D_6 
 ~PET ~adapter::PET ~PETCleanup ~CleanPlastic_A_2 ~Strategy_1
 ~ProcessOrder_TM_4
 Aloha DP4.

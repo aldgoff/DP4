@@ -115,7 +115,7 @@ Component* Decorator::addOption(const string& option, Component* component) {
 	if(		option == "option1")	return new Option1(component);
 	else if(option == "option2")	return new Option2(component);
 	else if(option == "option3")	return new Option3(component);
-	// Seam point - insert another option.
+	// Seam point - add another option.
 
 	else {
 		cout << "  Unknown option: " << option << ".\n";
