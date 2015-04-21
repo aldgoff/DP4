@@ -8,12 +8,14 @@ Hello DP4.
   <>Unknown plastic || defaulting to ABS.
   <>No size specified, defaulting to 100.
   <>Unknown packager || defaulting to Bulk packager.
-  Setup <AF_IL> injection line for 100 run with Bulk packager:
-    IJM_AF base - Mold_AF base - ConveyerBelt_AF base - PackageBin_AF base
+  Setup PilotOrder injection line for 100 run with Bulk packager:
+    IJM_110 - Aluminum(1) - Linear conveyer belt - CardboardBox
   Process order.
-    Get mold:
+    <>Can't find place || to get || mold from, defaulting to duck from inventory.
     Insert tags [] of width 0/20 mm.
     Load plastic, color, and additive bins.
+      <>No color specified, defaulting to black.
+      Recipe: <plastic>(35) black (3) <additive1>(<vol>) <additive2>(<vol>) Total = <vol>.
     Cycle IJM for ABS 100 times.
       Close - heat to 440 - inject at 125 PSI - cool to 360 - separate - progressive eject.
       CardboardBox package bin full...
@@ -23,10 +25,12 @@ Hello DP4.
 ~ABS
 ~Bulk ~Packager_FM_5 ~Observer_7
 ~IJM_110 ~IJM_AF ~Observer_7
-~Mold_AF
+~Aluminum ~Mold_AF
 ~LinearBelt ~ConveyerBelt_AF ~Observer_7
-~CardboardBox ~PackageBin_AF ~Subject_7 ~Observers left to process (should be zero) = 0.
+~CardboardBox ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
 ~PilotOrder_AF AbstractFactory_10 ~InjectionLine_AF
+~Inventory ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
+~Duck ~Shape_B_9 ~HighCarbon ~Platform_B_9
 ~ABS ~adapter::ABS ~CleanABS ~CleanPlastic_A_2 ~Strategy_1
 ~ProcessOrder_TM_4
 2:
@@ -41,12 +45,13 @@ Hello DP4.
 	color		= red
 	UVInhibiter	= 6
 	endOfOrder
-  Setup <AF_IL> injection line for 10000 run with Bulk packager:
-    IJM_AF base - Mold_AF base - ConveyerBelt_AF base - PackageBin_AF base
+  Setup PilotOrder injection line for 10000 run with Bulk packager:
+    IJM_110 - Aluminum(1) - Linear conveyer belt - CardboardBox
   Process order.
-    Get mold:
+    Pull duck mold from inventory.
     Insert tags [] of width 0/20 mm.
     Load plastic, color, and additive bins.
+      Recipe: <plastic>(35) red (3) <additive1>(<vol>) <additive2>(<vol>) Total = <vol>.
     Cycle IJM for ABS 10000 times.
       Close - heat to 440 - inject at 125 PSI - cool to 360 - separate - progressive eject.
       CardboardBox package bin full...
@@ -56,10 +61,12 @@ Hello DP4.
 ~ABS
 ~Bulk ~Packager_FM_5 ~Observer_7
 ~IJM_110 ~IJM_AF ~Observer_7
-~Mold_AF
+~Aluminum ~Mold_AF
 ~LinearBelt ~ConveyerBelt_AF ~Observer_7
-~CardboardBox ~PackageBin_AF ~Subject_7 ~Observers left to process (should be zero) = 0.
+~CardboardBox ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
 ~PilotOrder_AF AbstractFactory_10 ~InjectionLine_AF
+~Inventory ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
+~Duck ~Shape_B_9 ~HighCarbon ~Platform_B_9
 ~ABS ~adapter::ABS ~CleanABS ~CleanPlastic_A_2 ~Strategy_1
 ~ProcessOrder_TM_4
 3:
@@ -76,12 +83,14 @@ Hello DP4.
 	UVInhibiter		= 6
 	AntiBacterial	= 1
 	endOfOrder
-  Setup <AF_IL> injection line for 20000 run with ShrinkWrap packager:
-    IJM_AF base - Mold_AF base - ConveyerBelt_AF base - PackageBin_AF base
+  Setup SmallOrder injection line for 20000 run with ShrinkWrap packager:
+    IJM_120 - Aluminum(2) - Y-Split conveyer belt - CardboardBox
   Process order.
-    Get mold:
+    Create car mold from mill with 2 cavities:
+      using HighCarbon tools (drill, cut, and high speed grind) to mill aluminum block into 2 car shapes with smooth finish.
     Insert tags [] of width 0/20 mm.
     Load plastic, color, and additive bins.
+      Recipe: <plastic>(40) orange (4) <additive1>(<vol>) <additive2>(<vol>) Total = <vol>.
     Cycle IJM for Poly 20000 times.
       Close - heat to 350 - inject at  90 PSI - cool to 290 - separate - smooth eject.
       CardboardBox package bin full...
@@ -92,10 +101,12 @@ Hello DP4.
 ~Polypropylene
 ~ShrinkWrap ~Packager_FM_5 ~Observer_7
 ~IJM_120 ~IJM_AF ~Observer_7
-~Mold_AF
+~Aluminum ~Mold_AF
 ~YSplitBelt ~ConveyerBelt_AF ~Observer_7
-~CardboardBox ~PackageBin_AF ~Subject_7 ~Observers left to process (should be zero) = 0.
+~CardboardBox ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
 ~SmallOrder_AF AbstractFactory_10 ~InjectionLine_AF
+~Inventory ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
+~Car ~Shape_B_9 ~HighCarbon ~Platform_B_9
 ~Poly ~adapter::Poly ~CleanPolys ~CleanPlastic_A_2 ~Strategy_1
 ~ProcessOrder_TM_4
 4:
@@ -109,12 +120,14 @@ Hello DP4.
 	finish		= rippled
 	color		= yellow
 	endOfOrder
-  Setup <AF_IL> injection line for 50000 run with HardPack packager:
-    IJM_AF base - Mold_AF base - ConveyerBelt_AF base - PackageBin_AF base
+  Setup MediumOrder injection line for 50000 run with HardPack packager:
+    IJM_210 - Steel(1) - Linear conveyer belt - PallotBox
   Process order.
-    Get mold:
+    Create hero mold from mill with 1 cavities:
+      using Carbide tools (high speed drill, cross cut, and layer grind) to mill steel block into 1 hero shapes with rippled finish.
     Insert tags [] of width 0/20 mm.
     Load plastic, color, and additive bins.
+      Recipe: <plastic>(50) yellow (5) <additive1>(<vol>) <additive2>(<vol>) Total = <vol>.
     Cycle IJM for Poly 50000 times.
       Close - heat to 350 - inject at  90 PSI - cool to 290 - separate - smooth eject.
       PallotBox package bin full...
@@ -125,10 +138,12 @@ Hello DP4.
 ~Polyethelene
 ~HardPack ~Packager_FM_5 ~Observer_7
 ~IJM_210 ~IJM_AF ~Observer_7
-~Mold_AF
+~Steel ~Mold_AF
 ~LinearBelt ~ConveyerBelt_AF ~Observer_7
-~PallotBox ~PackageBin_AF ~Subject_7 ~Observers left to process (should be zero) = 0.
+~PallotBox ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
 ~MediumOrder_AF AbstractFactory_10 ~InjectionLine_AF
+~Inventory ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
+~Hero ~Shape_B_9 ~Carbide ~Platform_B_9
 ~Poly ~adapter::Poly ~CleanPolys ~CleanPlastic_A_2 ~Strategy_1
 ~ProcessOrder_TM_4
 5:
@@ -142,12 +157,14 @@ Hello DP4.
 	finish		= rippled
 	color		= green
 	endOfOrder
-  Setup <AF_IL> injection line for 50000 run with HardPack packager:
-    IJM_AF base - Mold_AF base - ConveyerBelt_AF base - PackageBin_AF base
+  Setup MediumOrder injection line for 50000 run with HardPack packager:
+    IJM_210 - Steel(1) - Linear conveyer belt - PallotBox
   Process order.
-    Get mold:
+    Create hero mold from mill with 1 cavities:
+      using Carbide tools (high speed drill, cross cut, and layer grind) to mill steel block into 1 hero shapes with rippled finish.
     Insert tags [] of width 0/20 mm.
     Load plastic, color, and additive bins.
+      Recipe: <plastic>(50) green (5) <additive1>(<vol>) <additive2>(<vol>) Total = <vol>.
     Cycle IJM for PET 50000 times.
       Close - heat to 404 - inject at 110 PSI - cool to 340 - separate - smooth eject.
       PallotBox package bin full...
@@ -158,10 +175,12 @@ Hello DP4.
 ~PET
 ~HardPack ~Packager_FM_5 ~Observer_7
 ~IJM_210 ~IJM_AF ~Observer_7
-~Mold_AF
+~Steel ~Mold_AF
 ~LinearBelt ~ConveyerBelt_AF ~Observer_7
-~PallotBox ~PackageBin_AF ~Subject_7 ~Observers left to process (should be zero) = 0.
+~PallotBox ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
 ~MediumOrder_AF AbstractFactory_10 ~InjectionLine_AF
+~Inventory ~Mill ~GetMold_CofR_8 ~GetMold_CofR_8 ~GetMold_CofR_8 
+~Hero ~Shape_B_9 ~Carbide ~Platform_B_9
 ~PET ~adapter::PET ~PETCleanup ~CleanPlastic_A_2 ~Strategy_1
 ~ProcessOrder_TM_4
 Aloha DP4.

@@ -187,7 +187,7 @@ public:
 
 Subject_7::~Subject_7() {
 	DTOR("~Subject_7 ");
-	DTOR("~Observers left to process (should be zero) = ");
+	DTOR("Observers left to process (should be zero) = ");
 	char str[80];
 	sprintf(str, "%d.\n", observers.size());
 	DTOR(str);
@@ -233,6 +233,7 @@ class MediumOrder : public Setup_AF_10 {};
 }
 
 // ----- Alternatively (may make it hard to match the dtor instrumentation) -----
+
 namespace abstract_factory_solti {	// DP 10 - more like GoF.
 
 using namespace observer;
@@ -250,10 +251,13 @@ public:
 };
 class Mold_AF {
 public:
-	Mold_AF() {}
+	const unsigned cavities;
+public:
+	Mold_AF(const unsigned cavities) : cavities(cavities) {}
 	virtual ~Mold_AF() { DTOR("~Mold_AF\n"); }
 public:
 	virtual string setup() { return "Mold_AF base"; }
+	virtual string metal() { return "unobtainium"; }
 };
 class ConveyerBelt_AF : public Observer_7 {
 public:
@@ -273,7 +277,6 @@ public:
 public:
 	virtual string setup() { return "PackageBin_AF base"; }
 };
-
 class AbstractFactory_10 {
 public:
 	virtual ~AbstractFactory_10() { DTOR("AbstractFactory_10 "); }
@@ -282,13 +285,13 @@ public:
 		return new IJM_AF(bin);
 	}
 	virtual Mold_AF* createMold() {
-		return new Mold_AF;
+		return new Mold_AF(0);
 	}
 	virtual ConveyerBelt_AF* createConveyerBelt(PackageBin_AF* bin) {
 		return new ConveyerBelt_AF(bin);
 	}
 	virtual PackageBin_AF* createPackageBin() {
-		return new PackageBin_AF("base");
+		return new PackageBin_AF("PackageBin");
 	}
 };
 class InjectionLine_AF {
@@ -320,12 +323,18 @@ public:
 	void createLine(map<string, string>& order) {
 		factory = buildFactory();
 
-		bin  = factory->createPackageBin();
+		bin  = factory->createPackageBin();		// Subject in Observer pattern.
 
-		ijm  = factory->createIJM(bin);
+		ijm  = factory->createIJM(bin);			// Observer #1 in Observer pattern.
 		mold = factory->createMold();
-		belt = factory->createConveyerBelt(bin);
+		belt = factory->createConveyerBelt(bin);// Observer #2 in Observer pattern.
+
+		order["metal"] = mold->metal();
+		char str[80];
+		sprintf(str, "%d", mold->cavities);
+		order["cavities"] = str;
 	}
+	virtual string getName() { return "BaseOrder"; }
 	void setup() {
 		cout << "    ";
 		cout << ijm->setup() << " - ";
@@ -349,8 +358,20 @@ public:
 		cout << "        IJM_110 pausing while ";
 		cout << bin->name << " package bin is swapped.\n";
 	}
+	string setup() { return "IJM_110"; }
 };
-class Aluminum : public Mold_AF {};
+class Aluminum : public Mold_AF {
+public:
+	Aluminum(const unsigned cavities) : Mold_AF(cavities) {}
+	~Aluminum() { DTOR("~Aluminum "); }
+public:
+	string setup() {
+		char str[80];
+		sprintf(str, "(%d)", cavities);
+		return(string("Aluminum") + str);
+	}
+	string metal() { return "aluminum"; }
+};
 class LinearBelt : public ConveyerBelt_AF {
 public:
 	LinearBelt(Subject_7* bin) : ConveyerBelt_AF(bin) {}
@@ -360,11 +381,14 @@ public:
 		cout << "        Linear conveyer belt pausing while ";
 		cout << bin->name << " package bin is swapped.\n";
 	}
+	string setup() { return "Linear conveyer belt"; }
 };
 class CardboardBox : public PackageBin_AF {
 public:
 	CardboardBox() : PackageBin_AF("CardboardBox") {}
 	~CardboardBox() { DTOR("~CardboardBox "); }
+public:
+	string setup() { return "CardboardBox"; }
 };
 class PilotOrder_AF : public AbstractFactory_10 {
 public:
@@ -374,7 +398,7 @@ public:
 		return new IJM_110(bin);
 	}
 	Mold_AF* createMold() {
-		return new Aluminum;
+		return new Aluminum(1);
 	}
 	ConveyerBelt_AF* createConveyerBelt(PackageBin_AF* bin) {
 		return new LinearBelt(bin);
@@ -386,6 +410,7 @@ public:
 class PilotOrder_IL : public InjectionLine_AF {
 public:
 	AbstractFactory_10* buildFactory() { return new PilotOrder_AF; }
+	virtual string getName() { return "PilotOrder"; }
 };
 
 // 20,000
@@ -398,6 +423,7 @@ public:
 		cout << "        IJM_120 pausing while ";
 		cout << bin->name << " package bin is swapped.\n";
 	}
+	string setup() { return "IJM_120"; }
 };
 //class Aluminum : public Mold_AF {};
 class YSplitBelt : public ConveyerBelt_AF {
@@ -409,6 +435,7 @@ public:
 		cout << "        Y-Split conveyer belt pausing while ";
 		cout << bin->name << " package bin is swapped.\n";
 	}
+	string setup() { return "Y-Split conveyer belt"; }
 };
 //class CardboardBox : public PackageBin_AF {};
 class SmallOrder_AF : public AbstractFactory_10 {
@@ -419,7 +446,7 @@ public:
 		return new IJM_120(bin);
 	}
 	Mold_AF* createMold() {
-		return new Aluminum;
+		return new Aluminum(2);
 	}
 	ConveyerBelt_AF* createConveyerBelt(PackageBin_AF* bin) {
 		return new YSplitBelt(bin);
@@ -431,6 +458,7 @@ public:
 class SmallOrder_IL : public InjectionLine_AF {
 public:
 	AbstractFactory_10* buildFactory() { return new SmallOrder_AF; }
+	virtual string getName() { return "SmallOrder"; }
 };
 
 // 50,000
@@ -443,13 +471,27 @@ public:
 		cout << "        IJM_210 pausing while ";
 		cout << bin->name << " package bin is swapped.\n";
 	}
+	string setup() { return "IJM_210"; }
 };
-class Steel : public Mold_AF {};
+class Steel : public Mold_AF {
+public:
+	Steel(const unsigned cavities) : Mold_AF(cavities) {}
+	~Steel() { DTOR("~Steel "); }
+public:
+	string setup() {
+		char str[80];
+		sprintf(str, "(%d)", cavities);
+		return(string("Steel") + str);
+	}
+	string metal() { return "steel"; }
+};
 //class LinearBelt : public ConveyerBelt_AF {};
 class PallotBox : public PackageBin_AF {
 public:
 	PallotBox() : PackageBin_AF("PallotBox") {}
 	 ~PallotBox() { DTOR("~PallotBox "); }
+public:
+	string setup() { return "PallotBox"; }
 };
 class MediumOrder_AF : public AbstractFactory_10 {
 public:
@@ -459,7 +501,7 @@ public:
 		return new IJM_210(bin);
 	}
 	Mold_AF* createMold() {
-		return new Steel;
+		return new Steel(1);
 	}
 	ConveyerBelt_AF* createConveyerBelt(PackageBin_AF* bin) {
 		return new LinearBelt(bin);
@@ -471,15 +513,17 @@ public:
 class MediumOrder_IL : public InjectionLine_AF {
 public:
 	AbstractFactory_10* buildFactory() { return new MediumOrder_AF; }
+	virtual string getName() { return "MediumOrder"; }
 };
 
-// Seam line - add another family.
+// Seam point - add another family.
 
 InjectionLine_AF* InjectionLine_AF::determineInjectionLine(map<string, string>& order) {
 	unsigned size = atoi(order["size"].c_str());
 	if(		size <= 10000) return new PilotOrder_IL;
 	else if(size <= 20000) return new SmallOrder_IL;
 	else if(size <= 50000) return new MediumOrder_IL;
+	// Seam point - insert another family.
 
 	else {						// Default.
 		cout << "<>Size too large |";
@@ -494,14 +538,202 @@ InjectionLine_AF* InjectionLine_AF::determineInjectionLine(map<string, string>& 
 
 namespace bridge {			// DP 9.
 
-// Seam Point - add another implementation.
+class Platform_B_9 {
+public:
+	const string name;
+public:
+	Platform_B_9(const string name="platform") : name(name) {}
+	virtual ~Platform_B_9() { DTOR("~Platform_B_9\n"); }
+public:
+	virtual string drill() { return "drill"; }
+	virtual string cut() { return "cut"; }
+	virtual string grind() { return "grind"; }
+public:
+	static Platform_B_9* getPlatform(map<string,string>& order);
+};
+class HighCarbon : public Platform_B_9 {
+public:
+	HighCarbon() : Platform_B_9("HighCarbon") {}
+	virtual ~HighCarbon() { DTOR("~HighCarbon "); }
+public:
+	string drill() { return "drill"; }
+	string cut() { return "cut"; }
+	string grind() { return "high speed grind"; }
+};
+class Carbide : public Platform_B_9 {
+public:
+	Carbide() : Platform_B_9("Carbide") {}
+	virtual ~Carbide() { DTOR("~Carbide "); }
+public:
+	string drill() { return "high speed drill"; }
+	string cut() { return "cross cut"; }
+	string grind() { return "layer grind"; }
+};
+// Seam Point - add another platform implementation.
 
-// Seam Point - add another abstraction.
+Platform_B_9* Platform_B_9::getPlatform(map<string,string>& order) {
+	string metal = order["metal"];
+	if(		metal == "aluminum") return new HighCarbon;
+	else if(metal == "steel") 	 return new Carbide;
+	// Seam Point - insert another platform implementation.
+
+	else {
+		cout << "UNKNOWN METAL.\n";
+		return new Platform_B_9;
+	}
+}
+
+class Shape_B_9 {
+protected:
+	Platform_B_9* platform;
+public:
+	const unsigned volume_cc;
+public:
+	Shape_B_9(Platform_B_9* platform=0, const unsigned volume_cc=0)
+	  : platform(platform),
+		volume_cc(volume_cc)
+	{}
+	virtual ~Shape_B_9() {
+		DTOR("~Shape_B_9 ");
+		delete platform;
+	}
+public:
+	virtual void mill(map<string,string>& order) {
+		cout << "      using " << platform->name << " tools (";
+		cout << platform->drill() << ", ";
+		cout << platform->cut() << ", ";
+		cout << platform->grind() << ")";
+		cout << " to mill <metal> block into <n> <shape> shapes with <finish> finish.\n";
+	}
+public:
+	static Shape_B_9* getShape(map<string,string>& order);
+};
+class Duck : public Shape_B_9 {
+public:
+	Duck(Platform_B_9* platform)
+		: Shape_B_9(platform, 35) {}
+	~Duck() { DTOR("~Duck "); }
+public:
+	void mill(map<string,string>& order) {
+		cout << "      using " << platform->name << " tools (";
+		cout << platform->drill() << ", ";
+		cout << platform->cut() << ", and ";
+		cout << platform->grind() << ")";
+		cout << " to mill " << order["metal"] << " block";
+		cout << " into " << order["cavities"] << " duck shapes";
+		cout << " with " << order["finish"] << " finish.\n";
+	}
+};
+class Car : public Shape_B_9 {
+public:
+	Car(Platform_B_9* platform)
+		: Shape_B_9(platform, 40) {}
+	~Car() { DTOR("~Car "); }
+public:
+	void mill(map<string,string>& order) {
+		cout << "      using " << platform->name << " tools (";
+		cout << platform->drill() << ", ";
+		cout << platform->cut() << ", and ";
+		cout << platform->grind() << ")";
+		cout << " to mill " << order["metal"] << " block";
+		cout << " into " << order["cavities"] << " car shapes";
+		cout << " with " << order["finish"] << " finish.\n";
+	}
+};
+class Hero : public Shape_B_9 {
+public:
+	Hero(Platform_B_9* platform)
+		: Shape_B_9(platform, 50) {}
+	~Hero() { DTOR("~Hero "); }
+public:
+	void mill(map<string,string>& order) {
+		cout << "      using " << platform->name << " tools (";
+		cout << platform->drill() << ", ";
+		cout << platform->cut() << ", and ";
+		cout << platform->grind() << ")";
+		cout << " to mill " << order["metal"] << " block";
+		cout << " into " << order["cavities"] << " hero shapes";
+		cout << " with " << order["finish"] << " finish.\n";
+	}
+};
+// Seam Point - add another shape abstraction.
+
+Shape_B_9* Shape_B_9::getShape(map<string,string>& order) {
+	Platform_B_9* platform = Platform_B_9::getPlatform(order);
+
+	string shape = order["mold"];
+	if(		shape == "duck")	return new Duck(platform);
+	else if(shape == "car")		return new Car(platform);
+	else if(shape == "hero")	return new Hero(platform);
+	// Seam Point - insert another shape abstraction.
+
+	else {					// Default.
+		return new Duck(platform);
+	}
+}
 
 }
 
 namespace chain_of_resp {	// DP 8.
 
+using namespace bridge;
+
+class GetMold {
+protected:
+	GetMold* successor;
+public:
+	GetMold(GetMold* successor=0) : successor(successor) {}
+	virtual ~GetMold() { DTOR("~GetMold_CofR_8 "); }
+public:
+	virtual Shape_B_9* from(map<string,string>& order) {
+		string shape = order["mold"];
+		string place = order["moldLoc"];
+		cout << "    <>Can't find place |" << place << "|";
+		cout << " to get |" << shape << "| mold from, ";
+		cout << "defaulting to ";
+		order["mold"] = "duck";
+		order["moldLoc"] = "inventory";
+		cout << order["mold"] << " from " << order["moldLoc"] << ".\n";
+		return Shape_B_9::getShape(order);
+	}
+};
+class Inventory : public GetMold {
+public:
+	Inventory(GetMold* successor) : GetMold(successor) {}
+	~Inventory() { DTOR("~Inventory "); delete successor; }
+public:
+	virtual Shape_B_9* from(map<string,string>& order) {
+		if(order["moldLoc"] == "inventory") {
+			cout << "    Pull " << order["mold"] << " mold from inventory.\n";
+			return Shape_B_9::getShape(order);
+			}
+		else if(successor)
+			return successor->from(order);
+		else {
+			return GetMold::from(order);
+		}
+	}
+};
+class Mill : public GetMold {
+public:
+	Mill(GetMold* successor) : GetMold(successor) {}
+	~Mill() { DTOR("~Mill "); delete successor; }
+public:
+	virtual Shape_B_9* from(map<string,string>& order) {
+		if(order["moldLoc"] == "mill") {
+			cout << "    Create " << order["mold"] << " mold";
+			cout << " from mill with " << order["cavities"] << " cavities:\n";
+			Shape_B_9* shape = Shape_B_9::getShape(order);
+			shape->mill(order);
+			return shape;
+			}
+		else if(successor)
+			return successor->from(order);
+		else {
+			return GetMold::from(order);
+		}
+	}
+};
 // Seam points - add another responder.
 
 }
@@ -516,7 +748,7 @@ namespace factory_method {	// DP 5.
 
 using namespace observer;
 
-class Packager_FM_5 : public Observer_7 {
+class Packager_FM_5 : public Observer_7 {	// Observer #3 in Observer pattern.
 public:
 	Packager_FM_5(Subject_7* subject) : Observer_7(subject) {}
 	virtual ~Packager_FM_5() { DTOR("~Packager_FM_5 "); }
@@ -588,21 +820,29 @@ namespace template_method {	// DP 4.
 //using namespace abstract_factory;
 using namespace abstract_factory_solti;
 using namespace factory_method;
+using namespace chain_of_resp;
 
 class ProcessOrder_TM_4 {
 protected:
 	strategy::Strategy_1* algorithm;
 	abstract_factory_solti::InjectionLine_AF* injectionLine;
-	Packager_FM_5*	packager;
+	Packager_FM_5*		packager;
+	GetMold*			theMold;
+	Shape_B_9*			shape;
 public:
 	ProcessOrder_TM_4()
 	  : algorithm(0),	// When no derived classes (new strategy::Strategy_1).
 		injectionLine(0),
-		packager(0)
+		packager(0),
+		theMold(0),
+		shape(0)
 	{}
 	virtual ~ProcessOrder_TM_4() {
 		delete packager;	// Must delete before injectionLine.
 		delete injectionLine;
+		delete theMold;
+		DTOR("\n");
+		delete shape;
 		delete algorithm;
 		DTOR("~ProcessOrder_TM_4\n");
 	}
@@ -617,20 +857,36 @@ private:
 		injectionLine->createLine(order);
 		packager = Packager_FM_5::createPackager(order, injectionLine->getBin());
 
-		cout << "  Setup <AF_IL> injection line for " << order["size"] ;
-		cout << " run with " << packager->name() << " packager:";
-		cout << "\n";
+		cout << "  Setup " << injectionLine->getName() << " injection line";
+		cout << " for " << order["size"] << " run";
+		cout << " with " << packager->name() << " packager";
+		cout << ":\n";
 
 		injectionLine->setup();
 	}
 	void getMold(map<string, string>& order) {
-		cout << "    Get mold:\n";
+		theMold =
+			new Inventory(
+			new Mill(
+			new GetMold(
+		)));
+
+		shape = theMold->from(order);
 	}
 	void insertTags(map<string, string>& order) {
 		cout << "    Insert tags [] of width 0/20 mm.\n";
 	}
 	void loadAdditives(map<string, string>& order) {
 		cout << "    Load plastic, color, and additive bins.\n";
+		if(order.find("color") == order.end()) {
+			order["color"] = "black";
+			cout << "      <>No color specified, defaulting to " << order["color"] << ".\n";
+		}
+		unsigned volume_cc = shape->volume_cc*0.1;
+		cout << "      Recipe: <plastic>(" << shape->volume_cc << ") ";
+		cout << order["color"] << " (" << volume_cc << ")";
+		cout << " <additive1>(<vol>) <additive2>(<vol>) Total = <vol>.\n";
+
 	}
 protected:
 	virtual void injectionCycle(map<string, string>& order) {
@@ -649,6 +905,7 @@ public:
 		loadAdditives(order);
 		injectionCycle(order);
 		cleanMold(order);
+		// Seam point - insert another step.
 	}
 };
 class ABS : public ProcessOrder_TM_4 {
