@@ -5,6 +5,18 @@
  *      Author:
  *
  *  Project: Intro to Design Patterns Pilot class.
+ *
+ *  Intent: Create just the design pattern architecture.
+ *  		No derived classes (except for the Observer pattern, where the
+ *  		derived classes are themselves base classes for other patterns),
+ *  		and the defaults in the specs have not been coded.
+ *
+ *  Result: The skeleton (outline) of the code, metaphorically, we have first
+ *  		framed the house, now can enclose each room. Contrast that with
+ *  		the usual approach of building the house room by room, then finding
+ *  		it too easy to put the frezzer in the garage instead of the kitchen.
+ *
+ *  Final LOC: 800.
  */
 
 #ifndef DP4_SRC_OUTLINE_FINAL_H_
@@ -14,6 +26,25 @@ namespace final_outline_file {
 
 const bool on = true;	// Useful macro to turn dtor instrumentation on/off.
 #define DTOR(x) if(on) { cout << x; }
+
+/* Decision logic interfaces (another place to reduce coupling):
+ *  1) Strategy			- selectCycleAlgorithm(order)	: "plastic".
+ *  2) Adapter			- getCleaningProcess(order)		: "plastic".
+ *  3)
+ *  4) TemplateMethod	- getOrderProcess(order)		: "plastic".
+ *  5) FactoryMethod	- createPackager(order)			: "packager"
+ *  6) Decorator		- insertTags(order, cavity)		: "tags".
+ *  					  addAddtives(order, color)		: "AdditiveX".
+ *  7) ChainOfResp		- getMold(order)				: "moldLoc".
+ *  8) Observer			- injection line base class machines inherit.
+ *  9) Bridge
+ *  	 Abstraction	- getShape(order)				: "mold".
+ *  	 Implementation	- getPlatform(order)			: 'metal'.
+ * 10) AbstractFactory	- determineInjectionLine(order)	: "size".
+ *
+ * "key" => present in order file.
+ * 'key' => added by code.
+ */
 
 namespace legacy_classes {	// Can't change these.
 
@@ -51,8 +82,20 @@ public:
 	virtual ~Adapter_2() { DTOR("~Adapter_2\n"); }
 public:
 	virtual string steps() { return "cleaning steps"; }
+public:
+	static Adapter_2* getCleaningProcess(map<string,string>& order);
 };
 // Seam point - add another cleaning interface.
+
+Adapter_2* Adapter_2::getCleaningProcess(map<string,string>& order) {
+	if(		order["plastic"] == "whatever")	return new Adapter_2;
+	else if(order["plastic"] == "whatever")	return new Adapter_2;
+	// Seam point - add another cleaning interface.
+
+	else {	// Default.
+		return new Adapter_2;
+	}
+}
 
 }
 
@@ -67,70 +110,150 @@ public:
 		cout << "      Close - heat to <temp> - inject at <psi> PSI";
 		cout << " - cool to <temp> - separate - <technique> eject.\n";
 	}
+public:
+	static Strategy_1* selectCycleAlgorithm(map<string,string>& order);
 };
 // Seam point - add another cycle algorithm.
+
+Strategy_1* Strategy_1::selectCycleAlgorithm(map<string,string>& order) {
+	if(		order["plastic"] == "whatever")	return new Strategy_1;
+	else if(order["plastic"] == "whatever")	return new Strategy_1;
+	// Seam point - add another cycle algorithm.
+
+	else {	// Default.
+		return new Strategy_1;
+	}
+}
 
 }
 
 namespace observer {		// DP 7.
 
-// Seam point - add another listener.
+/* The output bin is the Subject, it notifies for a pause when full.
+ * Earlier injection line machines are the Observers.
+ */
+
+class Observer_7;
+class Subject_7;
+
+class Subject_7 {
+	list<Observer_7*> observers;
+public:
+	const string name;
+public:
+	Subject_7(const string& name) : name(name) {}
+	~Subject_7();
+public:
+	void attach(Observer_7* obs) {
+		observers.push_back(obs);
+	}
+	void detach(Observer_7* obs) {
+		observers.remove(obs);
+	}
+	void pause();
+};
+
+class Observer_7 {
+protected:
+	Subject_7* subject;
+public:
+	Observer_7(Subject_7* subject) : subject(subject) {
+		subject->attach(this);
+	}
+	virtual ~Observer_7() {
+		subject->detach(this);
+		DTOR("~Observer_7\n");
+	}
+public:
+	virtual void update(Subject_7* subject=0) {
+		cout << "        <machine> pausing while";
+		cout << subject->name << " output bin is swapped.\n";
+	}
+};
+// No seam point - listeners are the base class machines of the injection line.
+
+Subject_7::~Subject_7() {
+	DTOR("~Subject_7 ");
+	DTOR("Observers left to process (should be zero) = ");
+	char str[80];
+	sprintf(str, "%d.\n", observers.size());
+	DTOR(str);
+}
+void Subject_7::pause() {
+	cout << "      " << name << " output bin full...\n";
+	list<Observer_7*>::iterator it;
+	for(it=observers.begin(); it!=observers.end(); it++) {
+		(*it)->update(this);
+	}
+}
 
 }
 
 namespace abstract_factory {// DP 10.
 
-class IJM_AF {
+using namespace observer;
+
+class IJM_AF : public Observer_7 {
 public:
-	IJM_AF() {}
-	virtual ~IJM_AF() { DTOR("~IJM_AF\n"); }
+	IJM_AF(Subject_7* bin) : Observer_7(bin) {}
+	virtual ~IJM_AF() { DTOR("~IJM_AF "); }
+public:
+	void update(Subject_7* bin) {
+		cout << "        <ijm> pausing while ";
+		cout << bin->name << " output bin is swapped.\n";
+	}
 };
 class Mold_AF {
 public:
 	Mold_AF() {}
 	virtual ~Mold_AF() { DTOR("~Mold_AF\n"); }
 };
-class ConveyerBelt_AF {
+class ConveyerBelt_AF : public Observer_7 {
 public:
-	ConveyerBelt_AF() {}
-	virtual ~ConveyerBelt_AF() { DTOR("~ConveyerBelt_AF\n"); }
+	ConveyerBelt_AF(Subject_7* bin) : Observer_7(bin) {}
+	virtual ~ConveyerBelt_AF() { DTOR("~ConveyerBelt_AF "); }
+public:
+	void update(Subject_7* bin) {
+		cout << "        <conveyer belt> pausing while ";
+		cout << bin->name << " output bin is swapped.\n";
+	}
 };
-class OutputBin_AF {
+class OutputBin_AF : public Subject_7 {
 public:
-	OutputBin_AF() {}
-	virtual ~OutputBin_AF() { DTOR("~OutputBin_AF\n"); }
+	OutputBin_AF(const string& name) : Subject_7(name) {}
+	virtual ~OutputBin_AF() { DTOR("~OutputBin_AF "); }
 };
 class AbstractFactory_10 {
 public:
 	AbstractFactory_10() {}
 	virtual ~AbstractFactory_10() { DTOR("~AbstractFactory_10 "); }
 public:
-	virtual IJM_AF* createIJM() {
-		return new IJM_AF;
+	virtual IJM_AF* createIJM(OutputBin_AF* bin) {
+		return new IJM_AF(bin);
 	}
 	virtual Mold_AF* createMold() {
 		return new Mold_AF;
 	}
-	virtual ConveyerBelt_AF* createConveyerBelt() {
-		return new ConveyerBelt_AF;
+	virtual ConveyerBelt_AF* createConveyerBelt(OutputBin_AF* bin) {
+		return new ConveyerBelt_AF(bin);
 	}
 	virtual OutputBin_AF* createOutputBin() {
-		return new OutputBin_AF;
+		return new OutputBin_AF("<OutputBin>");
 	}
 };
 class InjectionLine_AF {
 	AbstractFactory_10* factory;
+	OutputBin_AF*		bin;
 	IJM_AF*				ijm;
 	Mold_AF*			mold;
 	ConveyerBelt_AF*	belt;
-	OutputBin_AF*		bin;
 public:
 	InjectionLine_AF() :
 		factory(0),
+		bin(0),
 		ijm(0),
 		mold(0),
-		belt(0),
-		bin(0)
+		belt(0)
 	{}
 	virtual ~InjectionLine_AF() {
 		delete belt;
@@ -148,11 +271,13 @@ public:
 	void createLine(map<string,string>& order) {
 		factory = buildFactory();
 
-		ijm	 = factory->createIJM();
+		bin	 = factory->createOutputBin();			// Subject_7.
+
+		ijm	 = factory->createIJM(bin);				// Observer_7.
 		mold = factory->createMold();
-		belt = factory->createConveyerBelt();
-		bin	 = factory->createOutputBin();
+		belt = factory->createConveyerBelt(bin);	// Observer_7.
 	}
+	OutputBin_AF* getBin() { return bin; };
 public:
 	static InjectionLine_AF* determineInjectionLine(map<string,string>& order);
 };
@@ -160,24 +285,126 @@ public:
 // Seam point - add another injection line family.
 
 InjectionLine_AF* InjectionLine_AF::determineInjectionLine(map<string,string>& order) {
+	unsigned size = atoi(order["size"].c_str());
+	if(		size < 10000)	return new InjectionLine_AF;
+	else if(size < 20000)	return new InjectionLine_AF;
 	// Seam point - add another injection line family.
 
-	return new InjectionLine_AF;
+	else {	// Default.
+		return new InjectionLine_AF;
+	}
 }
 
 }
 
 namespace bridge {			// DP 9.
 
-// Seam Point - add another implementation.
+class Platform_B_9 {
+public:
+	const string name;
+public:
+	Platform_B_9(const string name="platform") : name(name) {}
+	virtual ~Platform_B_9() { DTOR("~Platform_B_9\n"); }
+public:
+	virtual string drill() { return "drill"; }
+	virtual string cut()   { return "cut"; }
+	virtual string grind() { return "grind"; }
+public:
+	static Platform_B_9* getPlatform(map<string,string>& order);
+};
+// Seam Point - add another milling platform implementation.
 
-// Seam Point - add another abstraction.
+Platform_B_9* Platform_B_9::getPlatform(map<string,string>& order) {
+	if(		order["metal"] == "whatever")	return new Platform_B_9;
+	else if(order["metal"] == "whatever")	return new Platform_B_9;
+	// Seam Point - add another milling platform implementation.
+
+	else {	// Default.
+		return new Platform_B_9;
+	}
+}
+
+class Shape_B_9 {
+protected:
+	Platform_B_9*	platform;
+public:
+	const unsigned	volume_cc;
+public:
+	Shape_B_9(Platform_B_9* platform, unsigned volume_cc=0)
+		: platform(platform), volume_cc(volume_cc) {}
+	virtual ~Shape_B_9() {
+		DTOR("~Shape_B_9 ");
+		delete platform;
+	}
+public:
+	virtual void mill(map<string,string>& order) {
+		cout << "      using " << platform->name << " tools (";
+		cout << platform->drill() << ", ";
+		cout << platform->cut() << ", ";
+		cout << platform->grind() << ")";
+		cout << " to mill " << order["metal"] << " block";
+		cout << " into " << order["cavities"] << " <shape> shapes";
+		cout << " with " << order["finish"] << " finish.\n";
+	}
+public:
+	static Shape_B_9* getShape(map<string,string>& order);
+};
+// Seam Point - add another shape abstraction.
+
+Shape_B_9* Shape_B_9::getShape(map<string,string>& order) {
+	Platform_B_9* platform = Platform_B_9::getPlatform(order);
+
+	if(		order["mold"] == "whatever")	return new Shape_B_9(platform);
+	else if(order["mold"] == "whatever")	return new Shape_B_9(platform);
+	// Seam Point - add another shape abstraction.
+
+	else {	// Default.
+		return new Shape_B_9(platform);
+	}
+}
 
 }
 
 namespace chain_of_resp {	// DP 8.
 
-// Seam points - add another responder.
+using namespace bridge;
+
+class GetMold_CofR_8 {
+protected:
+	GetMold_CofR_8* successor;
+public:
+	GetMold_CofR_8(GetMold_CofR_8* successor=0) : successor(successor) {}
+	virtual ~GetMold_CofR_8() { DTOR("~GetMold_CofR_8\n"); }
+public:
+	virtual Shape_B_9* from(map<string,string>& order) {
+		if(order["moldLoc"] == "wherever") {
+			cout << "    Get " << order["mold"] << " mold from <somewhere>.\n";
+			Shape_B_9* shape = Shape_B_9::getShape(order);
+			return shape;
+			}
+		else if(successor)
+			return successor->from(order);
+		else {
+			return /*GetMold::*/fromDefault(order);
+		}
+	}
+public:
+	Shape_B_9* fromDefault(map<string,string>& order) {
+		cout << "    Get " << order["mold"] << " mold from <somewhere>.\n";
+		return Shape_B_9::getShape(order);
+	}
+public:
+	static GetMold_CofR_8* getMold(map<string,string>& order);
+};
+// Seam point - add another mold location responder.
+
+GetMold_CofR_8* GetMold_CofR_8::getMold(map<string,string>& order) {
+	return
+		// new wherever(
+		// Seam point - add another mold location responder.
+		new GetMold_CofR_8(
+	);
+}
 
 }
 
@@ -235,20 +462,23 @@ public:
 		return option->list() + "";	// ModelNumber.
 	}
 public:
-	static Tags_D_6* insertTags(const string& list, Tags_D_6* cavity);
+	static Tags_D_6* insertTags(map<string,string>& order, Tags_D_6* cavity);
 };
 // Seam point - add another tag option.
 
-Tags_D_6* Tag::insertTags(const string& list, Tags_D_6* cavity) {
-	char tag[80] = "";
-	const char* remainingTokens = list.c_str();
+Tags_D_6* Tag::insertTags(map<string,string>& order, Tags_D_6* cavity) {
+	if(order.find("tags") == order.end())
+		return cavity;
 
-	for(;;) {
+	char tag[80] = "";
+	const char* remainingTokens = order["tags"].c_str();
+
+	while(remainingTokens) {
 		if(!sscanf(remainingTokens, "%s", tag))
 			break;
 
-//		if(		!strcmp(tag,  "<tag1>"))		cavity = new <Tag1>;
-//		else if(!strcmp(tag,  "<tag2>"))		cavity = new <Tag2>;
+		if(		!strcmp(tag,  "whatever"))		cavity = new Tag(cavity);
+		else if(!strcmp(tag,  "whatever"))		cavity = new Tag(cavity);
 		// Seam point - add another tag option.
 
 		else {
@@ -316,8 +546,15 @@ public:
 // Seam point - add another additive option.
 
 Plastic_D_6* Additive::addAdditives(map<string,string>& order, Plastic_D_6* color) {
-	if(order.find("Additive") != order.end()) {
-		color = new Additive(color, atoi(order["Additive"].c_str()));
+	unsigned vol_cc = 0;
+
+	if(order.find("Additive1") != order.end()) {
+		vol_cc = atoi(order["Additive1"].c_str());
+		color = new Additive(color, vol_cc);
+	}
+	if(order.find("Additive2") != order.end()) {
+		vol_cc = atoi(order["Additive2"].c_str());
+		color = new Additive(color, vol_cc);
 	}
 	// Seam point - add another additive option.
 
@@ -328,19 +565,30 @@ Plastic_D_6* Additive::addAdditives(map<string,string>& order, Plastic_D_6* colo
 
 namespace factory_method {	// DP 5.
 
-class Packager_FM_5 {
+using namespace observer;
+
+class Packager_FM_5 : public Observer_7 {
 public:
-	Packager_FM_5() {}
-	virtual ~Packager_FM_5() { DTOR("~Packager_FM_5\n"); }
+	Packager_FM_5(Subject_7* bin) : Observer_7(bin) {}
+	virtual ~Packager_FM_5() { DTOR("~Packager_FM_5 "); }
 public:
-	static Packager_FM_5* createPackager(map<string, string>& order);
+	void update(Subject_7* bin) {
+		cout << "        <packager> pausing while ";
+		cout << bin->name << " output bin is swapped.\n";
+	}
+public:
+	static Packager_FM_5* createPackager(map<string, string>& order, Subject_7* bin);
 };
 // Seam point - add another Packager class.
 
-Packager_FM_5* Packager_FM_5::createPackager(map<string, string>& order) {
+Packager_FM_5* Packager_FM_5::createPackager(map<string, string>& order, Subject_7* bin) {
+	if(		order["packager"] == "whatever")	return new Packager_FM_5(bin);
+	else if(order["packager"] == "whatever")	return new Packager_FM_5(bin);
 	// Seam point - add another Packager class.
 
-	return new Packager_FM_5;
+	else {	// Default.
+		return new Packager_FM_5(bin);
+	}
 }
 
 }
@@ -352,28 +600,36 @@ using namespace factory_method;
 using namespace strategy;
 using namespace adapter;
 using namespace decorator;
+using namespace chain_of_resp;
+using namespace bridge;
 
 class ProcessOrder_TM_4 {
 	InjectionLine_AF*	injectionLine;
 	Packager_FM_5*		packager;
-	Strategy_1*			algorithm;
-	Adapter_2*			cleaning;
+	GetMold_CofR_8*		mold;
+	Shape_B_9*			shape;
 	Tags_D_6*			cavity;
 	Plastic_D_6*		color;
+	Strategy_1*			algorithm;
+	Adapter_2*			cleaning;
 public:
 	ProcessOrder_TM_4() :
 		injectionLine(0),
 		packager(0),
-		algorithm(0),
-		cleaning(0),
+		mold(0),
+		shape(0),
 		cavity(0),
-		color(0)
+		color(0),
+		algorithm(0),
+		cleaning(0)
 	{}
 	virtual ~ProcessOrder_TM_4() {	// Reverse order from initialization.
-		delete color;
-		delete cavity;
 		delete cleaning;
 		delete algorithm;
+		delete color;
+		delete cavity;
+		delete shape;
+		delete mold;
 		delete packager;
 		delete injectionLine;
 		DTOR("~ProcessOrder_TM_4\n");
@@ -383,7 +639,8 @@ private:
 		injectionLine = InjectionLine_AF::determineInjectionLine(order);
 		injectionLine->createLine(order);
 
-		packager = Packager_FM_5::createPackager(order);
+		OutputBin_AF* bin = injectionLine->getBin();
+		packager = Packager_FM_5::createPackager(order, bin);
 
 		cout << "  Setup <DerivedOrder> injection line";
 		cout << " for <size> run with <Packager> packager:\n";
@@ -392,16 +649,14 @@ private:
 		cout << " - <Type> conveyer belt - <OutputBin>\n";
 	}
 	void getMold(map<string, string>& order) {
-		cout << "    Get <shape> mold from <somewhere>.\n";
+		mold = GetMold_CofR_8::getMold(order);
+
+		shape = mold->from(order);
 	};
 	void insertTags(map<string, string>& order) {
 		cavity = new Cavity;
 
-		string list = "";
-		if(order.find("list") != order.end()) {
-			list = order["list"];
-			cavity = Tag::insertTags(list, cavity);
-		}
+		cavity = Tag::insertTags(order, cavity);
 
 		unsigned tagsWidth_mm = cavity->width();
 		cavity->setBlankWidth(tagsWidth_mm);
@@ -409,7 +664,6 @@ private:
 		cout << "    Insert tags [" << cavity->list() << "]";
 		cout << " of width " << tagsWidth_mm << "/";
 		cout << cavity->getBlankWidth() << " mm.\n";
-
 	};
 	void loadAdditivies(map<string, string>& order) {
 		color = new Color(order["color"]);
@@ -435,6 +689,7 @@ protected:
 		cout << " " << order["size"] << " times.\n";
 		algorithm = new Strategy_1;
 		algorithm->cycle();
+		injectionLine->getBin()->pause();
 	};
 private:
 	void cleanMold(map<string, string>& order) {
@@ -454,15 +709,27 @@ public:
 		cleanMold(order);
 		// Seam point - add another step.
 	}
+public:
+	static ProcessOrder_TM_4* getOrderProcess(map<string,string>& order);
 };
 // Seam point - add another polymorphic step.
+
+ProcessOrder_TM_4* ProcessOrder_TM_4::getOrderProcess(map<string,string>& order) {
+	if(		order["plastic"] == "whatever")		return new ProcessOrder_TM_4;
+	else if(order["plastic"] == "whatever")		return new ProcessOrder_TM_4;
+	// Seam point - add another plastic.
+
+	else {	// Default.
+		return new ProcessOrder_TM_4;
+	}
+}
 
 }
 
 void process(map<string, string>& order) {
 	using namespace template_method;
 
-	ProcessOrder_TM_4* processOrder = new ProcessOrder_TM_4;
+	ProcessOrder_TM_4* processOrder = ProcessOrder_TM_4::getOrderProcess(order);
 
 	processOrder->run(order);
 
@@ -515,7 +782,7 @@ map<string, string> getCompleteOrder(FILE* orderFilePtr) {
 }
 
 void demo(const string& orderFile) {
-	cout << "<<< final design >>>\n";
+	cout << "<<< final outline >>>\n";
 
 	FILE* orderFilePtr = fopen(orderFile.c_str(), "r");
 

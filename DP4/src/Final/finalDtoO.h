@@ -146,7 +146,7 @@ public:
 
 namespace observer {		// DP 7.
 
-// Packager will be the Subject, the injection line machines the Observers.
+// Package bin will be the Subject, the injection line machines the Observers.
 
 class Observer_7;
 class Subject_7;

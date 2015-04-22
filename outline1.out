@@ -1,0 +1,195 @@
+Hello DP4.
+
+<<< final outline >>>
+1:
+	orderNum	= 1
+	comment		= Null order - check default behaviors.
+	endOfOrder
+  Setup <DerivedOrder> injection line for <size> run with <Packager> packager:
+    <IJM> - <Metal>(<cavities>) - <Type> conveyer belt - <OutputBin>
+  Process order:
+    Get  mold from <somewhere>.
+    Insert tags [] of width 0/20 mm.
+    Load plastic, color, and additive bins.
+      Recipe: (10) (1) Total = 22.
+    Cycle <IJM>: for   times.
+      Close - heat to <temp> - inject at <psi> PSI - cool to <temp> - separate - <technique> eject.
+      <OutputBin> output bin full...
+        <ijm> pausing while <OutputBin> output bin is swapped.
+        <conveyer belt> pausing while <OutputBin> output bin is swapped.
+        <packager> pausing while <OutputBin> output bin is swapped.
+    Clean <plastic> <optional metal> mold: <cleaning steps>.
+~Adapter_2
+~Strategy_1
+~Color ~Plastic_D_6
+~Cavity ~Tags_D_6
+~Shape_B_9 ~Platform_B_9
+~GetMold_CofR_8
+~Packager_FM_5 ~Observer_7
+~ConveyerBelt_AF ~Observer_7
+~Mold_AF
+~IJM_AF ~Observer_7
+~OutputBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
+~AbstractFactory_10 ~InjectionLine_AF
+~ProcessOrder_TM_4
+2:
+	orderNum	= 2
+	comment		= Example order - one of everything.
+	size		= 10000
+	packager	= Bulk
+	plastic		= ABS
+	moldLoc		= inventory
+	mold		= duck
+	tags		= ModelNumber
+	color		= red
+	UVInhibiter	= 6
+	endOfOrder
+  Setup <DerivedOrder> injection line for <size> run with <Packager> packager:
+    <IJM> - <Metal>(<cavities>) - <Type> conveyer belt - <OutputBin>
+  Process order:
+    Get duck mold from <somewhere>.
+Ignoring unknown tag ModelNumber.
+    Insert tags [] of width 0/20 mm.
+    Load plastic, color, and additive bins.
+      Recipe: ABS(10) red(1) Total = 22.
+    Cycle <IJM>: for ABS 10000 times.
+      Close - heat to <temp> - inject at <psi> PSI - cool to <temp> - separate - <technique> eject.
+      <OutputBin> output bin full...
+        <ijm> pausing while <OutputBin> output bin is swapped.
+        <conveyer belt> pausing while <OutputBin> output bin is swapped.
+        <packager> pausing while <OutputBin> output bin is swapped.
+    Clean <plastic> <optional metal> mold: <cleaning steps>.
+~Adapter_2
+~Strategy_1
+~Color ~Plastic_D_6
+~Cavity ~Tags_D_6
+~Shape_B_9 ~Platform_B_9
+~GetMold_CofR_8
+~Packager_FM_5 ~Observer_7
+~ConveyerBelt_AF ~Observer_7
+~Mold_AF
+~IJM_AF ~Observer_7
+~OutputBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
+~AbstractFactory_10 ~InjectionLine_AF
+~ProcessOrder_TM_4
+3:
+	orderNum		= 3
+	comment			= Max order - next of singles, all of everything else (orig secs).
+	size			= 20000
+	packager		= ShrinkWrap
+	plastic			= Polypropylene
+	moldLoc			= mill
+	mold			= car
+	finish			= smooth
+	tags			= ModelNumber Country Date
+	color			= orange
+	UVInhibiter		= 6
+	AntiBacterial	= 1
+	endOfOrder
+  Setup <DerivedOrder> injection line for <size> run with <Packager> packager:
+    <IJM> - <Metal>(<cavities>) - <Type> conveyer belt - <OutputBin>
+  Process order:
+    Get car mold from <somewhere>.
+Ignoring unknown tag ModelNumber.
+Ignoring unknown tag Country.
+Ignoring unknown tag Date.
+    Insert tags [] of width 0/20 mm.
+    Load plastic, color, and additive bins.
+      Recipe: Polypropylene(10) orange(1) Total = 22.
+    Cycle <IJM>: for Polypropylene 20000 times.
+      Close - heat to <temp> - inject at <psi> PSI - cool to <temp> - separate - <technique> eject.
+      <OutputBin> output bin full...
+        <ijm> pausing while <OutputBin> output bin is swapped.
+        <conveyer belt> pausing while <OutputBin> output bin is swapped.
+        <packager> pausing while <OutputBin> output bin is swapped.
+    Clean <plastic> <optional metal> mold: <cleaning steps>.
+~Adapter_2
+~Strategy_1
+~Color ~Plastic_D_6
+~Cavity ~Tags_D_6
+~Shape_B_9 ~Platform_B_9
+~GetMold_CofR_8
+~Packager_FM_5 ~Observer_7
+~ConveyerBelt_AF ~Observer_7
+~Mold_AF
+~IJM_AF ~Observer_7
+~OutputBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
+~AbstractFactory_10 ~InjectionLine_AF
+~ProcessOrder_TM_4
+4:
+	orderNum	= 4
+	comment		= Next of singles or last.
+	size		= 50000
+	packager	= HardPack
+	plastic		= Polyethelene
+	moldLoc		= mill
+	mold		= hero
+	finish		= rippled
+	color		= yellow
+	endOfOrder
+  Setup <DerivedOrder> injection line for <size> run with <Packager> packager:
+    <IJM> - <Metal>(<cavities>) - <Type> conveyer belt - <OutputBin>
+  Process order:
+    Get hero mold from <somewhere>.
+    Insert tags [] of width 0/20 mm.
+    Load plastic, color, and additive bins.
+      Recipe: Polyethelene(10) yellow(1) Total = 22.
+    Cycle <IJM>: for Polyethelene 50000 times.
+      Close - heat to <temp> - inject at <psi> PSI - cool to <temp> - separate - <technique> eject.
+      <OutputBin> output bin full...
+        <ijm> pausing while <OutputBin> output bin is swapped.
+        <conveyer belt> pausing while <OutputBin> output bin is swapped.
+        <packager> pausing while <OutputBin> output bin is swapped.
+    Clean <plastic> <optional metal> mold: <cleaning steps>.
+~Adapter_2
+~Strategy_1
+~Color ~Plastic_D_6
+~Cavity ~Tags_D_6
+~Shape_B_9 ~Platform_B_9
+~GetMold_CofR_8
+~Packager_FM_5 ~Observer_7
+~ConveyerBelt_AF ~Observer_7
+~Mold_AF
+~IJM_AF ~Observer_7
+~OutputBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
+~AbstractFactory_10 ~InjectionLine_AF
+~ProcessOrder_TM_4
+5:
+	orderNum	= 5
+	comment		= Next of singles or last.
+	size		= 50000
+	packager	= HardPack
+	plastic		= PET
+	moldLoc		= mill
+	mold		= hero
+	finish		= rippled
+	color		= green
+	endOfOrder
+  Setup <DerivedOrder> injection line for <size> run with <Packager> packager:
+    <IJM> - <Metal>(<cavities>) - <Type> conveyer belt - <OutputBin>
+  Process order:
+    Get hero mold from <somewhere>.
+    Insert tags [] of width 0/20 mm.
+    Load plastic, color, and additive bins.
+      Recipe: PET(10) green(1) Total = 22.
+    Cycle <IJM>: for PET 50000 times.
+      Close - heat to <temp> - inject at <psi> PSI - cool to <temp> - separate - <technique> eject.
+      <OutputBin> output bin full...
+        <ijm> pausing while <OutputBin> output bin is swapped.
+        <conveyer belt> pausing while <OutputBin> output bin is swapped.
+        <packager> pausing while <OutputBin> output bin is swapped.
+    Clean <plastic> <optional metal> mold: <cleaning steps>.
+~Adapter_2
+~Strategy_1
+~Color ~Plastic_D_6
+~Cavity ~Tags_D_6
+~Shape_B_9 ~Platform_B_9
+~GetMold_CofR_8
+~Packager_FM_5 ~Observer_7
+~ConveyerBelt_AF ~Observer_7
+~Mold_AF
+~IJM_AF ~Observer_7
+~OutputBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
+~AbstractFactory_10 ~InjectionLine_AF
+~ProcessOrder_TM_4
+Aloha DP4.
