@@ -28,17 +28,17 @@ Plastics:
   Polyethelene
   PET
   ...
-  Stryene
+  Styrene
   Nilon66
 
-Injection cycle:
+Injection cycles:
   ABS - Close - heat to 440 - inject at 125 PSI - cool to 360 - separate - progressive eject
   Poly - Close - heat to 350 - inject at 90 PSI - cool to 290 - separate - smooth eject
   PET - Close - heat to 404 - inject at 110 PSI - cool to 340 - separate - smooth eject
   ...
   Synthetics - Close - heat to 480 - inject at 150 PSI - cool to 390 - separate - shock eject
 
-Mold location:
+Mold locations:
   Inventory
   ...
   Sister company
@@ -59,7 +59,7 @@ Shapes:
   car (40 cc)
   hero (50 cc)
   ...
-  dino (35cc)
+  dino (35 cc)
   
 Milling Ops:
   Aluminum - High carbon
@@ -132,18 +132,28 @@ Package bins:
 Default to largest if size > max.
 
 Packagers:
-  bulk
+  bulk (default)
+  ... (does nothing, i.e., nothing to pause, so should not respond to update)
   shrink wrap
   hard pack
   ...
   ziploc
+......
+Stuffers: (another Observer)
+  Air (air - default, does nothing)
+  Popcorn (styrene propcorn)
+  BubbleWrap (bubble wrap)
+  Foam (expanding foam)
 
 Full bins:
   Pause injection line when full
-  Simulate just once during the injection run
+  ... Trigger Stuffer to fill output package bin
+  Simulate just once during the injection run:
   	IJM should pause
   	Belt should pause
-  	Packager should pause
+  	Packager should pause ... (unless Bulk Packager)
+  	...
+  	Stuffer should fill output package bin with chosen cushion substance (unless Air Stuffer)
 
 Cleaning the molds:
   ABS - soak in alcohol, rinse with water, dry
@@ -160,16 +170,18 @@ Cleaning the molds:
   	Ozone wash
 
 Setup the injection run:
-  Setup the injection line
+  Setup the injection line:
   	IJM
   	Mold
   	Conveyer belt
   	Packager
   	Output bin
+   	...
+  	Stuffer
   Get and install the mold
   Insert tags into mold
   Load additive bins
   Run the injection cycle till done
   Clean the mold
   ...
-  Ship to address
+  Ship to address (another step)

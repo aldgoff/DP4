@@ -10,7 +10,7 @@
 	1.2 If size > 50,000, default to 50,000
 		1.2.1 cout << "  <>No size specified, defaulting to 100.\n";
 3. Implement the following three Packagers:
-	3.1 Bulk (just dump part to output bin)
+	3.1 Bulk (default, just dump part to output bin)
 	3.2 ShrinkWrap
 	3.3 HardPack
 	3.4 If Packager unknown, default to Bulk

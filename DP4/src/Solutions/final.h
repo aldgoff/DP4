@@ -868,6 +868,68 @@ Packager_FM_5* Packager_FM_5::makeObject(map<string,string>& order, Subject* sub
 	}
 }
 
+// Seam point - add another Observer.
+
+class Stuffer_FM_5 : public Observer {
+public:
+	Stuffer_FM_5(Subject* subject) : Observer(subject) {}
+	virtual ~Stuffer_FM_5() { cout << "~Stuffer_FM_5 "; }
+public:
+	static Stuffer_FM_5* makeObject(map<string,string>& order, Subject* subject);
+	void update(Subject* subject) {
+		cout << "        Stuffer filling " << subject->name;
+		cout << " package bin with " << fill() << ".\n";
+	}
+public:
+	virtual string fill() { return "<cushion> stuffing"; }
+};
+class Air : public Stuffer_FM_5 {
+public:
+	Air(Subject* subject) : Stuffer_FM_5(subject) {
+//		subject->detach(this);	// Air stuffer is a null machine.
+	}
+	virtual ~Air() { cout << "~Air "; }
+public:
+	virtual string fill() { return "air stuffing"; }
+};
+class Popcorn : public Stuffer_FM_5 {
+public:
+	Popcorn(Subject* subject) : Stuffer_FM_5(subject) {}
+	virtual ~Popcorn() { cout << "~Popcorn "; }
+public:
+	virtual string fill() { return "styrene popcorn stuffing"; }
+};
+class BubbleWrap : public Stuffer_FM_5 {
+public:
+	BubbleWrap(Subject* subject) : Stuffer_FM_5(subject) {}
+	virtual ~BubbleWrap() { cout << "~BubbleWrap "; }
+public:
+	virtual string fill() { return "bubble wrap stuffing"; }
+};
+// Seam point - add another stuffer.
+class Foam : public Stuffer_FM_5 {
+public:
+	Foam(Subject* subject) : Stuffer_FM_5(subject) {}
+	virtual ~Foam() { cout << "~Foam "; }
+public:
+	virtual string fill() { return "expanding foam stuffing"; }
+};
+
+Stuffer_FM_5* Stuffer_FM_5::makeObject(map<string,string>& order, Subject* subject) {
+	if(     order["stuffer"] == "Air")			return new Air(subject);
+	else if(order["stuffer"] == "Popcorn")		return new Popcorn(subject);
+	else if(order["stuffer"] == "BubbleWrap")	return new BubbleWrap(subject);
+	// Seam point - add another stuffer.
+	else if(order["stuffer"] == "Foam")			return new Foam(subject);
+
+	else {									// Defaulting to Air stuffer.
+		cout << "  <>Unknown stuffer |" << order["stuffer"] << "|";
+		order["stuffer"] = "Air";
+		cout << " defaulting to " << order["stuffer"] << " stuffer.\n";
+		return new Air(subject);
+	}
+}
+
 }
 
 namespace legacy_classes {	// Can't change these.
@@ -1018,6 +1080,7 @@ protected:
 	Tags_D_6*			cavity;
 	Plastic_D_6*		color;
 	strategy::Strategy*	algorithm;
+	Stuffer_FM_5*		cushion;
 private:
 	void setupLine(map<string, string>& order) {	// Abstract Factory.
 		if(order.find("size") == order.end()) {
@@ -1035,6 +1098,8 @@ private:
 
 		packager = Packager_FM_5::makeObject(order, bin);	// FM & O.
 
+		cushion = Stuffer_FM_5::makeObject(order, bin);		// FM & O.
+
 		order["metal"] = mold->metal();
 		char str[80];
 		sprintf(str, "%d", mold->cavities());
@@ -1042,7 +1107,8 @@ private:
 
 		cout << "  Setup injection line for ";
 		cout << order["size"] << " run with ";
-		cout << packager->wrap() << ":\n    ";
+		cout << packager->wrap() << " and ";
+		cout << cushion->fill() << ":\n    ";
 		cout << ijm->setup() << " - ";
 		cout << mold->setup() << " - ";
 		cout << belt->setup() << " - ";
@@ -1105,6 +1171,7 @@ private:
 	}
 public:
 	virtual ~ProcessOrder_TM_4() {
+		delete cushion;
 		delete packager;
 		delete ijm;
 		delete mold;

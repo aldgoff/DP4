@@ -8,7 +8,8 @@ Hello DP4.
   <>Unknown plastic || defaulting to ABS.
   <>No size specified, defaulting to 100.
   <>Unknown packager || defaulting to Bulk packager.
-  Setup injection line for 100 run with Bulk packager:
+  <>Unknown stuffer || defaulting to Air stuffer.
+  Setup injection line for 100 run with Bulk packager and air stuffing:
     IJM_110 - Aluminum(1) - Linear conveyer belt - CardboardBox
   Process order.
     <>Can't find place || to get || mold from, defaulting to duck from inventory.
@@ -22,9 +23,11 @@ Hello DP4.
         IJM pausing while CardboardBox package bin is swapped.
         Conveyer belt pausing while CardboardBox package bin is swapped.
         Packager pausing while CardboardBox package bin is swapped.
+        Stuffer filling CardboardBox package bin with air stuffing.
     Clean ABS mold: soak in alcohol, rinse with water, dry.
     Ship to ""
 ~ABS
+~Air ~Stuffer_FM_5 ~Observer_7
 ~Bulk ~Packager_FM_5 ~Observer_7
 ~IJM_110 ~IJM_AF ~Observer_7
 ~Aluminum ~Mold_AF
@@ -49,7 +52,8 @@ Hello DP4.
 	color		= red
 	UVInhibiter	= 6
 	endOfOrder
-  Setup injection line for 10000 run with Bulk packager:
+  <>Unknown stuffer || defaulting to Air stuffer.
+  Setup injection line for 10000 run with Bulk packager and air stuffing:
     IJM_110 - Aluminum(1) - Linear conveyer belt - CardboardBox
   Process order.
     Pull duck mold from inventory.
@@ -62,9 +66,11 @@ Hello DP4.
         IJM pausing while CardboardBox package bin is swapped.
         Conveyer belt pausing while CardboardBox package bin is swapped.
         Packager pausing while CardboardBox package bin is swapped.
+        Stuffer filling CardboardBox package bin with air stuffing.
     Clean ABS mold: soak in alcohol, rinse with water, dry.
     Ship to ""
 ~ABS
+~Air ~Stuffer_FM_5 ~Observer_7
 ~Bulk ~Packager_FM_5 ~Observer_7
 ~IJM_110 ~IJM_AF ~Observer_7
 ~Aluminum ~Mold_AF
@@ -91,7 +97,8 @@ Hello DP4.
 	UVInhibiter		= 6
 	AntiBacterial	= 1
 	endOfOrder
-  Setup injection line for 20000 run with ShrinkWrap packager:
+  <>Unknown stuffer || defaulting to Air stuffer.
+  Setup injection line for 20000 run with ShrinkWrap packager and air stuffing:
     IJM_120 - Aluminum(2) - Y-Split conveyer belt - CardboardBox
   Process order.
     Create car mold from mill with 2 cavities:
@@ -105,9 +112,11 @@ Hello DP4.
         IJM pausing while CardboardBox package bin is swapped.
         Conveyer belt pausing while CardboardBox package bin is swapped.
         Packager pausing while CardboardBox package bin is swapped.
+        Stuffer filling CardboardBox package bin with air stuffing.
     Clean Poly mold: rinse with acetone, dry.
     Ship to ""
 ~Polypropylene
+~Air ~Stuffer_FM_5 ~Observer_7
 ~ShrinkWrap ~Packager_FM_5 ~Observer_7
 ~IJM_120 ~IJM_AF ~Observer_7
 ~Aluminum ~Mold_AF
@@ -131,7 +140,8 @@ Hello DP4.
 	finish		= rippled
 	color		= yellow
 	endOfOrder
-  Setup injection line for 50000 run with HardPack packager:
+  <>Unknown stuffer || defaulting to Air stuffer.
+  Setup injection line for 50000 run with HardPack packager and air stuffing:
     IJM_210 - Steel(1) - Linear conveyer belt - PallotBox
   Process order.
     Create hero mold from mill with 1 cavities:
@@ -145,9 +155,11 @@ Hello DP4.
         IJM pausing while PallotBox package bin is swapped.
         Conveyer belt pausing while PallotBox package bin is swapped.
         Packager pausing while PallotBox package bin is swapped.
+        Stuffer filling PallotBox package bin with air stuffing.
     Clean Poly mold: rinse with acetone, dry.
     Ship to ""
 ~Polyethelene
+~Air ~Stuffer_FM_5 ~Observer_7
 ~HardPack ~Packager_FM_5 ~Observer_7
 ~IJM_210 ~IJM_AF ~Observer_7
 ~Steel ~Mold_AF
@@ -171,7 +183,8 @@ Hello DP4.
 	finish		= rippled
 	color		= green
 	endOfOrder
-  Setup injection line for 50000 run with HardPack packager:
+  <>Unknown stuffer || defaulting to Air stuffer.
+  Setup injection line for 50000 run with HardPack packager and air stuffing:
     IJM_210 - Steel(1) - Linear conveyer belt - PallotBox
   Process order.
     Create hero mold from mill with 1 cavities:
@@ -185,9 +198,11 @@ Hello DP4.
         IJM pausing while PallotBox package bin is swapped.
         Conveyer belt pausing while PallotBox package bin is swapped.
         Packager pausing while PallotBox package bin is swapped.
+        Stuffer filling PallotBox package bin with air stuffing.
     Clean PET steel mold: heat to 895 C.
     Ship to ""
 ~PET
+~Air ~Stuffer_FM_5 ~Observer_7
 ~HardPack ~Packager_FM_5 ~Observer_7
 ~IJM_210 ~IJM_AF ~Observer_7
 ~Steel ~Mold_AF
@@ -212,9 +227,10 @@ Hello DP4.
 	tags		= IncCounter PartNumber RecycleCode
 	color		= blue
 	MicroFibers	= 3
+	stuffer		= Air
 	address		= MegaCorp, 1 Apple, Santa Clara, CA 92200
 	endOfOrder
-  Setup injection line for 40000 run with ZipLock packager:
+  Setup injection line for 40000 run with ZipLock packager and air stuffing:
     IJM_140 - Aluminum(4) - V-Level conveyer belt - PallotBox
   Process order.
     Borrow dino mold from sister company.
@@ -227,9 +243,11 @@ Hello DP4.
         IJM pausing while PallotBox package bin is swapped.
         Conveyer belt pausing while PallotBox package bin is swapped.
         Packager pausing while PallotBox package bin is swapped.
+        Stuffer filling PallotBox package bin with air stuffing.
     Clean synthetic mold: ozone wash.
     Ship to "MegaCorp, 1 Apple, Santa Clara, CA 92200"
 ~Styrene
+~Air ~Stuffer_FM_5 ~Observer_7
 ~ZipLock ~Packager_FM_5 ~Observer_7
 ~IJM_140 ~IJM_AF ~Observer_7
 ~Aluminum ~Mold_AF
@@ -252,9 +270,10 @@ Hello DP4.
 	mold		= dino
 	finish		= sanded
 	color		= violet
+	stuffer		= Popcorn
 	address		= Anytown, CA
 	endOfOrder
-  Setup injection line for 100000 run with ZipLock packager:
+  Setup injection line for 100000 run with ZipLock packager and styrene popcorn stuffing:
     IJM_220 - Steel(2) - Y-Split conveyer belt - Crate
   Process order.
     Acquire dino mold via purchase.
@@ -267,9 +286,11 @@ Hello DP4.
         IJM pausing while Crate package bin is swapped.
         Conveyer belt pausing while Crate package bin is swapped.
         Packager pausing while Crate package bin is swapped.
+        Stuffer filling Crate package bin with styrene popcorn stuffing.
     Clean synthetic mold: ozone wash.
     Ship to "Anytown, CA"
 ~Nylon66
+~Popcorn ~Stuffer_FM_5 ~Observer_7
 ~ZipLock ~Packager_FM_5 ~Observer_7
 ~IJM_220 ~IJM_AF ~Observer_7
 ~Steel ~Mold_AF
@@ -292,9 +313,10 @@ Hello DP4.
 	mold		= dino
 	finish		= satin
 	color		= gray
+	stuffer		= BubbleWrap
 	address		= Wherever, USA
 	endOfOrder
-  Setup injection line for 200000 run with ZipLock packager:
+  Setup injection line for 200000 run with ZipLock packager and bubble wrap stuffing:
     IJM_240 - Steel(4) - V-Level conveyer belt - Crate
   Process order.
     Create dino mold from mill with 4 cavities:
@@ -308,9 +330,11 @@ Hello DP4.
         IJM pausing while Crate package bin is swapped.
         Conveyer belt pausing while Crate package bin is swapped.
         Packager pausing while Crate package bin is swapped.
+        Stuffer filling Crate package bin with bubble wrap stuffing.
     Clean synthetic mold: ozone wash.
     Ship to "Wherever, USA"
 ~Nylon66
+~BubbleWrap ~Stuffer_FM_5 ~Observer_7
 ~ZipLock ~Packager_FM_5 ~Observer_7
 ~IJM_240 ~IJM_AF ~Observer_7
 ~Steel ~Mold_AF
@@ -337,10 +361,11 @@ Hello DP4.
 	MicroFibers		= 3
 	UVInhibiter		= 6
 	AntiBacterial	= 1
+	stuffer			= Foam
 	address			= PLay Toys, 1234 5th st, Pastoria, IL 34556
 	endOfOrder
   <>Size too large |400000| defaulting to HugeOrder.
-  Setup injection line for 200000 run with ZipLock packager:
+  Setup injection line for 200000 run with ZipLock packager and expanding foam stuffing:
     IJM_240 - Steel(4) - V-Level conveyer belt - Crate
   Process order.
     Create dino mold from mill with 4 cavities:
@@ -354,9 +379,11 @@ Hello DP4.
         IJM pausing while Crate package bin is swapped.
         Conveyer belt pausing while Crate package bin is swapped.
         Packager pausing while Crate package bin is swapped.
+        Stuffer filling Crate package bin with expanding foam stuffing.
     Clean synthetic mold: ozone wash.
     Ship to "PLay Toys, 1234 5th st, Pastoria, IL 34556"
 ~Nylon66
+~Foam ~Stuffer_FM_5 ~Observer_7
 ~ZipLock ~Packager_FM_5 ~Observer_7
 ~IJM_240 ~IJM_AF ~Observer_7
 ~Steel ~Mold_AF

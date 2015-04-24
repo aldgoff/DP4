@@ -62,6 +62,7 @@
 	tags		= IncCounter PartNumber RecycleCode
 	color		= blue
 	MicroFibers	= 3
+	stuffer		= Air
 	address		= MegaCorp, 1 Apple, Santa Clara, CA 92200
 	endOfOrder
 7:
@@ -74,6 +75,7 @@
 	mold		= dino
 	finish		= sanded
 	color		= violet
+	stuffer		= Popcorn
 	address		= Anytown, CA
 	endOfOrder
 8:
@@ -86,6 +88,7 @@
 	mold		= dino
 	finish		= satin
 	color		= gray
+	stuffer		= BubbleWrap
 	address		= Wherever, USA
 	endOfOrder
 9:
@@ -102,5 +105,6 @@
 	MicroFibers		= 3
 	UVInhibiter		= 6
 	AntiBacterial	= 1
+	stuffer			= Foam
 	address			= PLay Toys, 1234 5th st, Pastoria, IL 34556
 	endOfOrder

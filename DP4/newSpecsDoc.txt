@@ -13,28 +13,46 @@
 	6.2 PartNumber 2mm.
 	6.3 RecycleCode 6mm (2D bar code to automate sorting of discarded parts).
 7. Add new additive, MicroFibers.
-8. Add shipping step to injection run process:
-	8.1 order["address"] = shipping address as one line comma separated fields.
+8. Add Stuffing machine to put cushioning material into the output package bin:
+	8.1 order["stuffer"] = Air
+	8.2 Does nothing, but is default.
+	8.3 cout << "  <>Unknown stuffer || defaulting to Air stuffer.\n"
+	8.4 cout << "  Setup injection line for <size> run with <packager> packager and <cushion> stuffing:\n"
+9. Add shipping step to injection run process:
+	9.1 order["address"] = shipping address as one line comma separated fields.
 
-9. Add ability to handle run size of 100,000 (LargeOrder):
-	9.1 IJM_220.
-	9.2 Steel molds with 2 cavities.
-	9.3 Y-split conveyer belt.
-	9.4 New package (output) bin, Crate.
-10. Add Nylon66 as a new synthetic plastic:
-	10.1 Injection: heat to 480 - inject at 150 PSI - cool to 390 - shock eject.
-	10.1 Cleaning: ozone wash.
-11. Add purchase as new mold location, between sister company and mill.
+10. Add ability to handle run size of 100,000 (LargeOrder):
+	10.1 IJM_220.
+	10.2 Steel molds with 2 cavities.
+	10.3 Y-split conveyer belt.
+	10.4 New package (output) bin, Crate.
+11. Add Nylon66 as a new synthetic plastic:
+	11.1 Injection: heat to 480 - inject at 150 PSI - cool to 390 - shock eject.
+	11.1 Cleaning: ozone wash.
+12. Add purchase as new mold location, between sister company and mill.
+13. Add Stuffing machine for styrene popcorn:
+	13.1 order["stuffer"] = Popcorn
+	13.2 Triggered when output package bin is full.
+	13.3 cout << "        Stuffer filling <package> package bin with styrene popcorn stuffing.\n"
+	
+14. Add ability to handle run size of 200,000 (HugeOrder):
+	14.1 IJM_240.
+	14.2 Steel molds with 4 cavities.
+	14.3 V-Level converyer belt.
+15. Add a new finish, satin:
+	15.1 Requires DiamondTipped milling tools:
+		15.1.1 precision drill.
+		15.1.2 oil cooled cut.
+		15.1.3 cartoid grind.
+16. Add Stuffing machine for bubble wrap:
+	16.1 order["stuffer"] = BubbleWrap
+	16.2 Triggered when output package bin is full.
+	16.3 cout << "        Stuffer filling <package> package bin with bubble wrap stuffing.\n"
 
-12. Add ability to handle run size of 200,000 (HugeOrder):
-	12.1 IJM_240.
-	12.2 Steel molds with 4 cavities.
-	12.3 V-Level converyer belt.
-13. Add a new finish, satin:
-	13.1 Requires DiamondTipped milling tools:
-		13.1.1 precision drill.
-		13.1.2 oil cooled cut.
-		13.1.3 cartoid grind.
-
-14. Resize too large orders to largest available:
-	14.1 400,000 reduced to 200,000.
+17. Resize too large orders to largest available:
+	17.1 400,000 reduced to 200,000.
+18. Add Stuffing machine for expanding foam:
+	18.1 order["stuffer"] = Foam
+	18.2 Triggered when output package bin is full.
+	18.3 cout << "        Stuffer filling <package> package bin with expanding foam stuffing.\n"
+	

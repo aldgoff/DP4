@@ -19,12 +19,12 @@ Plastics:
   Polyethelene
   PET
 
-Injection cycle:
+Injection cycles:
   ABS  - Close - heat to 440 - inject at 125 PSI - cool to 360 - separate - progressive eject
   Poly - Close - heat to 350 - inject at  90 PSI - cool to 290 - separate - smooth eject
   PET  - Close - heat to 404 - inject at 110 PSI - cool to 340 - separate - smooth eject
 
-Mold location:
+Mold locations:
   Inventory
   Mill
 
@@ -80,13 +80,13 @@ Package bins:
 Default to largest if size > max.
 
 Packagers:
-  bulk
+  bulk (default)
   shrink wrap
   hard pack
 
 Full bins:
   Pause injection line when full
-  Simulate just once during the injection run
+  Simulate just once during the injection run:
   	IJM should pause
   	Belt should pause
   	Packager should pause
@@ -103,7 +103,7 @@ Cleaning the molds:
   	  use legacy method carbonize()
 
 Setup the injection run:
-  Setup the injection line
+  Setup the injection line:
   	IJM
   	Mold
   	Conveyer belt
