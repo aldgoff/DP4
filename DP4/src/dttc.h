@@ -19,7 +19,16 @@ namespace dttc {
 
 char str[80+1];
 
+namespace common_code {
+
+bool mustBeStable = false;
+bool keysWellBehaved = false;
+
+}
+
 namespace legacy {
+
+using namespace common_code;
 
 unsigned shiftLeft(const unsigned& reg, unsigned bits) {
 	unsigned shiftedReg = reg;
@@ -53,45 +62,39 @@ void heapSort(int* array, size_t size) { cout << "  heap sort\n";}
 void mergeSort(int* array, size_t size) { cout << "  merge sort\n";}
 void radixSort(int* array, size_t size) { cout << "  radix sort\n";}
 
-bool mustBeStable = false;
-bool keysWellBehaved = false;
-
-void mySort(int* array, size_t size) {
+void clientCode(int* array, size_t size) {
 	if(mustBeStable)		 heapSort(array, size);
 	else if(keysWellBehaved) radixSort(array, size);
-	else if(size <10)		 bubbleSort(array, size);
+	else if(size < 10)		 bubbleSort(array, size);
 	else if(size < 100000)	 quickSort(array, size);
 	else if(size >= 100000)  mergeSort(array, size);
-	else {
-		cout << "  OOPS!";
-	}
-	if(size < 10)			 bubbleSort(array, size);
-	else if(size < 100000)	 quickSort(array, size);
-	else if(mustBeStable)	 heapSort(array, size);
-	else if(size >= 100000)  mergeSort(array, size);
-	else if(keysWellBehaved) radixSort(array, size);
 	else {
 		cout << "  OOPS!";
 	}
 }
 
 void demo() {
+	cout << "<< legacy >>\n";
 	unsigned reg = 0x00FF;
 
 	sprintf(str, "  %04X - %04X\n", reg, shiftLeft(reg, 4));
 	cout << str;
 
-
 	int array[7] = { 5, 2, 3, 7, 1, 6, 4 };
+
 	size_t sizes[] = { 7, 100, 200000 };
 	for(size_t i=0; i<sizeof(sizes)/sizeof(*sizes); i++) {
-		mySort(array, sizes[i]);
+		clientCode(array, sizes[i]);
 	}
+
+	cout << endl;
 }
 
 }
 
 namespace design_pattern {
+
+using namespace common_code;
 
 unsigned shiftLeft(const unsigned& reg, unsigned bits) {
 	return(reg << bits);
@@ -100,47 +103,65 @@ unsigned shiftLeft(const unsigned& reg, unsigned bits) {
 class Sort {
 public: virtual ~Sort() {}
 public:
-	virtual void algorithm(unsigned* array, size_t size)=0;
+	virtual void algorithm(int* array, size_t size) {
+		cout << "  default sort\n";
+	}
+public:
+	static Sort* decisionLogic(size_t size);
 };
 class BubbleSort : public Sort {
 public:
-	void algorithm(unsigned* array, size_t size) { cout << "  bubble sort\n"; }
+	void algorithm(int* array, size_t size) { cout << "  bubble sort\n"; }
 };
 class QuickSort : public Sort {
 public:
-	void algorithm(unsigned* array, size_t size) { cout << "  quick sort\n"; }
+	void algorithm(int* array, size_t size) { cout << "  quick sort\n"; }
 };
 class HeapSort : public Sort {
 public:
-	void algorithm(unsigned* array, size_t size) { cout << "  heap sort\n"; }
+	void algorithm(int* array, size_t size) { cout << "  heap sort\n"; }
 };
 class MergeSort : public Sort {
 public:
-	void algorithm(unsigned* array, size_t size) { cout << "  merge sort\n"; }
+	void algorithm(int* array, size_t size) { cout << "  merge sort\n"; }
 };
 class RadixSort : public Sort {
 public:
-	void algorithm(unsigned* array, size_t size) { cout << "  radix sort\n"; }
+	void algorithm(int* array, size_t size) { cout << "  radix sort\n"; }
 };
+// Seam point - add another sort algorithm.
 
-void clientCode(unsigned* array, size_t size, Sort* sort) {
+Sort* Sort::decisionLogic(size_t size) {
+	if(mustBeStable)			return new HeapSort;
+	else if(keysWellBehaved)	return new RadixSort;
+	else if(size < 10)			return new BubbleSort;
+	else if(size < 100000)		return new QuickSort;
+	else if(size >= 100000) 	return new MergeSort;
+	else {
+		cout << "  OOPS!";
+		return new Sort;
+	}
+}
+
+void clientCode(int* array, size_t size, Sort* sort) {
 	sort->algorithm(array, size);
 }
 
 void demo() {
-	unsigned reg = 0x00FF;
+	cout << "<< design_patterns >>\n";
+	int reg = 0x00FF;
 
 	sprintf(str, "  %04X - %04X\n", reg, shiftLeft(reg, 4));
 	cout << str;
 
-	unsigned array[7] = { 5, 2, 3, 7, 1, 6, 4 };
+	int array[7] = { 5, 2, 3, 7, 1, 6, 4 };
 
-
-	Sort* sorts[] = { new BubbleSort, new QuickSort, new HeapSort };
 	size_t sizes[] = { 7, 100, 200000 };
-	for(size_t i=0; i<sizeof(sorts)/sizeof(*sorts); i++) {
-		clientCode(array, sizes[i], sorts[i]);
+	for(size_t i=0; i<sizeof(sizes)/sizeof(*sizes); i++) {
+		clientCode(array, sizes[i], Sort::decisionLogic(sizes[i]));
 	}
+
+	cout << endl;
 }
 
 }
