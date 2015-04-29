@@ -103,7 +103,7 @@ public:
 	}
 public:
 	virtual void cycle(map<string, string>& order) {
-		cout << "    Cycle IJM for <plastic> <size> times.\n";
+		cout << "    Cycle IJM for <plastic> <runSize> times.\n";
 		cout << "      Close - heat to <temp> - inject at <psi> PSI - cool to <temp> - separate - <technique> eject.\n";
 	}
 	void clean(const string& metal="steel") {
@@ -116,7 +116,7 @@ public:
 	~ABS() { DTOR("~ABS "); }
 public:
 	void cycle(map<string, string>& order) {
-		cout << "    Cycle IJM for ABS " << order["size"] << " times.\n";
+		cout << "    Cycle IJM for ABS " << order["runSize"] << " times.\n";
 		cout << "      Close - heat to 440 - inject at 125 PSI - cool to 360 - separate - progressive eject.\n";
 	}
 };
@@ -126,7 +126,7 @@ public:
 	~Poly() { DTOR("~Poly "); }
 public:
 	void cycle(map<string, string>& order) {
-		cout << "    Cycle IJM for Poly " << order["size"] << " times.\n";
+		cout << "    Cycle IJM for Poly " << order["runSize"] << " times.\n";
 		cout << "      Close - heat to 350 - inject at  90 PSI - cool to 290 - separate - smooth eject.\n";
 	}
 };
@@ -136,7 +136,7 @@ public:
 	~PET() { DTOR("~PET "); }
 public:
 	void cycle(map<string, string>& order) {
-		cout << "    Cycle IJM for PET " << order["size"] << " times.\n";
+		cout << "    Cycle IJM for PET " << order["runSize"] << " times.\n";
 		cout << "      Close - heat to 404 - inject at 110 PSI - cool to 340 - separate - smooth eject.\n";
 	}
 };
@@ -333,6 +333,10 @@ public:
 		char str[80];
 		sprintf(str, "%d", mold->cavities);
 		order["cavities"] = str;
+
+		unsigned runSize = atoi(order["size"].c_str())/mold->cavities;
+		sprintf(str, "%d", runSize);
+		order["runSize"] = str;
 	}
 	virtual string getName() { return "BaseOrder"; }
 	void setup() {
@@ -1037,7 +1041,7 @@ private:
 		packager = Packager_FM_5::createPackager(order, injectionLine->getBin());
 
 		cout << "  Setup " << injectionLine->getName() << " injection line";
-		cout << " for " << order["size"] << " run";
+		cout << " for " << order["runSize"] << " run";
 		cout << " with " << packager->name() << " packager";
 		cout << ":\n";
 

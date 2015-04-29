@@ -88,6 +88,8 @@ using namespace std;
 #include "whatVaries.h"
 
 #include "dttc.h"
+#include "Cavs/cavs.h"
+#include "Cavs/mixin.h"
 
 /*====================================================================================================================*/
 
@@ -302,6 +304,24 @@ void runDttcLecture() {
 	cout << "  Aloha dttc lecture.\n";
 }
 
+void runCAVS() {
+	cout << "  Hello cAVS exploration.\n";
+
+	using namespace cavs;
+	demo();
+
+	cout << "  Aloha cAVS exploration.\n";
+}
+
+void runMixin() {
+	cout << "  Hello Mixin.\n";
+
+	using namespace mixin;
+	demo();
+
+	cout << "  Aloha Mixin.\n";
+}
+
 /*====================================================================================================================*/
 
 int main(int argc, char* args[]) {
@@ -329,6 +349,8 @@ int main(int argc, char* args[]) {
 		cout << "virtualDtorBug\n";
 		cout << "maestro\n";
 		cout << "dttc\n";
+		cout << "cavs\n";
+		cout << "mixin\n";
 		cout << "\n";
 	}
 
@@ -369,6 +391,8 @@ int main(int argc, char* args[]) {
 		else if(!strcmp(args[i], "virtualDtorBug"))		runVirtualDtorBug();
 		else if(!strcmp(args[i], "maestro"))			runMaestroTests();
 		else if(!strcmp(args[i], "dttc"))				runDttcLecture();
+		else if(!strcmp(args[i], "cavs"))				runCAVS();
+		else if(!strcmp(args[i], "mixin"))				runMixin();
 		else {
 			cout << "  <" << args[i] << "> command line arg NOT understood.\n";
 		}

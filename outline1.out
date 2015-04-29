@@ -5,14 +5,14 @@ Hello DP4.
 	orderNum	= 1
 	comment		= Null order - check default behaviors.
 	endOfOrder
-  Setup <DerivedOrder> injection line for <size> run with <Packager> packager:
+  Setup <DerivedOrder> injection line for 0 run with <Packager> packager:
     <IJM> - <Metal>(<cavities>) - <Type> conveyer belt - <OutputBin>
   Process order:
     Get  mold from <somewhere>.
     Insert tags [] of width 0/20 mm.
     Load plastic, color, and additive bins.
       Recipe: (10) (1) Total = 22.
-    Cycle <IJM>: for   times.
+    Cycle <IJM>: for  0 times.
       Close - heat to <temp> - inject at <psi> PSI - cool to <temp> - separate - <technique> eject.
       <OutputBin> output bin full...
         <ijm> pausing while <OutputBin> output bin is swapped.
@@ -44,7 +44,7 @@ Hello DP4.
 	color		= red
 	UVInhibiter	= 6
 	endOfOrder
-  Setup <DerivedOrder> injection line for <size> run with <Packager> packager:
+  Setup <DerivedOrder> injection line for 10000 run with <Packager> packager:
     <IJM> - <Metal>(<cavities>) - <Type> conveyer belt - <OutputBin>
   Process order:
     Get duck mold from <somewhere>.
@@ -86,7 +86,7 @@ Ignoring unknown tag ModelNumber.
 	UVInhibiter		= 6
 	AntiBacterial	= 1
 	endOfOrder
-  Setup <DerivedOrder> injection line for <size> run with <Packager> packager:
+  Setup <DerivedOrder> injection line for 20000 run with <Packager> packager:
     <IJM> - <Metal>(<cavities>) - <Type> conveyer belt - <OutputBin>
   Process order:
     Get car mold from <somewhere>.
@@ -127,7 +127,7 @@ Ignoring unknown tag Date.
 	finish		= rippled
 	color		= yellow
 	endOfOrder
-  Setup <DerivedOrder> injection line for <size> run with <Packager> packager:
+  Setup <DerivedOrder> injection line for 50000 run with <Packager> packager:
     <IJM> - <Metal>(<cavities>) - <Type> conveyer belt - <OutputBin>
   Process order:
     Get hero mold from <somewhere>.
@@ -165,7 +165,7 @@ Ignoring unknown tag Date.
 	finish		= rippled
 	color		= green
 	endOfOrder
-  Setup <DerivedOrder> injection line for <size> run with <Packager> packager:
+  Setup <DerivedOrder> injection line for 50000 run with <Packager> packager:
     <IJM> - <Metal>(<cavities>) - <Type> conveyer belt - <OutputBin>
   Process order:
     Get hero mold from <somewhere>.

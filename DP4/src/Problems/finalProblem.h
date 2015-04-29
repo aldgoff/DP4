@@ -909,8 +909,12 @@ private:
 		sprintf(str, "%d", mold->cavities());
 		order["cavities"] = str;
 
+		unsigned runSize = atoi(order["size"].c_str())/mold->cavities();
+		sprintf(str, "%d", runSize);
+		order["runSize"] = str;
+
 		cout << "  Setup injection line for ";
-		cout << order["size"] << " run";
+		cout << runSize << " run";
 		cout << " with " << packager->wrap();
 		cout << ":\n    ";
 		cout << ijm->setup() << " - ";
@@ -961,7 +965,7 @@ private:
 	}
 protected:
 	virtual void injectionRun(map<string, string>& order) {
-		algorithm->cycle(atoi(order["size"].c_str()));
+		algorithm->cycle(atoi(order["runSize"].c_str()));
 		bin->pause();
 	}
 private:
@@ -1013,7 +1017,7 @@ public: ~PET() { cout << "~PET\n"; }
 
 }
 
-void process(map<string, string> order) {
+void process(map<string, string>& order) {
 	using namespace template_method;
 
 	ProcessOrder_TM_4* processOrder = 0;

@@ -87,7 +87,7 @@ Hello DP4.
 	UVInhibiter		= 6
 	AntiBacterial	= 1
 	endOfOrder
-  Setup SmallOrder injection line for 20000 run with ShrinkWrap packager:
+  Setup SmallOrder injection line for 10000 run with ShrinkWrap packager:
     IJM_120 - Aluminum(2) - Y-Split conveyer belt - CardboardBox
   Process order.
     Create car mold from mill with 2 cavities:
@@ -95,7 +95,7 @@ Hello DP4.
     Insert tags [ModelNumber Country Date ] of width 6/20 mm.
     Load plastic, color, and additive bins.
       Recipe: Polypropylene(40) orange(4) UVInhibiter(6) AntiBacterial(1) Total = 102.
-    Cycle IJM for Poly 20000 times.
+    Cycle IJM for Poly 10000 times.
       Close - heat to 350 - inject at  90 PSI - cool to 290 - separate - smooth eject.
       CardboardBox package bin full...
         IJM_120 pausing while CardboardBox package bin is swapped.

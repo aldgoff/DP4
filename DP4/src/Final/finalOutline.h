@@ -205,7 +205,9 @@ public:
 };
 class Mold_AF {
 public:
-	Mold_AF() {}
+	const unsigned cavities;
+public:
+	Mold_AF(unsigned cavities=1) : cavities(cavities) {}
 	virtual ~Mold_AF() { DTOR("~Mold_AF\n"); }
 };
 class ConveyerBelt_AF : public Observer_7 {
@@ -276,6 +278,11 @@ public:
 		ijm	 = factory->createIJM(bin);				// Observer_7.
 		mold = factory->createMold();
 		belt = factory->createConveyerBelt(bin);	// Observer_7.
+
+		char str[80];
+		unsigned runSize = atoi(order["size"].c_str())/mold->cavities;
+		sprintf(str, "%d", runSize);
+		order["runSize"] = str;
 	}
 	OutputBin_AF* getBin() { return bin; };
 public:
@@ -643,7 +650,8 @@ private:
 		packager = Packager_FM_5::createPackager(order, bin);
 
 		cout << "  Setup <DerivedOrder> injection line";
-		cout << " for <size> run with <Packager> packager:\n";
+		cout << " for " << order["runSize"] << " run";
+		cout << " with <Packager> packager:\n";
 
 		cout << "    <IJM> - <Metal>(<cavities>)";
 		cout << " - <Type> conveyer belt - <OutputBin>\n";
@@ -686,7 +694,7 @@ protected:
 	virtual void injectionCycle(map<string, string>& order) {
 		cout << "    Cycle <IJM>:";
 		cout << " for " << order["plastic"];
-		cout << " " << order["size"] << " times.\n";
+		cout << " " << order["runSize"] << " times.\n";
 		algorithm = new Strategy_1;
 		algorithm->cycle();
 		injectionLine->getBin()->pause();
