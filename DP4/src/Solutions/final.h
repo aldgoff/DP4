@@ -348,8 +348,8 @@ Setup_AF_10* Setup_AF_10::createInjectionLine(map<string, string>& order) {
 
 	else {						// Defaulting to HugeOrder.
 		cout << "  <>Size too large |" << size << "|";
-		cout << " defaulting to HugeOrder.\n";
 		order["size"] = "200000";
+		cout << " defaulting to HugeOrder of " << order["size"] << ".\n";
 		return new HugeOrder;
 	}
 }

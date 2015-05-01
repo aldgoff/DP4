@@ -332,14 +332,20 @@ int main(int argc, char* args[]) {
 		cout << "  Header files to include in DP4.cpp also listed.\n";
 		cout << endl;
 		meta("");
-		cout << "finalDesign\n";
-		cout << "finalDtoO\n";
-		cout << "finalOriginal\n";
-		cout << "finalOutline\n";
-		cout << "finalProblem\n";
-		cout << "finalRefactored\n";
-		cout << "finalMorph\n";
-		cout << "finalSolution\n";
+		cout << "finalDesign DP4/src/Final/orders_1.txt\n";
+		cout << "finalDtoO DP4/src/Final/orders_1.txt\n";
+		cout << "finalOriginal DP4/src/Final/orders_1.txt\n";
+
+		cout << "finalOutline DP4/src/Final/orders_1.txt\n";	// For DP5, or backup plan.
+
+		cout << "finalProblem DP4/src/Final/orders_1.txt\n";	// Should match "orig" above.
+		cout << "finalProblem DP4/src/Final/orders_2.txt\n";
+		cout << "finalOtoS DP4/src/Final/orders_2.txt\n";		// TODO: PtoS?
+		cout << "finalSolution DP4/src/Final/orders_2.txt\n";
+
+		cout << "finalRefactored\n";	// Obsolete.
+		cout << "finalMorph\n";			// Obsolete.
+
 		cout << "principles\n";
 		cout << "varies\n";
 		cout << "midterm\n";

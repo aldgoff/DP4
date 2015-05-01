@@ -98,7 +98,7 @@ Hello DP4.
 	AntiBacterial	= 1
 	endOfOrder
   <>Unknown stuffer || defaulting to Air stuffer.
-  Setup injection line for 20000 run with ShrinkWrap packager and air stuffing:
+  Setup injection line for 10000 run with ShrinkWrap packager and air stuffing:
     IJM_120 - Aluminum(2) - Y-Split conveyer belt - CardboardBox
   Process order.
     Create car mold from mill with 2 cavities:
@@ -106,7 +106,7 @@ Hello DP4.
     Insert tags [ModelNumber Country Date ] of width 6/20 mm.
     Load plastic, color, and additive bins.
       Recipe: Polypropylene(40) orange(4) UVInhibiter(6) AntiBacterial(1) Total = 102.
-    Cycle IJM for Poly 20000 times.
+    Cycle IJM for Poly 10000 times.
       Close - heat to 350 - inject at 90 PSI - cool to 290 - separate - smooth eject.
       CardboardBox package bin full...
         IJM pausing while CardboardBox package bin is swapped.
@@ -230,14 +230,14 @@ Hello DP4.
 	stuffer		= Air
 	address		= MegaCorp, 1 Apple, Santa Clara, CA 92200
 	endOfOrder
-  Setup injection line for 40000 run with ZipLock packager and air stuffing:
+  Setup injection line for 10000 run with ZipLock packager and air stuffing:
     IJM_140 - Aluminum(4) - V-Level conveyer belt - PallotBox
   Process order.
     Borrow dino mold from sister company.
     Insert tags [IncCounter PartNumber RecycleCode ] of width 12/20 mm.
     Load plastic, color, and additive bins.
       Recipe: Styrene(30) blue(3) MicroFibers(3) Total = 144.
-    Cycle IJM for Synthetics 40000 times.
+    Cycle IJM for Synthetics 10000 times.
       Close - heat to 480 - inject at 150 PSI - cool to 390 - separate - shock eject.
       PallotBox package bin full...
         IJM pausing while PallotBox package bin is swapped.
@@ -273,14 +273,14 @@ Hello DP4.
 	stuffer		= Popcorn
 	address		= Anytown, CA
 	endOfOrder
-  Setup injection line for 100000 run with ZipLock packager and styrene popcorn stuffing:
+  Setup injection line for 50000 run with ZipLock packager and styrene popcorn stuffing:
     IJM_220 - Steel(2) - Y-Split conveyer belt - Crate
   Process order.
     Acquire dino mold via purchase.
     Insert tags [] of width 0/20 mm.
     Load plastic, color, and additive bins.
       Recipe: Nylon66(30) violet(3) Total = 66.
-    Cycle IJM for Synthetics 100000 times.
+    Cycle IJM for Synthetics 50000 times.
       Close - heat to 480 - inject at 150 PSI - cool to 390 - separate - shock eject.
       Crate package bin full...
         IJM pausing while Crate package bin is swapped.
@@ -316,7 +316,7 @@ Hello DP4.
 	stuffer		= BubbleWrap
 	address		= Wherever, USA
 	endOfOrder
-  Setup injection line for 200000 run with ZipLock packager and bubble wrap stuffing:
+  Setup injection line for 50000 run with ZipLock packager and bubble wrap stuffing:
     IJM_240 - Steel(4) - V-Level conveyer belt - Crate
   Process order.
     Create dino mold from mill with 4 cavities:
@@ -324,7 +324,7 @@ Hello DP4.
     Insert tags [] of width 0/20 mm.
     Load plastic, color, and additive bins.
       Recipe: Nylon66(30) gray(3) Total = 132.
-    Cycle IJM for Synthetics 200000 times.
+    Cycle IJM for Synthetics 50000 times.
       Close - heat to 480 - inject at 150 PSI - cool to 390 - separate - shock eject.
       Crate package bin full...
         IJM pausing while Crate package bin is swapped.
@@ -364,8 +364,8 @@ Hello DP4.
 	stuffer			= Foam
 	address			= PLay Toys, 1234 5th st, Pastoria, IL 34556
 	endOfOrder
-  <>Size too large |400000| defaulting to HugeOrder.
-  Setup injection line for 200000 run with ZipLock packager and expanding foam stuffing:
+  <>Size too large |400000| defaulting to HugeOrder of 200000.
+  Setup injection line for 50000 run with ZipLock packager and expanding foam stuffing:
     IJM_240 - Steel(4) - V-Level conveyer belt - Crate
   Process order.
     Create dino mold from mill with 4 cavities:
@@ -373,7 +373,7 @@ Hello DP4.
     Insert tags [IncCounter PartNumber RecycleCode ModelNumber Country Date ] of width 18/20 mm.
     Load plastic, color, and additive bins.
       Recipe: Nylon66(30) white(3) UVInhibiter(6) AntiBacterial(1) MicroFibers(3) Total = 172.
-    Cycle IJM for Synthetics 200000 times.
+    Cycle IJM for Synthetics 50000 times.
       Close - heat to 480 - inject at 150 PSI - cool to 390 - separate - shock eject.
       Crate package bin full...
         IJM pausing while Crate package bin is swapped.

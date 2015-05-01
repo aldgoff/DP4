@@ -8,6 +8,7 @@ Run sizes:
   40,000
   100,000
   200,000
+  400,000 defaults to 200,000
 
 Colors:
   black
