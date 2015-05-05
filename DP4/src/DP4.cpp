@@ -15,28 +15,27 @@ using namespace std;
 #include "Lectures/lectures.h"
 #include "Variations/templateMethod.h"
 
+// Follow the "varies" paradigm.
 #include "strategy.h"
 #include "adapter.h"
 #include "facade.h"
 #include "templateMethod.h"
-
+#include "factoryMethod.h"
+#include "decorator.h"
+#include "observer.h"
+#include "chainOfResponsibility.h"
 #include "bridge.h"
 #include "abstractFactory.h"
-#include "decorator.h"
 
-#include "observer.h"
-
-#include "singleton.h"
-#include "factoryMethod.h"
+#include "state.h"
+#include "visitor.h"
 
 #include "midterm.h"
 
+// Do not follow the "varies" paradigm.
+#include "singleton.h"
 #include "composite.h"
-#include "chainOfResponsibility.h"
-
 #include "iterator.h"
-#include "visitor.h"
-
 #include "command.h"
 // Seam point half avoided by auto generation.
 

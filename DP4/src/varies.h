@@ -9,12 +9,15 @@
  *   1) If the algorithms are varying, use the Strategy pattern.
  *   2) If the interfaces are varying, use the Adapter pattern.
  *   3) If the API's are varying, use the Facade pattern.
- *   4) If the steps are varying, use the Template Method pattern.
+ *   4) If some of the steps are varying, use the Template Method pattern.
  *   5) If the classes are varying, use the Factory Method pattern.
  *   6) If the options are varying, use the Decorator pattern.
  *   7) If the listeners are varying, use the Observer pattern.
- *   8) If the yyy are varying, use the ddd pattern.
+ *   8) If the responders are varying, use the Chain of Responsibility pattern.
+ *   9) If the behaviors are varying, use the State pattern.
  * Multiple inheritance trees:
+ *   x) If the abstractions and implementations are varying use the Bridge pattern.
+ *   y) If whole familes are varying, use the Abstract Factory pattern.
  *   9) If the requests and receivers are varying, use the Command pattern.
  *   A) If the uuu and vvv are varying, use the ddd pattern.
  *

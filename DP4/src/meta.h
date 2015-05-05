@@ -579,6 +579,24 @@ public:
 	}
 };
 
+class State : public DesignPattern {
+public:
+	State() : DesignPattern("State") {}
+public:
+	void legacy(int i) {
+		DesignPattern::legacy(i);
+		homework::state_legacy::demo();
+	}
+	void problem(int i) {
+		DesignPattern::problem(i);
+		homework::state_problem::demo();
+	}
+	void solution(int i) {
+		DesignPattern::solution(i);
+		homework::state_solution::demo();
+	}
+};
+
 class Singleton : public DesignPattern {
 public:
 	Singleton() : DesignPattern("Singleton") {}
@@ -625,6 +643,7 @@ namespace dp_list {
 		new ChainOfResponsibility,
 		new Bridge,
 		new AbstractFactory,
+		new State,
 	};
 
 	void scanLectures() {

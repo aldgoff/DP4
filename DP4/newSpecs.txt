@@ -60,7 +60,7 @@ Shapes:
   car (40 cc)
   hero (50 cc)
   ...
-  dino (35 cc)
+  dino (30 cc)
   
 Milling Ops:
   Aluminum - High carbon
