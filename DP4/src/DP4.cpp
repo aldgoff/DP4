@@ -90,6 +90,8 @@ using namespace std;
 #include "Cavs/cavs.h"
 #include "Cavs/mixin.h"
 
+#include "Students/final.h"
+
 /*====================================================================================================================*/
 
 void runStrategy() {
@@ -398,6 +400,21 @@ int main(int argc, char* args[]) {
 		else if(!strcmp(args[i], "dttc"))				runDttcLecture();
 		else if(!strcmp(args[i], "cavs"))				runCAVS();
 		else if(!strcmp(args[i], "mixin"))				runMixin();
+
+		else if(!strcmp(args[i], "carlos"))		final_carlos_file::demo(string(args[++i]));
+		else if(!strcmp(args[i], "jason"))		final_jason_file::demo(string(args[++i]));
+		// Folder ...
+//		else if(!strcmp(args[i], "jasonr"))		final_jasonr_file::demo(string(args[++i]));
+		else if(!strcmp(args[i], "srujan"))		final_srujan_file::demo(string(args[++i]));
+		// Folder - norm.
+		else if(!strcmp(args[i], "sergio"))		final_sergio_file::demo(string(args[++i]));
+//		else if(!strcmp(args[i], "jeff"))		final_jeff_file::demo(string(args[++i]));
+		else if(!strcmp(args[i], "mohamed"))	final_mohamed_file::demo(string(args[++i]));
+//		else if(!strcmp(args[i], "chao"))		final_chao_file::demo(string(args[++i]));
+//		else if(!strcmp(args[i], "soltif"))		final_solti_file::demo(string(args[++i]));
+//		else if(!strcmp(args[i], "rohuit"))		final_rohit_file::demo(string(args[++i]));
+		else if(!strcmp(args[i], "yong"))		final_problem_file_yong::demo(string(args[++i]));
+
 		else {
 			cout << "  <" << args[i] << "> command line arg NOT understood.\n";
 		}
