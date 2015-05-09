@@ -54,6 +54,8 @@
  - 35.	One of the initially constant TM_4 steps should have to become virtual
  - 36.	Consider adding dryers, visual inspection, rejections affect run size
  * 37.	Fully decouple the decision logic
+ - 38.	Eliminate the Hello/Aloha requirement.
+ - 39.	Better separation of Strategy and Template Method.
  */
 
 

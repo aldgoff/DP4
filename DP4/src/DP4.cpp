@@ -414,6 +414,7 @@ int main(int argc, char* args[]) {
 //		else if(!strcmp(args[i], "soltif"))		final_solti_file::demo(string(args[++i]));
 //		else if(!strcmp(args[i], "rohuit"))		final_rohit_file::demo(string(args[++i]));
 		else if(!strcmp(args[i], "yong"))		final_problem_file_yong::demo(string(args[++i]));
+		else if(!strcmp(args[i], "tao"))		final_tao_file::demo(string(args[++i]));
 
 		else {
 			cout << "  <" << args[i] << "> command line arg NOT understood.\n";

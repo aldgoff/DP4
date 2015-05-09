@@ -1,0 +1,407 @@
+Hello DP4.
+
+<<< final solution >>>
+1:
+	orderNum	= 1
+	comment		= Null order - check default behaviors.
+	endOfOrder
+  <>Unknown plastic || defaulting to ABS.
+  <>No size specified, defaulting to 100.
+  <>Unknown packager || defaulting to Bulk packager.
+    IJM_110 - Aluminum(1) - Linear conveyer belt - CardboardBox
+  <>Unknown stuffer || defaulting to Air stuffer.
+  Setup injection line for 100 run with Bulk packager and air stuffing:
+  Process order.
+    <>Can't find place || to get || mold from, defaulting to duck from inventory.
+    Insert tags [] of width 0/20 mm.
+    Load plastic, color, and additive bins.
+      <>No color specified, defaulting to black.
+      Recipe: ABS(35) black(3) Total = 38.
+~Color ~AdditiveDecorator ~Plastic_D_6
+~ABS ~AdditiveDecorator ~Plastic_D_6
+    Cycle IJM for ABS 100 times.
+      Close - heat to 440 - inject at 125 PSI - cool to 360 - separate - progressive eject.
+      CardboardBox package bin full...
+        IJM pausing while CardboardBox package bin is swapped.
+        Conveyer Belt pausing while CardboardBox package bin is swapped.
+        Packager pausing while CardboardBox package bin is swapped.
+        Stuffer filling CardboardBox package bin with air stuffing.
+    Clean ABS mold: soak in alcohol, rinse with water, dry.
+    Ship to ""
+~Duck ~Shape_B_9 ~ABS 
+ ~Strategy_1
+~adapter::ABS_Clean ~CleanABS CleanPlastic_A_2 ~CardboardBox ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
+~Bulk ~Packager_FM_5 
+Observer_7
+~PilotOrder~Setup_AF_10
+~ProcessOrder_TM_4
+~Plastic_D_6
+~Tags_D_6
+~Blank ~TagDecorator ~Tags_D_6
+~Mill ~GetMold_CofR_8 ~Purchase ~GetMold_CofR_8 ~SisterCompany ~GetMold_CofR_8 ~Inventory ~GetMold_CofR_8 2:
+	orderNum	= 2
+	comment		= Example order - one of everything.
+	size		= 10000
+	packager	= Bulk
+	plastic		= ABS
+	moldLoc		= inventory
+	mold		= duck
+	tags		= ModelNumber
+	color		= red
+	UVInhibiter	= 6
+	endOfOrder
+    IJM_110 - Aluminum(1) - Linear conveyer belt - CardboardBox
+  <>Unknown stuffer || defaulting to Air stuffer.
+  Setup injection line for 10000 run with Bulk packager and air stuffing:
+  Process order.
+    Pull duck mold from inventory.
+    Insert tags [ModelNumber ] of width 2/20 mm.
+    Load plastic, color, and additive bins.
+      Recipe: ABS(35) red(3) UVInhibiter(6) Total = 44.
+~UVInhibiter ~AdditiveDecorator ~Plastic_D_6
+~Color ~AdditiveDecorator ~Plastic_D_6
+~ABS ~AdditiveDecorator ~Plastic_D_6
+    Cycle IJM for ABS 10000 times.
+      Close - heat to 440 - inject at 125 PSI - cool to 360 - separate - progressive eject.
+      CardboardBox package bin full...
+        IJM pausing while CardboardBox package bin is swapped.
+        Conveyer Belt pausing while CardboardBox package bin is swapped.
+        Packager pausing while CardboardBox package bin is swapped.
+        Stuffer filling CardboardBox package bin with air stuffing.
+    Clean ABS mold: soak in alcohol, rinse with water, dry.
+    Ship to ""
+~Duck ~Shape_B_9 ~ABS 
+ ~Strategy_1
+~adapter::ABS_Clean ~CleanABS CleanPlastic_A_2 ~CardboardBox ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
+~Bulk ~Packager_FM_5 
+Observer_7
+~PilotOrder~Setup_AF_10
+~ProcessOrder_TM_4
+~Plastic_D_6
+~Tags_D_6
+~Blank ~TagDecorator ~Tags_D_6
+~ModelNumber ~TagDecorator ~Tags_D_6
+~Mill ~GetMold_CofR_8 ~Purchase ~GetMold_CofR_8 ~SisterCompany ~GetMold_CofR_8 ~Inventory ~GetMold_CofR_8 3:
+	orderNum		= 3
+	comment			= Max order - next of singles, all of everything else (orig secs).
+	size			= 20000
+	packager		= ShrinkWrap
+	plastic			= Polypropylene
+	moldLoc			= mill
+	mold			= car
+	finish			= smooth
+	tags			= ModelNumber Country Date
+	color			= orange
+	UVInhibiter		= 6
+	AntiBacterial	= 1
+	endOfOrder
+    IJM_120 - Aluminum(2) - Y-Split conveyer belt - CardboardBox
+  <>Unknown stuffer || defaulting to Air stuffer.
+  Setup injection line for 10000 run with ShrinkWrap packager and air stuffing:
+  Process order.
+    Create car mold from mill with 2 cavities:
+      using HighCarbon tools (drill, cut, and high speed grind) to mill aluminum block into 2 car shapes with smooth finish.
+    Insert tags [ModelNumber Country Date ] of width 6/20 mm.
+    Load plastic, color, and additive bins.
+      Recipe: Polypropylene(40) orange(4) UVInhibiter(6) AntiBacterial(1) Total = 102.
+~AntiBacterial ~AdditiveDecorator ~Plastic_D_6
+~UVInhibiter ~AdditiveDecorator ~Plastic_D_6
+~Color ~AdditiveDecorator ~Plastic_D_6
+~Polypropylene ~AdditiveDecorator ~Plastic_D_6
+    Cycle IJM for Poly 10000 times.
+      Close - heat to 350 - inject at 90 PSI - cool to 290 - separate - smooth eject.
+      CardboardBox package bin full...
+        IJM pausing while CardboardBox package bin is swapped.
+        Conveyer Belt pausing while CardboardBox package bin is swapped.
+        Packager pausing while CardboardBox package bin is swapped.
+        Stuffer filling CardboardBox package bin with air stuffing.
+    Clean Poly mold: rinse with acetone, dry.
+    Ship to ""
+~Car ~HighCarbon ~Platform_B_9
+~Shape_B_9 ~Poly 
+ ~Strategy_1
+~adapter::Poly_Clean ~CleanPolys CleanPlastic_A_2 ~CardboardBox ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
+~ShrinkWrap ~Packager_FM_5 
+Observer_7
+~SmallOrder~Setup_AF_10
+~ProcessOrder_TM_4
+~Plastic_D_6
+~Tags_D_6
+~Blank ~TagDecorator ~Tags_D_6
+~ModelNumber ~TagDecorator ~Tags_D_6
+~Country ~TagDecorator ~Tags_D_6
+~Date ~TagDecorator ~Tags_D_6
+~Mill ~GetMold_CofR_8 ~Purchase ~GetMold_CofR_8 ~SisterCompany ~GetMold_CofR_8 ~Inventory ~GetMold_CofR_8 4:
+	orderNum	= 4
+	comment		= Next of singles or last.
+	size		= 50000
+	packager	= HardPack
+	plastic		= Polyethelene
+	moldLoc		= mill
+	mold		= hero
+	finish		= rippled
+	color		= yellow
+	endOfOrder
+    IJM_210 - Steel(1) - Linear conveyer belt - PallotBox
+  <>Unknown stuffer || defaulting to Air stuffer.
+  Setup injection line for 50000 run with HardPack packager and air stuffing:
+  Process order.
+    Create hero mold from mill with 1 cavities:
+      using Carbide tools (high speed drill, cross cut, and layer grind) to mill steel block into 1 hero shapes with rippled finish.
+    Insert tags [] of width 0/20 mm.
+    Load plastic, color, and additive bins.
+      Recipe: Polyethelene(50) yellow(5) Total = 55.
+~Color ~AdditiveDecorator ~Plastic_D_6
+~Polyethelene ~AdditiveDecorator ~Plastic_D_6
+    Cycle IJM for Poly 50000 times.
+      Close - heat to 350 - inject at 90 PSI - cool to 290 - separate - smooth eject.
+      PallotBox package bin full...
+        IJM pausing while PallotBox package bin is swapped.
+        Conveyer Belt pausing while PallotBox package bin is swapped.
+        Packager pausing while PallotBox package bin is swapped.
+        Stuffer filling PallotBox package bin with air stuffing.
+    Clean Poly mold: rinse with acetone, dry.
+    Ship to ""
+~Hero ~Carbide ~Platform_B_9
+~Shape_B_9 ~Poly 
+ ~Strategy_1
+~adapter::Poly_Clean ~CleanPolys CleanPlastic_A_2 ~PallotBox ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
+~HardPack ~Packager_FM_5 
+Observer_7
+~MediumOrder~Setup_AF_10
+~ProcessOrder_TM_4
+~Plastic_D_6
+~Tags_D_6
+~Blank ~TagDecorator ~Tags_D_6
+~Mill ~GetMold_CofR_8 ~Purchase ~GetMold_CofR_8 ~SisterCompany ~GetMold_CofR_8 ~Inventory ~GetMold_CofR_8 5:
+	orderNum	= 5
+	comment		= Next of singles or last.
+	size		= 50000
+	packager	= HardPack
+	plastic		= PET
+	moldLoc		= mill
+	mold		= hero
+	finish		= rippled
+	color		= green
+	endOfOrder
+    IJM_210 - Steel(1) - Linear conveyer belt - PallotBox
+  <>Unknown stuffer || defaulting to Air stuffer.
+  Setup injection line for 50000 run with HardPack packager and air stuffing:
+  Process order.
+    Create hero mold from mill with 1 cavities:
+      using Carbide tools (high speed drill, cross cut, and layer grind) to mill steel block into 1 hero shapes with rippled finish.
+    Insert tags [] of width 0/20 mm.
+    Load plastic, color, and additive bins.
+      Recipe: PET(50) green(5) Total = 55.
+~Color ~AdditiveDecorator ~Plastic_D_6
+~PET ~AdditiveDecorator ~Plastic_D_6
+    Cycle IJM for PET 50000 times.
+      Close - heat to 404 - inject at 110 PSI - cool to 340 - separate - smooth eject.
+      PallotBox package bin full...
+        IJM pausing while PallotBox package bin is swapped.
+        Conveyer Belt pausing while PallotBox package bin is swapped.
+        Packager pausing while PallotBox package bin is swapped.
+        Stuffer filling PallotBox package bin with air stuffing.
+    Clean PET steel mold: heat to 895 C.
+    Ship to ""
+~Hero ~Carbide ~Platform_B_9
+~Shape_B_9 ~PET 
+ ~Strategy_1
+~adapter::PET_Clean ~PETCleanup CleanPlastic_A_2 ~PallotBox ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
+~HardPack ~Packager_FM_5 
+Observer_7
+~MediumOrder~Setup_AF_10
+~ProcessOrder_TM_4
+~Plastic_D_6
+~Tags_D_6
+~Blank ~TagDecorator ~Tags_D_6
+~Mill ~GetMold_CofR_8 ~Purchase ~GetMold_CofR_8 ~SisterCompany ~GetMold_CofR_8 ~Inventory ~GetMold_CofR_8 6:
+	orderNum	= 6
+	comment		= New Specs: new singles, all of new groups.
+	size		= 40000
+	packager	= ZipLock
+	plastic		= Styrene
+	moldLoc		= sisterCompany
+	mold		= dino
+	finish		= dimpled
+	tags		= IncCounter PartNumber RecycleCode
+	color		= blue
+	MicroFibers	= 3
+	stuffer		= Air
+	address		= MegaCorp, 1 Apple, Santa Clara, CA 92200
+	endOfOrder
+    IJM_140 - Aluminum(4) - V-Level conveyer belt - PallotBox
+  Setup injection line for 10000 run with ZipLock packager and air stuffing:
+  Process order.
+    Borrow dino mold from sister Company.
+    Insert tags [IncCounter PartNumber RecycleCode ] of width 12/20 mm.
+    Load plastic, color, and additive bins.
+      Recipe: Styrene(30) blue(3) Microfibers(3) Total = 144.
+~MicroFiber ~AdditiveDecorator ~Plastic_D_6
+~Color ~AdditiveDecorator ~Plastic_D_6
+~Styrene ~AdditiveDecorator ~Plastic_D_6
+    Cycle IJM for Synthetics 10000 times.
+      Close - heat to 480 - inject at 150 PSI - cool to 390 - separate - shock eject.
+      PallotBox package bin full...
+        IJM pausing while PallotBox package bin is swapped.
+        Conveyer Belt pausing while PallotBox package bin is swapped.
+        Packager pausing while PallotBox package bin is swapped.
+        Stuffer filling PallotBox package bin with air stuffing.
+    Clean synthetic mold: ozone wash.
+    Ship to "MegaCorp, 1 Apple, Santa Clara, CA 92200"
+~Dino ~Shape_B_9 ~Synthetics 
+ ~Strategy_1
+~adapter::Synthetics_Clean CleanPlastic_A_2 ~PallotBox ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
+~ZipLock ~Packager_FM_5 
+Observer_7
+~FastOrder~Setup_AF_10
+~ProcessOrder_TM_4
+~Plastic_D_6
+~Tags_D_6
+~Blank ~TagDecorator ~Tags_D_6
+~IncrementCounter ~TagDecorator ~Tags_D_6
+~PartNumber ~TagDecorator ~Tags_D_6
+~RecycleCode ~TagDecorator ~Tags_D_6
+~Mill ~GetMold_CofR_8 ~Purchase ~GetMold_CofR_8 ~SisterCompany ~GetMold_CofR_8 ~Inventory ~GetMold_CofR_8 7:
+	orderNum	= 7
+	comment		= New Specs: next singles, or last.
+	size		= 100000
+	packager	= ZipLock
+	plastic		= Nylon66
+	moldLoc		= purchase
+	mold		= dino
+	finish		= sanded
+	color		= violet
+	stuffer		= Popcorn
+	address		= Anytown, CA
+	endOfOrder
+    IJM_220 - Steel(2) - Y-Split conveyer belt - Crate
+  Setup injection line for 50000 run with ZipLock packager and styrene popcorn stuffing:
+  Process order.
+    Acquire dino mold via purchase.
+    Insert tags [] of width 0/20 mm.
+    Load plastic, color, and additive bins.
+      Recipe: Nylon66(30) violet(3) Total = 66.
+~Color ~AdditiveDecorator ~Plastic_D_6
+~Nilon66 ~AdditiveDecorator ~Plastic_D_6
+    Cycle IJM for Synthetics 50000 times.
+      Close - heat to 480 - inject at 150 PSI - cool to 390 - separate - shock eject.
+      Crate package bin full...
+        IJM pausing while Crate package bin is swapped.
+        Conveyer Belt pausing while Crate package bin is swapped.
+        Packager pausing while Crate package bin is swapped.
+        Stuffer filling Crate package bin with styrene popcorn stuffing.
+    Clean synthetic mold: ozone wash.
+    Ship to "Anytown, CA"
+~Dino ~Shape_B_9 ~Synthetics 
+ ~Strategy_1
+~adapter::Synthetics_Clean CleanPlastic_A_2 ~Crate ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
+~ZipLock ~Packager_FM_5 
+Observer_7
+~LargeOrder~Setup_AF_10
+~ProcessOrder_TM_4
+~Plastic_D_6
+~Tags_D_6
+~Blank ~TagDecorator ~Tags_D_6
+~Mill ~GetMold_CofR_8 ~Purchase ~GetMold_CofR_8 ~SisterCompany ~GetMold_CofR_8 ~Inventory ~GetMold_CofR_8 8:
+	orderNum	= 8
+	comment		= New Specs: next singles, or last.
+	size		= 200000
+	packager	= ZipLock
+	plastic		= Nylon66
+	moldLoc		= mill
+	mold		= dino
+	finish		= satin
+	color		= gray
+	stuffer		= BubbleWrap
+	address		= Wherever, USA
+	endOfOrder
+    IJM_240 - Steel(4) - V-Level conveyer belt - Crate
+  Setup injection line for 50000 run with ZipLock packager and bubble wrap stuffing:
+  Process order.
+    Create dino mold from mill with 4 cavities:
+      using DiamondTipped tools (precision drill, oil cooled cut, and cartoid grind) to mill steel block into 4 dino shapes with satin finish.
+    Insert tags [] of width 0/20 mm.
+    Load plastic, color, and additive bins.
+      Recipe: Nylon66(30) gray(3) Total = 132.
+~Color ~AdditiveDecorator ~Plastic_D_6
+~Nilon66 ~AdditiveDecorator ~Plastic_D_6
+    Cycle IJM for Synthetics 50000 times.
+      Close - heat to 480 - inject at 150 PSI - cool to 390 - separate - shock eject.
+      Crate package bin full...
+        IJM pausing while Crate package bin is swapped.
+        Conveyer Belt pausing while Crate package bin is swapped.
+        Packager pausing while Crate package bin is swapped.
+        Stuffer filling Crate package bin with bubble wrap stuffing.
+    Clean synthetic mold: ozone wash.
+    Ship to "Wherever, USA"
+~Dino ~DiamonTipped ~Platform_B_9
+~Shape_B_9 ~Synthetics 
+ ~Strategy_1
+~adapter::Synthetics_Clean CleanPlastic_A_2 ~Crate ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
+~ZipLock ~Packager_FM_5 
+Observer_7
+~HugeOrder~Setup_AF_10
+~ProcessOrder_TM_4
+~Plastic_D_6
+~Tags_D_6
+~Blank ~TagDecorator ~Tags_D_6
+~Mill ~GetMold_CofR_8 ~Purchase ~GetMold_CofR_8 ~SisterCompany ~GetMold_CofR_8 ~Inventory ~GetMold_CofR_8 9:
+	orderNum		= 9
+	comment			= New Specs: max out, mill or last.
+	size			= 400000
+	packager		= ZipLock
+	plastic			= Nylon66
+	moldLoc			= mill
+	mold			= dino
+	finish			= satin
+	color			= white
+	tags			= IncCounter PartNumber RecycleCode ModelNumber Country Date
+	MicroFibers		= 3
+	UVInhibiter		= 6
+	AntiBacterial	= 1
+	stuffer			= Foam
+	address			= PLay Toys, 1234 5th st, Pastoria, IL 34556
+	endOfOrder
+  <>size too large |400000| defaulting to HugeOrder of 200000.
+    IJM_240 - Steel(4) - V-Level conveyer belt - Crate
+  Setup injection line for 50000 run with ZipLock packager and expanding foam stuffing:
+  Process order.
+    Create dino mold from mill with 4 cavities:
+      using DiamondTipped tools (precision drill, oil cooled cut, and cartoid grind) to mill steel block into 4 dino shapes with satin finish.
+    Insert tags [IncCounter PartNumber RecycleCode ModelNumber Country Date ] of width 18/20 mm.
+    Load plastic, color, and additive bins.
+      Recipe: Nylon66(30) white(3) UVInhibiter(6) AntiBacterial(1) Microfibers(3) Total = 172.
+~MicroFiber ~AdditiveDecorator ~Plastic_D_6
+~AntiBacterial ~AdditiveDecorator ~Plastic_D_6
+~UVInhibiter ~AdditiveDecorator ~Plastic_D_6
+~Color ~AdditiveDecorator ~Plastic_D_6
+~Nilon66 ~AdditiveDecorator ~Plastic_D_6
+    Cycle IJM for Synthetics 50000 times.
+      Close - heat to 480 - inject at 150 PSI - cool to 390 - separate - shock eject.
+      Crate package bin full...
+        IJM pausing while Crate package bin is swapped.
+        Conveyer Belt pausing while Crate package bin is swapped.
+        Packager pausing while Crate package bin is swapped.
+        Stuffer filling Crate package bin with expanding foam stuffing.
+    Clean synthetic mold: ozone wash.
+    Ship to "PLay Toys, 1234 5th st, Pastoria, IL 34556"
+~Dino ~DiamonTipped ~Platform_B_9
+~Shape_B_9 ~Synthetics 
+ ~Strategy_1
+~adapter::Synthetics_Clean CleanPlastic_A_2 ~Crate ~PackageBin_AF ~Subject_7 Observers left to process (should be zero) = 0.
+~ZipLock ~Packager_FM_5 
+Observer_7
+~HugeOrder~Setup_AF_10
+~ProcessOrder_TM_4
+~Plastic_D_6
+~Tags_D_6
+~Blank ~TagDecorator ~Tags_D_6
+~IncrementCounter ~TagDecorator ~Tags_D_6
+~PartNumber ~TagDecorator ~Tags_D_6
+~RecycleCode ~TagDecorator ~Tags_D_6
+~ModelNumber ~TagDecorator ~Tags_D_6
+~Country ~TagDecorator ~Tags_D_6
+~Date ~TagDecorator ~Tags_D_6
+~Mill ~GetMold_CofR_8 ~Purchase ~GetMold_CofR_8 ~SisterCompany ~GetMold_CofR_8 ~Inventory ~GetMold_CofR_8 Aloha DP4.
+

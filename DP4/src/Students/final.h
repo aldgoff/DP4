@@ -31,6 +31,6 @@ int stoi(const string& str) {
 #include "solti.h"		// Used unique_ptr.
 #include "rohit.h"		// Used shared_ptr.
 #include "yong.h"		// Excellent - missed 'separate', PET cleaning, propcorn, oiled, but caught Null Observers, dtors.
-
+#include "tao.h"		//
 
 #endif /* DP4_SRC_STUDENTS_FINAL_H_ */
